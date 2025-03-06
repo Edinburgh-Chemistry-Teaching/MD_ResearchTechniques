@@ -1,0 +1,75 @@
+graph {
+
+node [ shape=box, width=1, target=_blank]
+
+top [
+  label="/"
+  tooltip="root directory"
+  shape=folder
+  group=first
+  fontname="courier"
+  style=filled
+  fillcolor="#fcdc34"
+  color="#a18004"
+]
+
+bin [
+  label="bin"
+  tooltip="where some built-in programs are stored"
+  shape=folder
+  group=second
+  fontname="courier"
+  style=filled
+  fillcolor="#fcdc34"
+  color="#a18004"
+]
+
+data [
+  label="data"
+  tooltip="miscellaneous data files"
+  shape=folder
+  group=second
+  fontname="courier"
+  style=filled
+  fillcolor="#fcdc34"
+  color="#a18004"
+]
+
+home [
+  label="home"
+  tooltip="where users’ personal directories are located"
+  shape=folder
+  group=second
+  fontname="courier"
+  style=filled
+  fillcolor="#fcdc34"
+  color="#a18004"
+]
+
+tmp [
+  label="tmp"
+  tooltip="temporary files that don’t need to be stored long-term"
+  shape=folder
+  group=second
+  fontname="courier"
+  style=filled
+  fillcolor="#fcdc34"
+  color="#a18004"
+]
+
+splines=ortho
+
+0 [width=0, shape=point, style=invis]
+1 [width=0, shape=point, style=invis]
+2 [width=0, shape=point, style=invis]
+
+top -- 0 [ headclip=false style="bold" color="blue" penwidth=4 ]
+
+{rank=same; 1 -- 0 -- 2 [ headclip=false tailclip=false style="bold" color="blue" penwidth=4 ] }
+
+1 -- bin [ tailclip=false style="bold" color="blue" penwidth=4 ]
+1 -- data [ tailclip=false style="bold" color="blue" penwidth=4 ]
+2 -- home [ tailclip=false style="bold" color="blue" penwidth=4 ]
+2 -- tmp [ tailclip=false style="bold" color="blue" penwidth=4 ]
+
+}

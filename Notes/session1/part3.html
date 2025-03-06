@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en-UK">
+<!--xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html">-->
+
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0, user-scalable=yes" name="viewport"/>
+    <meta content="Session1: part 3" name="description"/>
+    <link href="https://fonts.googleapis.com" rel="preconnect">
+    <link crossorigin href="https://fonts.gstatic.com" rel="preconnect">
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,400;0,600;1,400&display=swap"
+          rel="stylesheet">
+    <link href="../scripts/style.css" rel="stylesheet"/>
+    <title>Part 3 &ndash; Using high performance computers</title>
+</head>
+
+<body>
+
+<div class="box">
+    <h1 id="heading">Part 3 &ndash; Using high performance computers</h1>
+    <p> &uarr; <a href="Session1.html">Go to the main menu</a> <br>
+        &larr; <a href="part2.html">Go to the previous part &ndash; Working With Files and Directories</a> <br>
+        &rarr; <a href="part4.html">Go to the next part &ndash; Pipes and Filters (Advanced)</a> </p>
+
+</div>
+
+<div class="box">
+    <h2 id="overview">Contents</h2>
+</div>
+
+<div class="box">
+    <p>We have seen above how using a command-line interface instead of a GUI can save us valuable time running the analysis. Still, depending on
+        the job we need to do, the time-limiting step can be the performance of our laptop/desktop. In this case, we need access to a more powerful
+        machine. There are numerous large computers with shared computing resources available: from smaller machines in research groups, to the
+        University ones, to national facilities. </p>
+
+    <p>The resources on these machines typically have larger numbers and sizes of central processing units (CPUs), CPUs that operate at higher
+        speeds, more memory, more storage, and faster connections with other computer systems. They are frequently called “clusters”,
+        “supercomputers” or resources for “high-performance computing” or HPC. </p>
+
+    <p>Using a cluster often has the following advantages for researchers:</p>
+    <ul style="margin-top:-3mm">
+        <li><strong>Speed</strong>. With many more CPU cores, often with higher performance specs, than a typical laptop or
+        desktop, HPC systems can offer significant speed up.
+        </li>
+        <li><strong>Volume</strong>. Many HPC systems have both the processing memory (RAM) and disk storage to handle very
+        large amounts of data. Terabytes of RAM and petabytes of storage are available for research projects.
+        </li>
+        <li><strong>Efficiency</strong>. Many HPC systems operate a pool of resources that are drawn on by many users. In
+        most cases, when the pool is large and diverse enough, the resources on the system are used almost constantly.
+        This also means that the user can run jobs in parallel and a number of jobs simultaniously.
+        </li>
+        <li><strong>Cost</strong>. Bulk purchasing and government funding mean that the cost to the research community for
+        using these systems in significantly less that it would be otherwise.
+        </li>
+        <li><strong>Convenience</strong>. Maybe your calculations just take a long time to run or are otherwise inconvenient
+        to run on your personal computer. There’s no need to tie up your own computer for hours when you can use someone
+        else’s instead;)
+        </li>
+    </ul>
+
+    <p>The University of Edinburgh has a supercomputer <a
+        href="https://www.ed.ac.uk/information-services/research-support/research-computing/ecdf/high-performance-computing">Eddie</a>,
+    which we will be using during this practical. Furthermore, UoE is a host for national supercomputing facilities <a
+            href="https://www.archer2.ac.uk">ARCHER2</a> and <a href="https://www.cirrus.ac.uk">Cirrus</a>, available to
+    researchers in the UK.</p>
+
+    <p>In this part of the session we will apply the bash skills we have learned earlier to connect and use Eddie HPC. In
+    the following sessions, we will be using Eddie to run our calculations.</p>
+
+</div>
+
+<div class="box">
+    <h2 class="enum" id="toc_1">Connecting to a remote machine</h2>
+
+    <p>Connecting to an HPC system is most often done through a tool known as SSH, for <strong>s</strong>ecure
+    <strong>sh</strong>ell, and usually SSH is run through a terminal. So, to begin using an HPC system, we need to open
+    a terminal. </p>
+
+    <p style="font-weight: bold">Open a new terminal for this step. You will then have two terminals to work on in parallel
+    - one for working on local machine, one for working on Eddie.</p>
+
+    <p>Into the terminal type without brackets:</p>
+
+    <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-4mm">$ ssh -X &lt;UUN&gt;@eddie.ecdf.ed.ac.uk</code>
+
+    <p>where <code>&lt;UUN&gt;</code> should be replaced with your university credentials, typically starting with
+    <code>s</code>, for example:</p>
+
+    <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-4mm">$ ssh -X s1234567@eddie.ecdf.ed.ac.uk</code>
+    <p class="note" style="margin-top:2mm">The <code>&dash;X</code> option is used to enable X11 forwarding, which allows you to use the graphical
+        interface needed to display plots on Eddie. </p>
+
+    <p>The terminal will prompt you for the password, which is your university password. Note, that there will be no
+    spaces/stars/symbols filling up when you are typing the password in, the display will not change. When you are done,
+    hit &lsquo;Enter&rsquo;.</p>
+
+    <p>Note, if logging in for the first time, your computer may ask to remember the remote machine, reply &lsquo;yes&rsquo;.</p>
+
+    <p>When successfully logged in, you will see:</p>
+
+    <samp style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-4mm">         _______    _     _ _
+        (_______)  | |   | (_)
+         _____   _ | | _ | |_  ____
+        |  ___) / || |/ || | |/ _  )
+        | |____( (_| ( (_| | ( (/ /
+        |_______)____|\____|_|\____)
+
+
+    WELCOME TO Eddie
+
+        www.ecdf.ed.ac.uk
+_____________________________________________________________________
+
+A guide to getting started is available here:
+https://www.wiki.ed.ac.uk/display/ResearchServices/Quickstart
+
+Service documentation is here:
+https://www.wiki.ed.ac.uk/display/ResearchServices/Eddie
+
+Please report any issues to IS.Helpline@ed.ac.uk
+_____________________________________________________________________</samp>
+</div>
+
+<div class="box">
+    <h2 class="enum" id="toc_2">Telling the difference between local and remote terminals</h2>
+
+    <p>You may have also noticed that the prompt changed when you logged into the remote system from <code>$</code> to a
+    more complete <code>[nelle@login03(eddie) ~]$</code>.</p>
+
+    <p>This change is important because it makes it clear on which system the commands you type will be run when you pass
+    them into the terminal. Exactly what is reported before the <code>$</code> in the terminal when it is connected to
+    the local system and the remote system will typically be different for every user.</p>
+
+    <p>Just like on your local machine, you can use the commands <code>cd</code>, <code>ls</code>, <code>pwd</code>, etc. to
+    navigate around, as well as all the other commands we have used above. </p>
+</div>
+
+<div class="box">
+    <h2 class="enum" id="toc_3">File structure</h2>
+
+    <p>Unlike your local machine, the file structure of Eddie is different, offering a variety of storage options/locations
+    to cater for different types of work. </p>
+
+    <p>When you log into the machine, you automatically land at your <strong>home directory</strong>. Check what it is by
+    typing:</p>
+    <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-4mm">[nelle@login03(eddie) ~]$ pwd </code>
+    <samp style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-0.25mm">/home/nelle</samp>
+
+    <p>This home directory space is small, default only 10 Gb, and can be used to store cluster conimguration files/ job
+    scripts and small amounts of persistent data. It is not suitable for the large files produced by the
+    simulations. </p>
+
+    <p>Instead, there is a <strong>scratch directory</strong>, a large 2 Tb space, shared by all users of Eddie, where we
+    will be running our simulations from. </p>
+
+<blockquote>
+    <p><strong><em>WARNING</em></strong> ⚠️ <em>Files older than one month will be deleted from Scratch directory.</em>
+        This is enough time for the duration of our course, but if you would like to keep your data, it will have to be
+        moved onto your personal Datastore.</p>
+</blockquote>
+
+    <p>Let&rsquo;s explore that space:</p>
+    <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-4mm">[nelle@login03(eddie) ~]$ cd /exports/eddie/scratch/&lt;UUN&gt;</code>
+
+    <p>Replace <code>&lt;UUN&gt;</code> with your username, for Nelle her username is <code>nelle</code>, and therefore,
+    this is:</p>
+    <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-4mm">[nelle@login03(eddie) ~]$ cd /exports/eddie/scratch/nelle</code>
+
+    <p><em>Have you noticed that the prompt has changed?</em>
+    Instead of <code>~</code>, standing for &lsquo;home directory&rsquo;, it is now showing the directory you are
+    currently in, i.e. <code>[nelle@login03(eddie) nelle]$</code></p>
+
+    <p>In this directory, let&rsquo;s create a folder <code>session1</code> and descend into it:</p>
+
+    <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-4mm">[nelle@login03(eddie) nelle]$ mkdir session1
+[nelle@login03(eddie) nelle]$ cd session1
+[nelle@login03(eddie) session1]$ pwd </code>
+<samp style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-0.25mm">/exports/eddie/scratch/nelle/session1</samp>
+
+    <p>Let&rsquo;s remember this location, as it will be the destination for the file transfers.</p>
+</div>
+
+<div class="box">
+    <h2 class="enum" id="toc_4">Transferring files to the remote machine</h2>
+
+    <p>To transfer files across computers, we will use <code>scp</code>, which stands for <strong>s</strong>ecure
+    <strong>c</strong>o<strong>p</strong>y. The command works like <code>cp</code> that we use when copying files within
+    our own machine, i.e., the command is followed by the file to copy and the location to copy to.</p>
+
+    <p>To copy a file from your local machine to your remote machine, there are two options:</p>
+
+    <p>1. When run on your local machine:
+    <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:1mm">$ scp /location/directory/file &lt;YOUR UUN&gt;@eddie.ecdf.ed.ac.uk:/destination/directory/</code>
+
+    <p>2. When run on your remote machine:</p>
+    <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-4mm">[&lt;UUN&gt;@login03(eddie) session1]$ scp &lt;localname&gt;@&lt;localIP&gt;:/location/directory/file /destination/directory/.</code>
+
+    <p>Let&rsquo;s transfer the files <code>hello.sh</code> and <code>myjob.sh</code> from the virtual machine onto Eddie. </p>
+    <p>These files are located within <code>session1/eddie-hpc-data</code> on the virtual machine and we need to move
+    them to the <code>session1</code> folder we have just created on Eddie. Since both files finish in <code>.sh</code>,
+    instead of typing each in we can use a <code>*</code> wildcard.</p>
+
+    <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-4mm">$ cd eddie-hpc-data
+$ scp *.sh nelle@eddie.ecdf.ed.ac.uk:/exports/eddie/scratch/nelle/session1</code>
+
+
+    <p>You will be prompted for the password, then you will see the report on the file transfer:</p>
+    <samp style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-4mm">hello.sh                      100% 271 44.3KB/s 00:00
+myjob.sh                      100% 316 62.2KB/s 00:00</samp>
+
+    <p>If we now check the files from Eddie:</p>
+
+    <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-4mm">[nelle@login03(eddie) session1]$ pwd </code>
+    <samp style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-0.25mm">/exports/eddie/scratch/nelle/session1 </samp>
+    <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-0.25mm">[nelle@login03(eddie) session1]$ ls -lrth </code>
+<samp style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-0.25mm">total 1.0K
+-rw-r--r-- 1 nelle eddie_users 271 Jan 17 11:42 hello.sh
+-rw-r--r-- 1 nelle eddie_users 316 Jan 17 11:42 myjob.sh</samp>
+
+<p>The command <code>ls -lrth</code> lists the contents of the directory in an expanded format <code>-l</code>, ordering
+    them by time, <code>-t</code>, in a reverse, <code>-r</code>, order with the newest files at the bottom, and shows
+    the showing the file sizes in human-readable format, <code>-h</code>. Explore further options of listing files with
+    <code>ls --help</code>.</p>
+</div>
+
+<div class="box">
+    <div class="hbox">
+    <h3 id="Transferring files"></h3>
+
+    <p>If you wanted to transfer the whole directory <code>eddie-hpc-data</code>, what would you type?</p>
+
+    <p><details>
+        <summary><strong>Answer</strong></summary>
+    </p>
+
+    <p>To copy a whole directory, we add the <code>-r</code> flag, for “recursive”</p>
+
+    <pre><code class="language-none">$ scp -r eddie-hpc-data nelle@eddie.ecdf.ed.ac.uk:/exports/eddie/scratch/nelle/session1</code></pre>
+
+</details>
+    <p> </p>
+        </div>
+</div>
+
+<div class="box">
+    <h2 class="enum" id="toc_5">Using the resources</h2>
+
+    <p> The HPC is composed of <em>nodes</em>, which are individual computers, and they come in different types. </p>
+
+    <p> The node we are logged into is the <em>head node</em>, which you see in your prompt as <code>login03</code>. This
+    node is made for login, file transfer and manipulation, but it is <u>not for calculations</u>. </p>
+
+    <p> If we need to run simple calculations, we can access a <em>login node</em> using <code>qlogin</code>. For more complex calculations, we
+        access the <em>compute nodes</em> by submitting a job to the <em>scheduler</em> using <code>qsub</code>. </p>
+
+    <p>To run something, you will need to submit a Grid Engine job submission script, that contains details of the program to
+    run as well as requests for resources (compute nodes, memory, time, etc). </p>
+
+    <div class="flex-figure" style="margin-top:-4mm;">
+            <div class="figure" style="width: 80%">
+                <figure>
+                    <img src="img/eddie.jpg" width="100%">
+                </figure>
+            </div>
+        </div>
+
+    <p style="margin-top:-3mm">You have just copied over an example job script, <code>myjob.sh</code>. Let&rsquo;s examine it with <code>more myjob.sh</code>:</p>
+    <samp style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-4mm">#!/bin/sh
+# Grid Engine options (lines prefixed with #$)
+#  job name: -N
+#$ -N hello  
+#  use the current working directory: -cwd            
+#$ -cwd 
+#  runtime limit of 5 minutes: -l h_rt                 
+#$ -l h_rt=00:10:00
+#  memory limit of 1 Gbyte: -l h_vmem
+#$ -l h_vmem=1G
+
+
+# Run the program
+sleep 5m
+bash hello.sh </samp>
+
+    <p style="margin-top:2mm">This script tells Eddie to sleep for 5 minutes and then run a job named <code>hello</code> from the current working
+        directory, requesting a maximum of 10 minutes run time and a maximum memory of 1 GB.
+    The job itself is a bash script named <code>hello.sh</code>.</p>
+
+    <p>We can now submit <code>myjob.sh</code> using the scheduler command <code>qsub</code>. </p>
+    <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-4mm">[nelle@login03(eddie) session1]$ qsub myjob.sh </code>
+<samp style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-0.25mm">Your job 38945036 (&quot;hello&quot;) has been submitted</samp>
+    <p style="margin-top:2mm">The scheduler assigns this job an ID and reports that the job has been submitted. The scheduler will queue the job,
+    while waiting for the resources to become available.</p>
+
+    <p>We can monitor the progress of our job with the command <code>qstat</code>:</p>
+    <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-4mm">[nelle@login03(eddie) session1]$ qstat -u nelle </code>
+<samp style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-0.25mm">job-ID    prior    name   user   state  submit/start         queue       jclass        slots        ja-task-ID
+---------------------------------------------------------------------------------------------------------------
+38945036  0.00000  hello  nelle  qw     01/17/2024 12:13:09                            1        </samp>
+
+
+    <p style="margin-top:2mm">This tells us that the job is currently queuing <code>qw</code> for resources; since we are not asking for much, it
+    should not take long for it to run, and then the state will show as <code>r</code>. Nevertheless, the job is very
+    small and will take an instance to run, so we may even miss it.</p>
+
+    <p>If you have made a mistake and want to cancel the job, you can do it with the command <code>qdel JobId</code>, where
+    <code>JobID</code> is the number that was assigned to your job by the scheduler, here <code>38945036</code>.</p>
+
+    <p>Unlike on a personal machine, running jobs do not print onto your screen (imagine the mess it would make if you were
+    running many jobs at the same time). Instead, the two extra files are written:</p>
+
+    <ul style="margin-top:-4mm">
+        <li><code>&lt;name&gt;.o&lt;JobID&gt;</code> that contains the output you would normally receive on the screen;</li>
+        <li><code>&lt;name&gt;.e&lt;JobID&gt;</code> that contains any errors or HPC-related info.</li>
+    </ul>
+
+    <p>Let&rsquo;s examine the files you got:</p>
+    <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-4mm">[nelle@login03(eddie) session1]$ ls -lrth </code>
+<samp style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-0.25mm">total 1.5K
+-rw-r--r-- 1 nelle eddie_users 271 Jan 17 11:42 hello.sh
+-rw-r--r-- 1 nelle eddie_users 316 Jan 17 11:42 myjob.sh
+-rw-r--r-- 1 nelle eddie_users   0 Jan 17 12:13 hello.e38945036
+-rw-r--r-- 1 nelle eddie_users 104 Jan 17 12:13 hello.o38945036</samp>
+
+    <p>And now read <code>hello.o38945036</code>:</p>
+    <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-4mm">[nelle@login03(eddie) session1]$ more hello.o38945036 </code>
+<samp style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-0.25mm">Hello World!
+I am: nelle
+It is now: Wed 17 Jan 12:13:25 GMT 2024
+I am using: node2c01.ecdf.ed.ac.uk</samp>
+
+<p>This is the output of our <code>hello.sh</code> script - feel free to modify it to your liking.</p>
+</div>
+
+<div class="box">
+    <h2 class="enum" id="toc_6">Logging out</h2>
+
+    <p>Not every job will run over a few minutes, but using an HPC with a job scheduler means that you do not need ot remain
+    logged in for the job to be running. HPC will continue to do its job while you are sleeping, away or on holiday.</p>
+
+    <p>To log out from Eddie just type <code>exit</code></p>
+    <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-4mm">[nelle@login03(eddie) session1]$ exit</code>
+    <p> </p>
+</div>
+
+<div class="box">
+<blockquote>
+    <h3 id="toc_8">Key Points:</h3>
+
+    <ul>
+        <li>Connect to a remote HPC: <code>ssh yourUsername@remote.computer.address</code></li>
+        <li>Copy files between two machines with <code>scp</code></li>
+        <li>HPCs have log-in nodes and compute-nodes</li>
+        <li>Schedulers optimise the use of resources and manage job submission, queuing and running.</li>
+        <li>To submit a job one needs a script <code>qsub myjob.sh</code></li>
+        <li><code>qstat</code> allows to check on the status of the submitted jobs</li>
+    </ul>
+</blockquote>
+</div>
+
+<div class="box">
+    <h4>This brings us to the end of the essential topics. The other parts are beneficial, especially if you are planning to use these skills beyond
+        this course, but are not necessary for the following sessions.</h4>
+</div>
+
+<div class="box">
+<p> &uarr; <a href="Session1.html">Go to the main menu</a> <br>
+    &larr; <a href="part2.html">Go to the previous part &ndash; Working With Files and Directories</a><br>
+    &rarr; <a href="part4.html">Go to the next part &ndash; Pipes and Filters (Advanced)</a> </p>
+</div>
+
+<script src="../scripts/generate_header.js"></script>
+<script src="../scripts/generate_overview.js"></script>
+<script src="../scripts/scroll_up.js"></script>
+<script src="../scripts/adjust_for_dyslexia.js"></script>
+<script>window.onload = function () {
+    generateOverview();
+    scrollUp();
+    adjustForDyslexia()
+}</script>
+</body>
+</html>

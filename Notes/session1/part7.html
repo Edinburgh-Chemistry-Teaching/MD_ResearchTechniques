@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en-UK">
+<!--xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html">-->
+
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0, user-scalable=yes" name="viewport"/>
+    <meta content="Session1: part 7" name="description"/>
+    <link href="https://fonts.googleapis.com" rel="preconnect">
+    <link crossorigin href="https://fonts.gstatic.com" rel="preconnect">
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,400;0,600;1,400&display=swap"
+          rel="stylesheet">
+    <link href="../scripts/style.css" rel="stylesheet"/>
+    <title>Part 7 &ndash; Finding Things</title>
+</head>
+
+<body>
+
+<div class="box">
+<h1 id="heading">Part 7 &ndash; Finding Things</h1>
+
+    <p> &uarr; <a href="Session1.html">Go to the main menu</a> <br>
+    &larr; <a href="part6.html">Go to the previous part &ndash; Shell Scripts </a><br> </p>
+
+    <p><span style="color:blue"> <strong>This is an advanced topic and extra material</strong> </span></p>
+</div>
+
+<div class="box">
+    <h2 id="overview">Contents</h2>
+</div>
+
+<div class="box">
+    <h2 class="enum" id="toc_1">Searching within files</h2>
+
+    <p>In the same way that many of us now use ‘Google’ as a verb meaning ‘to find’, Unix programmers often use the word <code>grep</code>. <code>
+        grep</code> is a contraction of ‘<strong>g</strong>lobal <strong>r</strong>egular <strong>e</strong>xpression <strong>p</strong>rint’, a
+        common sequence of operations in early Unix text editors. It is also the name of a very useful command-line program.</p>
+
+    <p><code>grep</code> finds and prints lines in files that match a pattern. For our examples, we will use a file that contains three haiku taken from a <a href="https://web.archive.org/web/19991201042211/http://salon.com/21st/chal/1998/01/26chal.html">1998 competition</a> in Salon magazine (Credit to authors Bill Torcaso, Howard Korder, and Margaret Segall, respectively). For this set of examples, we’re going to be working in the writing subdirectory:</p>
+
+    <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-4mm">$ cd
+$ cd Desktop/shell-lesson-data/exercise-data/writing
+$ cat haiku.txt </code>
+
+<samp style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-0.25mm">The Tao that is seen
+Is not the true Tao, until
+You bring fresh toner.
+
+With searching comes loss
+and the presence of absence:
+&quot;My Thesis&quot; not found.
+
+Yesterday it worked
+Today it is not working
+Software is like that.
+</samp>
+
+    <p>Let’s find lines that contain the word ‘not’:</p>
+
+    <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-4mm">$ grep not haiku.txt </code>
+<samp style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-0.25mm">Is not the true Tao, until
+&quot;My Thesis&quot; not found
+Today it is not working</samp>
+
+    <p>Here, not is the pattern we’re searching for. The grep command searches through the file, looking for matches to the pattern specified. To
+        use it type <code>grep</code>, then the pattern we’re searching for and finally, the name of the file (or files) we’re searching in.</p>
+
+    <p>The output is the three lines in the file that contain the letters ‘not’.</p>
+
+    <p>By default, <code>grep</code> searches for a pattern in a case-sensitive way. In addition, the search pattern we have selected does not have to
+        form a complete word, as we will see in the next example.</p>
+
+    <p>Let’s search for the pattern: ‘The’.</p>
+
+    <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-4mm">$ grep The haiku.txt </code>
+    <samp style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-0.25mm">The Tao that is seen
+&quot;My Thesis&quot; not found.</samp>
+
+    <p>This time, two lines that include the letters ‘The’ are outputted, one of which contained our search pattern within a larger word, ‘Thesis’
+        .</p>
+
+    <p>To restrict matches to lines containing the word ‘The’ on its own, we can give <code>grep</code> the <code>-w</code> option. This will limit
+        matches to word boundaries.</p>
+
+    <p>Later, we will also see how we can change the search behavior of grep with respect to its case sensitivity.</p>
+
+    <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-4mm">$ grep -w The haiku.txt </code>
+<samp style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-0.25mm">The Tao that is seen</samp>
+
+    <p>Note that a ‘word boundary’ includes the start and end of a line, so not just letters surrounded by spaces. Sometimes we don’t want to
+        search for a single word, but a phrase. We can also do this with <code>grep</code> by putting the phrase in quotes.</p>
+
+    <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-4mm">$ grep -w &quot;is not&quot; haiku.txt </code>
+    <samp style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-0.25mm">Today it is not working</samp>
+
+    <p>We’ve now seen that you don’t have to have quotes around single words, but it is useful to use quotes when searching for multiple words. It
+        also helps to make it easier to distinguish between the search term or phrase and the file being searched. We will use quotes in the
+        remaining examples.</p>
+
+    <p>Another useful option is <code>-n</code>, which numbers the lines that match:</p>
+
+    <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-4mm">$ grep -n &quot;it&quot; haiku.txt </code>
+<samp style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-0.25mm">5:With searching comes loss
+9:Yesterday it worked
+10:Today it is not working</samp>
+
+    <p>Here, we can see that lines 5, 9, and 10 contain the letters ‘it’.</p>
+
+    <p>We can combine options (i.e. flags) as we do with other Unix commands. For example, let’s find the lines that contain the word ‘the’. We can
+        combine the option <code>-w</code> to find the lines that contain the word ‘the’ and <code>-n</code> to number the lines that match:</p>
+
+    <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-4mm">$ grep -n -w &quot;the&quot; haiku.txt </code>
+<samp style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-0.25mm">2:Is not the true Tao, until
+6:and the presence of absence:</samp>
+
+    <p>Now we want to use the option -i to make our search case-insensitive:</p>
+
+    <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-4mm">$ grep -n -w -i &quot;the&quot; haiku.txt </code>
+<samp style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-0.25mm">1:The Tao that is seen
+2:Is not the true Tao, until
+6:and the presence of absence:</samp>
+
+    <p>Now, we want to use the option <code>-v</code> to invert our search, i.e., we want to output the lines that do not contain the word ‘the’.</p>
+
+    <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-4mm">$ grep -n -w -v &quot;the&quot; haiku.txt </code>
+<samp style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-0.25mm">1:The Tao that is seen
+3:You bring fresh toner.
+4:
+5:With searching comes loss
+7:&quot;My Thesis&quot; not found.
+8:
+9:Yesterday it worked
+10:Today it is not working
+11:Software is like that.</samp>
+
+    <p>If we use the <code>-r</code> (recursive) option, <code>grep</code> can search for a pattern recursively through a set of files in
+        subdirectories.</p>
+
+    <p>Let’s search recursively for Yesterday in the <code>shell-lesson-data/exercise-data/writing</code> directory:</p>
+
+    <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-4mm">$ grep -r Yesterday . </code>
+<samp style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-0.25mm">./LittleWomen.txt:&quot;Yesterday, when Aunt was asleep and I was trying to be as still as a
+./LittleWomen.txt:Yesterday at dinner, when an Austrian officer stared at us and then
+./LittleWomen.txt:Yesterday was a quiet day spent in teaching, sewing, and writing in my
+./haiku.txt:Yesterday it worked</samp>
+
+    <p><code>grep</code> has lots of other options. To find out what they are, we can type:</p>
+
+    <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-4mm">$ grep --help </code>
+<samp style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-0.25mm">Usage: grep [OPTION]... PATTERN [FILE]...
+Search for PATTERN in each FILE or standard input.
+PATTERN is, by default, a basic regular expression (BRE).
+Example: grep -i &#39;hello world&#39; menu.h main.c
+
+Regexp selection and interpretation:
+  -E, --extended-regexp     PATTERN is an extended regular expression (ERE)
+  -F, --fixed-strings       PATTERN is a set of newline-separated fixed strings
+  -G, --basic-regexp        PATTERN is a basic regular expression (BRE)
+  -P, --perl-regexp         PATTERN is a Perl regular expression
+  -e, --regexp=PATTERN      use PATTERN for matching
+  -f, --file=FILE           obtain PATTERN from FILE
+  -i, --ignore-case         ignore case distinctions
+  -w, --word-regexp         force PATTERN to match only whole words
+  -x, --line-regexp         force PATTERN to match only whole lines
+  -z, --null-data           a data line ends in 0 byte, not newline
+
+Miscellaneous:
+...        ...        ...</samp>
+    <p> </p>
+</div>
+
+<div class="box">
+    <div class="hbox">
+    <h3 id="grep_options"></h3>
+
+    <p>Which command would result in the following output:</p>
+
+    <samp style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-4mm">and the presence of absence:</samp>
+
+    <ol>
+        <li><code>grep &quot;of&quot; haiku.txt</code></li>
+        <li><code>grep -E &quot;of&quot; haiku.txt</code></li>
+        <li><code>grep -w &quot;of&quot; haiku.txt</code></li>
+        <li><code>grep -i &quot;of&quot; haiku.txt</code></li>
+    </ol>
+
+    <p><details>
+        <summary><strong>Answer</strong></summary></p>
+
+    <p>The correct answer is 3, because the <code>-w</code> option looks only for whole-word matches. The other options will also match ‘of’ when part of another word.</p>
+
+    </details>
+    </div>
+
+    <div class="bbox">
+
+    <h3 id="Scripting_with_grep"></h3>
+
+    <p>Leah has several hundred data files saved in one directory, each of which is formatted like this:</p>
+
+    <samp style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-4mm">2012-11-05,deer,5
+2012-11-05,rabbit,22
+2012-11-05,raccoon,7
+2012-11-06,rabbit,19
+2012-11-06,deer,2
+2012-11-06,fox,4
+2012-11-07,rabbit,16
+2012-11-07,bear,1</samp>
+
+    <p>She wants to write a shell script that takes a species as the first command-line argument and a directory as the second argument. The script
+        should return one file called <code>&lt;species&gt;.txt</code> containing a list of dates and the number of that species seen on each date.
+        For example using the data shown above, <code>rabbit.txt</code> would contain:</p>
+
+    <samp style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-4mm">2012-11-05,22
+2012-11-06,19
+2012-11-07,16</samp>
+
+    <p>Below, each line contains an individual command, or pipe. Arrange their sequence in one command in order to achieve Leah’s goal:</p>
+
+    <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-4mm">cut -d : -f 2
+&gt;
+|
+grep -w $1 -r $2
+|
+$1.txt
+cut -d , -f 1,3</code>
+
+    <p><strong>Hint</strong>: use <code>man grep</code> to look for how to grep text recursively in a directory and <code>man cut</code> to select
+        more than one field in a line.</p>
+
+    <p>An example of such a file is provided in <code>shell-lesson-data/exercise-data/animal-counts/animals.csv</code></p>
+
+    <p><details>
+        <summary><strong>Solution</strong></summary></p>
+
+    <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-4mm">  grep -w $1 -r $2 | cut -d : -f 2 | cut -d , -f 1,3 &gt; $1.txt </code>
+
+    <p>Actually, you can swap the order of the two cut commands and it still works. At the command line, try changing the order of the cut
+        commands, and have a look at the output from each step to see why this is the case.</p>
+
+    <p>You would call the script above like this:</p>
+
+    <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-4mm">$ bash count-species.sh bear .</code>
+
+    </details>
+        <p> </p>
+    </div>
+</div>
+
+<div class="box">
+    <h2 class="enum" id="toc_2">Finding files</h2>
+
+    <p>While <code>grep</code> finds lines in files, the <code>find</code> command finds files themselves. Again, it has a lot of options; to show
+        how the simplest ones work, we’ll use the <code>shell-lesson-data/exercise-data</code> directory tree shown below.</p>
+
+    <samp style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-4mm">.
+├── animal-counts/
+│   └── animals.csv
+├── creatures/
+│   ├── basilisk.dat
+│   ├── minotaur.dat
+│   └── unicorn.dat
+├── numbers.txt
+├── alkanes/
+│   ├── cubane.pdb
+│   ├── ethane.pdb
+│   ├── methane.pdb
+│   ├── octane.pdb
+│   ├── pentane.pdb
+│   └── propane.pdb
+└── writing/
+    ├── haiku.txt
+    └── LittleWomen.txt</samp>
+
+    <p>The exercise-data directory contains one file, <code>numbers.txt</code> and four directories: <code>animal-counts</code>, <code>creatures
+    </code>, <code>alkanes</code> and <code>writing</code> containing various files.</p>
+
+    <p>For our first command, let’s run <code>find .</code> (remember to run this command from the <code>shell-lesson-data/exercise-data
+        folder</code>).</p>
+
+    <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-4mm">$ find . </code>
+<samp style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-0.25mm">.
+./writing
+./writing/LittleWomen.txt
+./writing/haiku.txt
+./creatures
+./creatures/basilisk.dat
+./creatures/unicorn.dat
+./creatures/minotaur.dat
+./animal-counts
+./animal-counts/animals.csv
+./numbers.txt
+./alkanes
+./alkanes/ethane.pdb
+./alkanes/propane.pdb
+./alkanes/octane.pdb
+./alkanes/pentane.pdb
+./alkanes/methane.pdb
+./alkanes/cubane.pdb</samp>
+
+    <p>As always, the <code>.</code> on its own means the current working directory, which is where we want our search to start. find’s output is
+        the names of every file and directory under the current working directory. This can seem useless at first but find has many options to
+        filter the output and in this lesson we will discover some of them.</p>
+
+    <p>The first option in our list is <code>-type d</code> that means ‘things that are directories’. Sure enough, find’s output is the names of
+        the five directories (including <code>.</code>):</p>
+
+    <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-4mm">$ find . -type d </code>
+    <samp style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-0.25mm">.
+./writing
+./creatures
+./animal-counts
+./alkanes</samp>
+
+    <p>Notice that the objects find finds are not listed in any particular order. If we change <code>-type d</code> to <code>-type f</code>, we get
+        a listing of all the files instead:</p>
+
+    <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-4mm">$ find . -type f </code>
+    <samp style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-0.25mm">./writing/LittleWomen.txt
+./writing/haiku.txt
+./creatures/basilisk.dat
+./creatures/unicorn.dat
+./creatures/minotaur.dat
+./animal-counts/animals.csv
+./numbers.txt
+./alkanes/ethane.pdb
+./alkanes/propane.pdb
+./alkanes/octane.pdb
+./alkanes/pentane.pdb
+./alkanes/methane.pdb
+./alkanes/cubane.pdb</samp>
+
+    <p>Now let’s try matching by name:</p>
+
+    <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-4mm">$ find . -name *.txt </code>
+    <samp style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-0.25mm">./numbers.txt</samp>
+
+    <p>We expected it to find all the text files, but it only prints out <code>./numbers.txt</code>. The problem is that the shell expands wildcard
+        characters like <code>*</code> before commands run. Since <code>*.txt</code> in the current directory expands to <code>./numbers
+            .txt</code>, the command we actually ran was:</p>
+
+    <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-4mm">$ find . -name numbers.txt</code>
+
+    <p>find did what we asked; we just asked for the wrong thing.</p>
+
+    <p>To get what we want, let’s do what we did with <code>grep</code>: put <code>*.txt</code> in quotes to prevent the shell from expanding the
+        <code>*</code> wildcard. This way, find actually gets the pattern <code>*.txt</code>, not the expanded filename <code>numbers.tx</code>t:</p>
+
+    <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-4mm">$ find . -name &quot;*.txt&quot; </code>
+<samp style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-0.25mm">./writing/LittleWomen.txt
+./writing/haiku.txt
+./numbers.txt</samp>
+
+    <p> </p>
+
+</div>
+
+<div class="box">
+    <h2 class="enum" id="toc_3">Combining the commands</h2>
+
+    <p>As we said earlier, the command line’s power lies in combining tools. We’ve seen how to do that with pipes; let’s look at another technique.
+        As we just saw, <code>find . -name &quot;*.txt&quot;</code> gives us a list of all text files in or below the current directory. How can we
+        combine that with <code>wc -l</code> to count the lines in all those files?</p>
+
+    <p>The simplest way is to put the <code>find</code> command inside <code>$()</code>:</p>
+
+    <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-4mm">$ wc -l $(find . -name &quot;*.txt&quot;) </code>
+<samp style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-0.25mm">  21022 ./writing/LittleWomen.txt
+     11 ./writing/haiku.txt
+      5 ./numbers.txt
+  21038 total</samp>
+
+    <p>When the shell executes this command, the first thing it does is run whatever is inside the <code>$()</code>. It then replaces the <code>$
+        ()</code> expression with that command’s output. Since the output of find is the three filenames <code>./writing/LittleWomen.txt</code>,
+        <code>./writing/haiku.txt</code>, and <code>./numbers.txt</code>, the shell constructs the command:</p>
+
+    <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-4mm">$ wc -l ./writing/LittleWomen.txt ./writing/haiku.txt ./numbers.txt</code>
+
+    <p>which is what we wanted. This expansion is exactly what the shell does when it expands wildcards like <code>*</code> and <code>?</code>, but
+        lets us use any command we want as our own ‘wildcard’.</p>
+
+    <p>It’s very common to use <code>find</code> and <code>grep</code> together. The first finds files that match a pattern; the second looks for
+        lines inside those files that match another pattern. Here, for example, we can find txt files that contain the word “searching” by looking
+        for the string ‘searching’ in all the <code>.txt</code> files in the current directory:</p>
+
+    <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-4mm">$ grep &quot;searching&quot; $(find . -name &quot;*.txt&quot;) </code>
+<samp style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-0.25mm">./writing/LittleWomen.txt:sitting on the top step, affected to be searching for her book, but was
+./writing/haiku.txt:With searching comes loss </samp>
+
+    <p>The Unix shell is older than most of the people who use it. It has survived so long because it is one of the most productive programming
+        environments ever created — maybe even the most productive. Its syntax may be cryptic, but people who have mastered it can experiment with
+        different commands interactively, then use what they have learned to automate their work. Graphical user interfaces may be easier to use at
+        first, but once learned, the productivity in the shell is unbeatable. And as Alfred North Whitehead wrote in 1911, ‘Civilization advances
+        by extending the number of important operations which we can perform without thinking about them.’</p>
+
+</div>
+
+<div class="box">
+<blockquote>
+<h3 id="toc_4">Key Points:</h3>
+
+<ul>
+<li><code>find</code> finds files with specific properties that match patterns.</li>
+<li><code>grep</code> selects lines in files that match patterns.</li>
+<li><code>--help</code> is an option supported by many bash commands, and programs that can be run from within Bash, to display more information on how to use these commands or programs.</li>
+<li><code>man [command]</code> displays the manual page for a given command.</li>
+<li><code>$([command])</code> inserts a command’s output in place.</li>
+</ul>
+</blockquote>
+
+</div>
+
+<div class="box">
+    <h4>This brings us to the end of the advanced topics.</h4>
+</div>
+
+<div class="box">
+<p> &uarr; <a href="Session1.html">Go to the main menu</a> <br>
+&larr; <a href="part6.html">Go to the previous part &ndash; Shell Script </a><br> </p>
+</div>
+
+<script src="../scripts/generate_header.js"></script>
+<script src="../scripts/generate_overview.js"></script>
+<script src="../scripts/scroll_up.js"></script>
+<script src="../scripts/adjust_for_dyslexia.js"></script>
+<script>window.onload = function () {
+    generateOverview();
+    generateHeader();
+    scrollUp();
+    adjustForDyslexia()
+}</script>
+</body>
+</html>

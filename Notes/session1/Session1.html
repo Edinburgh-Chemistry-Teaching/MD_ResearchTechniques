@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en-UK">
+<!--xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html">-->
+
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0, user-scalable=yes" name="viewport"/>
+    <meta content="Session 1: Intro to Linux" name="description"/>
+    <link href="https://fonts.googleapis.com" rel="preconnect">
+    <link crossorigin href="https://fonts.gstatic.com" rel="preconnect">
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,400;0,600;1,400&display=swap"
+          rel="stylesheet">
+    <link href="../scripts/style.css" rel="stylesheet"/>
+    <title>Session 1</title>
+</head>
+
+<body>
+
+<div class="box">
+    <h1 id="title">Intro to Linux</h1>
+</div>
+
+<div class="box">
+    <h2 id="overview">Contents</h2>
+</div>
+
+<div class="box">
+    <h2 id="toc_1">Session Outline</h2>
+
+    <p>This session is based upon <a href="https://swcarpentry.github.io/shell-novice/"><strong>The Unix Shell</strong></a>,
+        the <a href="https://www.hpc-carpentry.org/hpc-shell/"><strong>Introduction to Using the Shell in a High-Performance Computing Context</strong></a>
+        and <a href="https://epcced.github.io/hpc-intro/"><strong>Introduction to High-Performance Computing</strong></a> courses.</p>
+
+    <p> The material is divided into 7 parts, and for the purpose of this course you are only required to do <strong>Parts 1 to 3</strong>. The
+        other parts are beneficial, especially if you are planning to use these skills beyond this course, but are not essential for the following
+        sessions.</p>
+
+    <p>Essential Topics:</p>
+    <ol>
+        <li style="margin-top:-4mm"> <a href="part1.html"><strong>Navigating Files and Directories</strong></a> </li>
+        <li> <a href="part2.html"><strong>Working With Files and Directories</strong></a> </li>
+        <li> <a href="part3.html"><strong>Using High-Performance Computers</strong></a> </li>
+    </ol>
+    <p>Advanced Topics:</p>
+    <ol start="4">
+        <li style="margin-top:-4mm"> <a href="part4.html"><strong>Pipes and Filters</strong></a> </li>
+        <li> <a href="part5.html"><strong>Loops</strong></a> </li>
+        <li> <a href="part6.html"><strong>Shell Scripts</strong></a> </li>
+        <li> <a href="part7.html"><strong>Finding Things</strong></a> </li>
+    </ol>
+
+    <p>
+        Each part contains instructions that you should follow during the session, and additional <strong>Questions</strong> and <strong>Tasks
+    </strong> at the end of each section that should be done after the session (or during <em>only</em> if you have finished all required parts).
+        All the questions and tasks have answers/solutions provided in a drop-down.</p>
+
+    <p>A BASH cheatsheet of the key commands you will learn can be found <a href="bash_cheat_sheet_short.html">here</a> and on LEARN. A more
+        detailed cheatsheet can be found <a href="bash_cheat_sheet.html">here</a>.
+    </p>
+</div>
+
+<div class="box">
+    <h2 id="toc_2">Learning Outcomes</h2>
+    <p> By the end of this session you should be able to: </p>
+
+    <ul>
+        <li>Understand what shell and command line interfaces are, and know when one would use it</li>
+        <li>Navigate around directories and look up their contents</li>
+        <li>Use options and arguments to change the behaviour of shell commands</li>
+        <li>Know what the path is, be able to translate a relative path into an absolute and vice-versa </li>
+        <li>Create, edit, move and delete files and directories </li>
+        <li>Edit text using <code>vim</code></li>
+        <li>Know what a script is and be able to run one</li>
+        <li>Connect to Eddie HPC</li>
+        <li>Transfer files between a local and remote machine</li>
+        <li>Run a simple job on Eddie HPC</li>
+    </ul>
+</div>
+
+<div class="box">
+    <h2 id="toc_3">Overview</h2>
+    <p>In computing, a <strong>shell</strong> is a computer programme that allows you to communicate with Unix operating systems (Linux and
+        MacOS). We do this using a <strong>command-line interface</strong> where we input lines of text that instruct the shell on what to do. The
+        most popular Unix shell is Bash (Bourne Again SHell), which is the default on most modern unix systems. This is what we will be using to
+        perform our tasks, via the <strong>Terminal</strong> application.</p>
+
+    <p>Typically, we use <strong>graphical interfaces</strong> to use a computer (clicking a mouse and using menus). However, some tasks can take
+        hours to do using this method, whereas using a command line could take only seconds. Additionally, we can <strong>create scripts to automate
+            tasks</strong>, meaning we can do other things while the shell is working.</p>
+
+    <p>The Unix shell is a powerful tool, with a <strong>high action-to-keystroke ratio</strong>, making complex and powerful tasks easier. It is
+        <strong>essential for accessing</strong> (and managing) networked machines and <strong>high-performance computers</strong>.</p>
+
+    <p>Using the shell can seem daunting at the beginning, but <strong>only a few "words" (commands)</strong> are needed to perform a wide
+        variety of tasks. Unlike when normally using a computer, there are no choices automatically presented and so it is necessary to <strong>learn
+            some essential commands</strong>. As with most computing problems, <strong>using the programme documentation</strong> or a <strong>simple
+            Google search</strong> can usually tell you what command and options are needed to do whatever you require.</p>
+
+    <p>A summary of some basic Bash commands used during this session can be found <a
+            href="bash_cheat_sheet_short.html">here</a>.</p>
+
+</div>
+
+<div class="box">
+    <h3 id="toc_4">A Typical Problem</h3>
+
+    <p>Nelle Nemo, a marine biologist, has just returned from a six-month survey of the <a
+        href="https://en.wikipedia.org/wiki/North_Pacific_Gyre">North Pacific Gyre</a>, where she has been sampling gelatinous marine life in the
+        <a href="https://en.wikipedia.org/wiki/Great_Pacific_Garbage_Patch">Great Pacific Garbage Patch</a>. She has 1520 samples that she’s run
+        through an assay machine to measure the relative abundance of 300 proteins. She needs to run these 1520 files through an imaginary program
+        called <code>goostats.sh</code>. In addition to this huge task, she has to write up results by the end of the month, so her paper can appear
+        in a special issue of Aquatic Goo Letters.</p>
+
+    <p>If Nelle chooses to run <code>goostats.sh</code> by hand using a graphical interface, she’ll have to select and open a file 1520 times. If
+        <code>goostats.sh</code> takes 30 seconds to run each file, the whole process will take more than 12 hours of Nelle’s attention. With the
+        shell, Nelle can instead assign her computer this mundane task while she focuses her attention on writing her paper.</p>
+
+    <p>In this session will explore the ways Nelle can achieve this. More specifically, the practical explains how she can use a command shell to run
+        the <code>goostats.sh</code> program, using loops to automate the repetitive steps of entering file names, so that Nelle's computer can work
+        while she writes her paper.</p>
+
+    <p>As a bonus, once she has put a processing pipeline together, she will be able to use it again whenever she collects more data.</p>
+
+    <p>In order to achieve her task, Nelle needs to know how to:</p>
+
+    <ul>
+        <li>Navigate to a file/directory</li>
+        <li>Create a file/directory</li>
+        <li>Chain commands together</li>
+        <li>Retrieve a set of files</li>
+        <li>Iterate over files</li>
+        <li>Run a shell script containing the pipeline</li>
+    </ul>
+</div>
+
+<script src="../scripts/generate_header.js"></script>
+<script src="../scripts/generate_overview.js"></script>
+<script src="../scripts/scroll_up.js"></script>
+<script src="../scripts/feedback.js"></script>
+<script src="../scripts/adjust_for_dyslexia.js"></script>
+<script>window.onload = function () {
+    addFeedback('https://app.wooclap.com/XREESD/questionnaires/676a9ec2e01546c9c752c32e', 'img/session_1.png');
+    generateOverview()
+    generateHeader();
+    adjustForDyslexia()
+}</script>
+</body>
+</html>

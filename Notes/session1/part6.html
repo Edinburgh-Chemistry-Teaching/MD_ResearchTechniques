@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en-UK">
+<!--xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html">-->
+
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0, user-scalable=yes" name="viewport"/>
+    <meta content="Session1: part 6" name="description"/>
+    <link href="https://fonts.googleapis.com" rel="preconnect">
+    <link crossorigin href="https://fonts.gstatic.com" rel="preconnect">
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,400;0,600;1,400&display=swap"
+          rel="stylesheet">
+    <link href="../scripts/style.css" rel="stylesheet"/>
+    <title>Part 6 &ndash; Shell Scripts</title>
+</head>
+
+<body>
+
+<div class="box">
+    <h1 id="heading">Part 6 &ndash; Shell Scripts</h1>
+
+    <p> &uarr; <a href="Session1.html">Go to the main menu</a> <br>
+        &larr; <a href="part5.html">Go to the previous part &ndash; Loops</a><br>
+        &rarr; <a href="part7.html">Go to the next part &ndash; Finding things</a></p>
+
+    <p><span style="color:blue"> <strong>This is an advanced topic and extra material</strong> </span></p>
+</div>
+
+<div class="box">
+    <h2 id="overview">Contents</h2>
+</div>
+
+<div class="box">
+     <h2 class="enum" id="toc_1">Shell scripts</h2>
+
+    <p>We are finally ready to see what makes the shell such a powerful programming environment. We are going to take the commands we repeat
+        frequently and save them in files so that we can re-run all those operations again later by typing a single command. For historical
+        reasons, a bunch of commands saved in a file is usually called a <em>shell script</em>, but make no mistake — these are actually small
+        programs.</p>
+
+    <p>Not only will writing shell scripts make your work faster, but also you won’t have to retype the same commands over and over again. It will
+        also make it more accurate (fewer chances for typos) and more reproducible. If you come back to your work later (or if someone else finds
+        your work and wants to build on it), you will be able to reproduce the same results simply by running your script, rather than having to
+        remember or retype a long list of commands.</p>
+
+    <p>Let’s start by going back to <code>alkanes/</code> and creating a new file, <code>middle.sh</code> which will become our shell script:</p>
+
+    <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-4mm">$ cd alkanes
+$ vim middle.sh</code>
+
+    <p>The command <code>vim middle.sh</code> opens the file <code>middle.sh</code> within the text editor vim (which runs within the shell). If
+        the file does not exist, it will be created. We can use the text editor to directly edit the file by inserting the following line:</p>
+
+    <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-4mm">head -n 15 octane.pdb | tail -n 5</code>
+
+    <p>This is a variation on the pipe we constructed earlier, which selects lines 11-15 of the file <code>octane.pdb</code>. Remember, we are not
+        running it as a command just yet; we are only incorporating the commands in a file.</p>
+
+    <p>Then we save the file (type <code>:w</code> in <code>read</code> mode ) and exit the text editor (type <code>:q</code> in <code>read</code>
+        mode). Check that the directory alkanes now contains a file called <code>middle.sh</code>.</p>
+
+    <p>Once we have saved the file, we can ask the shell to execute the commands it contains. Our shell is called bash, so we run the following
+        command:</p>
+
+    <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-4mm">$ bash middle.sh </code>
+<samp style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-0.25mm">ATOM      9  H           1      -4.502   0.681   0.785  1.00  0.00
+ATOM     10  H           1      -5.254  -0.243  -0.537  1.00  0.00
+ATOM     11  H           1      -4.357   1.252  -0.895  1.00  0.00
+ATOM     12  H           1      -3.009  -0.741  -1.467  1.00  0.00
+ATOM     13  H           1      -3.172  -1.337   0.206  1.00  0.00</samp>
+
+    <p>Sure enough, our script’s output is exactly what we would get if we ran that pipeline directly.</p>
+
+</div>
+
+<div class="box">
+     <h2 class="enum" id="toc_2">Variables within scripts</h2>
+
+    <p>What if we want to select lines from an arbitrary file? We could edit <code>middle.sh</code> each time to change the filename, but that
+        would probably take longer than typing the command out again in the shell and executing it with a new file name. Instead, let’s edit <code>
+            middle.sh</code> and make it more versatile:</p>
+
+    <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-4mm">$ vim middle.sh</code>
+
+    <p>Now, replace the text <code>octane.pdb</code> with the special variable called <code>$1</code>:</p>
+
+    <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-4mm">head -n 15 &quot;$1&quot; | tail -n 5</code>
+
+    <p>Inside a shell script, <code>$1</code> means ‘the first filename (or other argument) on the command line’. We can now run our script like
+        this:</p>
+
+    <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-4mm">$ bash middle.sh octane.pdb </code>
+<samp style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-0.25mm">ATOM      9  H           1      -4.502   0.681   0.785  1.00  0.00
+ATOM     10  H           1      -5.254  -0.243  -0.537  1.00  0.00
+ATOM     11  H           1      -4.357   1.252  -0.895  1.00  0.00
+ATOM     12  H           1      -3.009  -0.741  -1.467  1.00  0.00
+ATOM     13  H           1      -3.172  -1.337   0.206  1.00  0.00</samp>
+
+    <p>or on a different file like this:</p>
+
+    <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-4mm">$ bash middle.sh pentane.pdb </code>
+<samp style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-0.25mm">ATOM      9  H           1       1.324   0.350  -1.332  1.00  0.00
+ATOM     10  H           1       1.271   1.378   0.122  1.00  0.00
+ATOM     11  H           1      -0.074  -0.384   1.288  1.00  0.00
+ATOM     12  H           1      -0.048  -1.362  -0.205  1.00  0.00
+ATOM     13  H           1      -1.183   0.500  -1.412  1.00  0.00</samp>
+
+    <p>For the same reason that we put the loop variable inside double-quotes, in case the filename happens to contain any spaces, we surround
+        <code>$1</code> with double-quotes.</p>
+
+    <p>Currently, we need to edit <code>middle.sh</code> each time we want to adjust the range of lines that is returned. Let’s fix that by
+        configuring our script to instead use three command-line arguments. After the first command-line argument (<code>$1</code>), each
+        additional argument that we provide will be accessible via the special variables <code>$1</code>, <code>$2</code>, <code>$3</code>, which
+        refer to the first, second, third command-line arguments, respectively.</p>
+
+    <p>Knowing this, we can use additional arguments to define the range of lines to be passed to head and tail, respectively:</p>
+
+    <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-4mm">$ vim middle.sh</code>
+
+    <p>and edit to:</p>
+
+    <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-4mm">head -n &quot;$2&quot; &quot;$1&quot; | tail -n &quot;$3&quot;</code>
+
+    <p>We can now run:</p>
+
+    <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-4mm">$ bash middle.sh pentane.pdb 15 5 </code>
+<samp style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-0.25mm">ATOM      9  H           1       1.324   0.350  -1.332  1.00  0.00
+ATOM     10  H           1       1.271   1.378   0.122  1.00  0.00
+ATOM     11  H           1      -0.074  -0.384   1.288  1.00  0.00
+ATOM     12  H           1      -0.048  -1.362  -0.205  1.00  0.00
+ATOM     13  H           1      -1.183   0.500  -1.412  1.00  0.00</samp>
+
+    <p>By changing the arguments to our command, we can change our script’s behaviour:</p>
+
+    <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-4mm">$ bash middle.sh pentane.pdb 20 5 </code>
+<samp style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-0.25mm">ATOM     14  H           1      -1.259   1.420   0.112  1.00  0.00
+ATOM     15  H           1      -2.608  -0.407   1.130  1.00  0.00
+ATOM     16  H           1      -2.540  -1.303  -0.404  1.00  0.00
+ATOM     17  H           1      -3.393   0.254  -0.321  1.00  0.00
+TER      18              1</samp>
+
+    <p>This works, but it may take the next person who reads <code>middle.sh</code> a moment to figure out what it does. We can improve our script
+        by adding some comments at the top:</p>
+
+    <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-4mm">$ vim middle.sh</code>
+
+    <p>and edit:</p>
+
+    <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-4mm"># Select lines from the middle of a file.
+# Usage: bash middle.sh filename end_line num_lines
+head -n &quot;$2&quot; &quot;$1&quot; | tail -n &quot;$3&quot;</code>
+
+    <p>A comment starts with a <code>#</code> character and runs to the end of the line. The computer ignores comments, but they’re invaluable for
+        helping people (including your future self) understand and use scripts. The only caveat is that each time you modify the script, you should
+        check that the comment is still accurate. An explanation that sends the reader in the wrong direction is worse than none at all.</p>
+
+    <p>What if we want to process many files in a single pipeline? For example, if we want to sort our .pdb files by length, we would type:</p>
+
+    <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-4mm">$ wc -l *.pdb | sort -n</code>
+
+    <p>because <code>wc -l</code> lists the number of lines in the files (recall that <code>wc</code> stands for ‘word count’, adding the <code>-l
+    </code> option means ‘count lines’ instead) and <code>sort -n</code> sorts things numerically. </p>
+    <p> We could put this in a file, but then it would only ever sort a list of <code>.pdb</code> files in the current directory. If we want to be
+        able to get a sorted list of other kinds of files, we need a way to get all those names into the script. We can’t use <code>$1</code>,
+        <code>$2</code>, and so on because we don’t know how many files there are. Instead, we use the special variable <code>$@</code>, which
+        means, ‘All of the command-line arguments to the  shell script’. We also should put <code>$@</code> inside double-quotes to handle the case
+        of arguments containing spaces (<code>&quot;$@&quot;</code> is special syntax and is equivalent to <code>&quot;$1&quot; &quot;$2&quot; …</code>).</p>
+
+    <p>Here’s an example:</p>
+
+    <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-4mm">$ vim sorted.sh</code>
+
+    <p>edit to:</p>
+
+    <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-4mm"># Sort files by their length.
+# Usage: bash sorted.sh one_or_more_filenames
+wc -l &quot;$@&quot; | sort -n</code>
+
+    <p>and run:</p>
+
+    <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-4mm">$ bash sorted.sh *.pdb ../creatures/*.dat </code>
+<samp style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-0.25mm">9 methane.pdb
+12 ethane.pdb
+15 propane.pdb
+20 cubane.pdb
+21 pentane.pdb
+30 octane.pdb
+163 ../creatures/basilisk.dat
+163 ../creatures/minotaur.dat
+163 ../creatures/unicorn.dat
+596 total</samp>
+
+    <p> </p>
+
+</div>
+
+<div class="box">
+    <div class="bbox">
+    <h3 id="Creating_a_script"></h3>
+
+    <p>Leah has several hundred data files, each of which is formatted like this:</p>
+
+    <samp style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-4mm">2013-11-05,deer,5
+2013-11-05,rabbit,22
+2013-11-05,raccoon,7
+2013-11-06,rabbit,19
+2013-11-06,deer,2
+2013-11-06,fox,1
+2013-11-07,rabbit,18
+2013-11-07,bear,1</samp>
+
+    <p>An example of this type of file is given in <code>shell-lesson-data/exercise-data/animal-counts/animals.csv</code>.</p>
+
+    <p>We can use the command <code>cut -d , -f 2 animals.csv | sort | uniq</code> to produce the unique species in <code>animals.csv</code>. In
+        order to avoid having to type out this series of commands every time, a scientist may choose to write a shell script instead.</p>
+
+    <p>Write a shell script called <code>species.sh</code> that takes any number of filenames as command-line arguments and uses a variation of the
+        above command to print a list of the unique species appearing in each of those files separately.</p>
+
+    <p><details>
+        <summary><strong>Solution</strong></summary></p>
+
+    <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-4mm"># Script to find unique species in csv files where species is the second data field
+# This script accepts any number of file names as command line arguments
+
+# Loop over all files
+for file in $@
+do
+    echo &quot;Unique species in $file:&quot;
+    # Extract species names
+    cut -d , -f 2 $file | sort | uniq
+done</code>
+
+    </details>
+        <p> </p>
+
+    </div>
+</div>
+
+<div class="box">
+    <h2 class="enum" id="toc_3">Making analysis reproducible</h2>
+
+    <p>Nelle’s supervisor insisted that all her analytics must be reproducible. The easiest way to capture all the steps is in a script.</p>
+
+    <p>First, we return to Nelle’s project directory:</p>
+
+    <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-4mm">$ cd ../../north-pacific-gyre/</code>
+
+    <p>She creates a file using vim …</p>
+
+    <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-4mm">$ vim do-stats.sh</code>
+
+    <p>…which contains the following:</p>
+
+    <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-4mm"># Calculate stats for data files.
+for datafile in &quot;$@&quot;
+do
+    echo $datafile
+    bash goostats.sh $datafile stats-$datafile
+done</code>
+
+    <p>She saves this in a file called <code>do-stats.sh</code> so that she can now re-do the first stage of her analysis by typing:</p>
+
+    <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-4mm">$ bash do-stats.sh NENE*A.txt NENE*B.txt</code>
+
+    <p>She can also do this:</p>
+
+    <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-4mm">$ bash do-stats.sh NENE*A.txt NENE*B.txt | wc -l </code>
+
+    <p>so that the output is just the number of files processed rather than the names of the files that were processed.</p>
+
+    <p>One thing to note about Nelle’s script is that it lets the person running it decide what files to process. She could have written it as:</p>
+
+    <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-4mm"># Calculate stats for Site A and Site B data files.
+for datafile in NENE*A.txt NENE*B.txt
+do
+    echo $datafile
+    bash goostats.sh $datafile stats-$datafile
+done</code>
+
+    <p>The advantage is that this always selects the right files: she doesn't have to remember to exclude the ‘Z’ files. The disadvantage is that
+        it always selects just those files — she can’t run it on all files (including the ‘Z’ files), or on the ‘G’ or ‘H’ files her colleagues in
+        Antarctica are producing, without editing the script. If she wanted to be more adventurous, she could modify her script to check for
+        command-line arguments, and use <code>NENE*A.txt</code> <code>NENE*B.txt</code> if none were provided. Of course, this introduces another
+        tradeoff between flexibility and complexity.</p>
+</div>
+
+<div class="box">
+<blockquote>
+<h3 id="toc_4">Key Points:</h3>
+
+<ul>
+<li>Save commands in files (usually called shell scripts) for re-use.</li>
+<li><code>bash [filename]</code> runs the commands saved in a file.</li>
+<li><code>$@</code> refers to all of a shell script’s command-line arguments.</li>
+<li><code>$1</code>, <code>$2</code>, etc., refer to the first command-line argument, the second command-line argument, etc.</li>
+<li>Place variables in quotes if the values might have spaces in them.</li>
+<li>Letting users decide what files to process is more flexible and more consistent with built-in Unix commands.</li>
+</ul>
+</blockquote>
+
+</div>
+
+<div class="box">
+<p> &uarr; <a href="Session1.html">Go to the main menu</a> <br>
+&larr; <a href="part5.html">Go to the previous part &ndash; Loops</a><br>
+&rarr; <a href="part7.html">Go to the next part &ndash; Finding Things</a></p>
+</div>
+
+<script src="../scripts/generate_header.js"></script>
+<script src="../scripts/generate_overview.js"></script>
+<script src="../scripts/scroll_up.js"></script>
+<script src="../scripts/adjust_for_dyslexia.js"></script>
+<script>window.onload = function () {
+    generateOverview();
+    generateHeader();
+    scrollUp();
+    adjustForDyslexia()
+}</script>
+</body>
+</html>

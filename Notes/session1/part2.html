@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="en-UK">
+<!--xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html">-->
+
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0, user-scalable=yes" name="viewport"/>
+    <meta content="Session1: part 2" name="description"/>
+    <link href="https://fonts.googleapis.com" rel="preconnect">
+    <link crossorigin href="https://fonts.gstatic.com" rel="preconnect">
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,400;0,600;1,400&display=swap"
+          rel="stylesheet">
+    <link href="../scripts/style.css" rel="stylesheet"/>
+    <title>Part 2 &ndash; Working With Files and Directories</title>
+</head>
+
+<body>
+
+<div class="box">
+    <h1 id="heading">Part 2 &ndash; Working With Files and Directories</h1>
+    <p> &uarr; <a href="Session1.html">Go to the main menu</a> <br>
+        &larr; <a href="part1.html">Go to the previous part &ndash; Navigating Files and Directories</a> <br>
+        &rarr; <a href="part3.html">Go to the next part &ndash; Using High-Performance Computers</a> </p>
+</div>
+
+<div class="box">
+    <h2 id="overview">Contents</h2>
+</div>
+
+<div class="box">
+    <h2 class="enum" id="toc_1">Creating directories</h2>
+    <p>We now know how to explore files and directories, but how do we create them in the first place?</p>
+
+    <p>In this section, we will learn about creating and moving files and directories, using the <code>exercise-data/writing</code> directory as an
+        example.</p>
+
+    <p>First, let&rsquo;s check which directory we are in:</p>
+    <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-4mm">$ pwd </code>
+    <samp style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-0.25mm">/Users/nelle/Desktop/session1/shell-lesson-data</samp>
+    <p style="margin-top:3mm"> If you are not in the <code>shell-lesson-data</code> directory, use the <code>cd</code> command to navigate there. Then make sure you are in
+        the right directory by using <code>pwd</code> again.</p>
+
+    <p>Now check the contents of the <code>shell-lesson-data</code> directory and move into <code>exercise-data/writing</code></p>
+    <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-4mm">$ ls </code>
+<samp style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-0.25mm">exercise-data/      north-pacific-gyre/ </samp>
+<code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-0.25mm">$ cd exercise-data/writing/</code>
+
+    <p>Now, let&rsquo;s check what is inside the directory:</p>
+    <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-4mm">$ ls </code>
+<samp style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-0.25mm">LittleWomen.txt       haiku.txt</samp>
+
+    <p>Let’s create a new directory called thesis (which has no output):</p>
+    <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-4mm">$ mkdir thesis</code>
+    <p style="margin-top:2mm"><code>mkdir</code> means <strong>m</strong>a<strong>k</strong>e <strong>dir</strong>ectory. Since <code>thesis</code>
+    is a relative path, the new directory is created in the current working directory:</p>
+    <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-2mm">$ ls </code>
+<samp style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-0.25mm">LittleWomen.txt       haiku.txt       thesis/</samp>
+
+    <p>Since we’ve just created the thesis directory, there’s nothing in it yet (check using <code>ls</code>)</p>
+
+    <div style="color: darkslategray; border: darkslategray; border-width: 1px; border-style: solid; background: aliceblue; padding: 10px">
+        <h3 style="margin-top:0"><strong>How to name files/ directories</strong>:</h3>
+
+        <ul>
+            <li style="margin-top:-2mm">No spaces, but can use <code>-</code> or <code>_</code>: <br>
+                ❌ <code>north pacific gyre</code> <br>
+                ✅ <code>north-pacific-gyre</code> </li>
+
+            <li style="margin-top:4mm">No strange symbols, such as <code>&amp;</code> or <code>-</code>: <br>
+                ❌ <code>Peter &amp; Mary</code> <br>
+                ✅ <code>Peter_Mary</code> </li>
+
+            <li style="margin-top:4mm">With extensions, to help identify file types: <br>
+                ❌ <code>mydocument</code> <br>
+                ✅ <code>mydocument.txt</code> </li>
+        </ul>
+    </div>
+    <p> </p>
+</div>
+
+<div class="box">
+<h2 class="enum" id="toc_2">Create a text file</h2>
+
+    <p>Let’s change our working directory to <code>thesis</code> using command <code>cd</code>, then run a text editor called Vim to create a file
+        called <code>draft.txt</code>:</p>
+    <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-2mm">$ cd thesis
+$ vim draft.txt</code>
+
+    <p>Note that there are other text editors available. Nano and <a href="https://www.vim.org/">Vim</a> are the two main text editors for editing
+        plain text. They are light and will work directly on the terminal without the need for a graphical interface (which may not always be
+        available on remote machines). Alternatively, you can use a basic GUI program called <code>gedit</code> or a little bit more advanced and
+        more powerful <code>sublime</code> (may need to be installed).</p>
+
+        <p>There are other ways to create files. Often, they are generated as an output of a program we run. </p>
+
+
+    <h4>Let&rsquo;s type in a couple of words using vim and save into the <code>draft.txt</code>:</h4>
+    <p style="margin-top:-5mm"> When you create a new file using vim, you will see a number of lines with a <code>~</code>, and your cursor will be
+        at the top. At the
+        bottom of the terminal you will see the name of the file, <code>[New]</code> showing that Vim is creating a new file, <code>0, 0-1</code>
+        which is the location (line and character number) of your cursor and <code>All</code> which tells you that the entire file is displayed.</p>
+    <div class="flex-figure" style="margin-top:-8mm;margin-bottom:-5mm">
+        <div class="figure" style="width: 70%">
+            <figure>
+                <img alt="empty vim" src="img/empty_vim.png" width="100%">
+            </figure>
+        </div>
+    </div>
+
+    <p>To start writing, you need to enter <code>insert mode</code>. Do this by pressing the <code>i</code> key, and <code>-- INSERT --</code> will
+        appear at the bottom of the terminal.</p>
+    <div class="flex-figure" style="margin-top:-8mm;margin-bottom:-5mm">
+        <div class="figure" style="width: 70%">
+            <figure>
+                <img alt="insert vim" src="img/insert_vim.png" width="100%">
+            </figure>
+        </div>
+    </div>
+
+    <p>Once we’re happy with our text, we can press <code>esc</code> (the escape key) to exit <code>insert mode</code> Then type <code>:w</code>
+        followed by the <code>enter</code> key to <strong>w</strong>rite the file. Vim will tell you the name of the
+        file it just created.</p>
+    <div class="flex-figure" style="margin-top:-8mm;margin-bottom:-5mm">
+        <div class="figure" style="width: 70%">
+            <figure>
+                <img alt="insert vim" src="img/exit_vim.png" width="100%">
+            </figure>
+        </div>
+    </div>
+
+    <p>To <strong>q</strong>uit, type <code>:q</code> followed by the <code>enter</code> key. <code>Vim</code> doesn’t leave any output on the
+        screen after it exits, but <code>ls</code> now shows that we have created a file called <code>draft.txt</code></p>
+    <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-2mm">$ ls </code>
+<samp style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-0.25mm">draft.txt</samp>
+
+    <h4>A simple <code>Vim</code> cheatsheet can be found <a href="vim_cheat_sheet.html">here</a> and on LEARN. For a more comprehensive list, see <a
+            href="https://www.thegeekdiary.com/basic-vi-commands-cheat-sheet/">here</a>.</h4>
+
+</div>
+
+<div class="box">
+    <h2 class="enum" id="toc_3">Moving files and directories</h2>
+
+    <p>Make sure you are in the <code>shell-lesson-data/exercise-data/writing</code> directory, which you can do by using
+    the absolute path or locate yourself in the directories and navigate up:</p>
+    <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-4mm">$ cd ~/Desktop/session1/shell-lesson-data/exercise-data/writing</code>
+
+    <p>In our <code>thesis</code> directory we have a file <code>draft.txt</code> which isn’t a particularly informative name, so let’s change the
+        file’s name using <code>mv</code>, which is short for <strong>m</strong>o<strong>v</strong>e:</p>
+    <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-4mm">$ mv thesis/draft.txt thesis/quotes.txt</code>
+
+    <p>The first argument tells <code>mv</code> <u>what</u> we’re ‘moving’, while the second is <u>where</u> it’s to go. In this case, we’re moving
+        <code>thesis/draft.txt</code> to <code>thesis/quotes.txt</code>. Moving has the same effect as renaming the file. It also works on
+        directories.</p>
+
+    <p>Sure enough, <code>ls</code> shows us that <code>thesis</code> now contains one file called <code>quotes.txt</code>: </p>
+    <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-4mm">$ ls thesis </code>
+<samp style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-0.25mm">quotes.txt</samp>
+
+<blockquote>
+    <p><strong><em>WARNING</em></strong> ⚠️</p>
+
+    <p>Be careful when specifying the target file name since <strong><code>mv</code> will silently overwrite any existing
+        file</strong> with the same name, which could lead to data loss. </p>
+
+    <p>By default, <code>mv</code> will not ask for confirmation before overwriting files. However, an additional
+        option, <code>mv -i</code> will cause <code>mv</code> to request such confirmation.</p>
+</blockquote>
+
+    <p>Let’s move <code>quotes.txt</code> into the current working directory. We use <code>mv</code> once again, but this time we’ll use just the
+        name of a directory as the second argument to tell <code>mv</code> that we want to keep the filename but put it into a new place. In this
+        case, the directory name we use is the special directory name <code>.</code>, which means the current directory.</p>
+
+    <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-4mm">$ mv thesis/quotes.txt .</code>
+
+    <p>If you try to explicitly list this file at its previous location, you will see:</p>
+
+    <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-4mm">$ ls thesis/quotes.txt </code>
+<samp style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-0.25mm">ls: cannot access &#39;thesis/quotes.txt&#39;: No such file or directory</samp>
+</div>
+
+<div class="box">
+    <h2 class="enum" id="toc_4">Copying files and directories</h2>
+
+    <p>The <code>cp</code> command works very much like <code>mv</code>, except it <strong>c</strong>o<strong>p</strong>ies a file instead of moving
+        it. We can check that it did the right thing using <code>ls</code></p>
+
+    <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-4mm">$ cp quotes.txt thesis/quotations.txt
+$ ls quotes.txt </code>
+    <samp style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-0.25mm">quotes.txt </samp>
+    <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-0.25mm">$ ls thesis/quotations.txt </code>
+    <samp style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-0.25mm">thesis/quotations.txt</samp>
+
+    <p>We can also copy a directory and all its contents by using the recursive option <code>-r</code> (otherwise you will receive an error
+        <code>cp: -r not specified; omitting directory &#39;thesis&#39;</code>). </p>
+
+    <p> Let's back up our directory:</p>
+    <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-4mm">$ cp -r thesis thesis_backup</code>
+
+<p>We can check using <code>ls</code> with two paths as arguments — like most Unix commands, <code>ls</code> can be
+    given multiple paths at once:</p>
+    <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-4mm">$ ls thesis thesis_backup </code>
+    <samp style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-0.25mm">thesis:
+quotations.txt
+
+thesis_backup:
+quotations.txt</samp>
+</div>
+
+
+<div class="box">
+    <div class="hbox">
+    <h3 id="Renaming files"></h3>
+
+    <p>Suppose that you created a plain-text file in your current directory to contain a list of the statistical tests you will need to do to analyze
+        your data, and named it <code>statstics.txt</code></p>
+
+    <p>After creating and saving this file you realize you misspelled the filename! You want to correct the mistake, which of the following commands
+        could you use to do so?</p>
+
+    <ol>
+        <li><code>cp statstics.txt statistics.txt</code></li>
+        <li><code>mv statstics.txt statistics.txt</code></li>
+        <li><code>mv statstics.txt .</code></li>
+        <li><code>cp statstics.txt .</code></li>
+    </ol>
+
+    <p><details>
+        <summary><strong>Answer</strong></summary>
+    </p>
+
+    <ol>
+        <li>No: While this would create a file with the correct name, the incorrectly named file still exists in the
+            directory and would need to be deleted.
+        </li>
+        <li>✅: this would work to rename the file.</li>
+        <li>No: the period(.) indicates where to move the file, but does not provide a new file name; identical file
+            names cannot be created.
+        </li>
+        <li>No: the period(.) indicates where to copy the file, but does not provide a new file name; identical file
+            names cannot be created.
+        </li>
+    </ol>
+</details>
+        <p> </p>
+    </div>
+
+    <div class="hbox">
+    <h3 id="Copying and moving files"></h3>
+
+    <p>What is the output of the closing <code>ls</code> command in the sequence shown below?</p>
+
+        <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-4mm">$ pwd </code>
+        <samp style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-0.25mm">/Users/jamie/data </samp>
+        <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-0.25mm">$ ls </code>
+        <samp style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-0.25mm">proteins.dat </samp>
+<code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-0.25mm">$ mkdir recombined
+$ mv proteins.dat recombined/
+$ cp recombined/proteins.dat ../proteins-saved.dat
+$ ls</code>
+
+    <ol style="margin-top:4mm">
+        <li><code>proteins-saved.dat recombined</code></li>
+        <li><code>recombined</code></li>
+        <li><code>proteins.dat recombined</code></li>
+        <li><code>proteins-saved.dat</code></li>
+    </ol>
+
+    <p><details>
+        <summary><strong>Answer</strong></summary>
+    </p>
+
+    <p>We start in the <code>/Users/jamie/data</code> directory, and create a new folder called <code>recombined</code>.
+        The fourth command moves the file <code>proteins.dat</code> to the new folder <code>recombined</code>. The fifth
+        command makes a copy of the file we just moved. The tricky part here is where the file was copied to. Recall that
+        <code>..</code> means ‘go up a level’, so the copied file is now in <code>/Users/jamie</code>. Notice that
+        <code>..</code> is interpreted with respect to the <strong>current working directory</strong>, not with respect to the location
+        of the file being copied. So, the only thing that will show using <code>ls</code> (in <code>/Users/jamie/data</code>) is the
+        recombined folder.</p>
+
+    <ol>
+        <li>No: see explanation above. <code>proteins-saved.dat</code> is located at <code>/Users/jamie</code></li>
+        <li>✅</li>
+        <li>No: see explanation above. <code>proteins.dat</code> is located at <code>/Users/jamie/data/recombined</code>
+        </li>
+        <li>No: see explanation above. <code>proteins-saved.dat</code> is located at <code>/Users/jamie</code>
+        </li>
+    </ol>
+</details>
+        <p> </p>
+    </div>
+</div>
+
+<div class="box">
+    <h2 class="enum" id="toc_5">Removing files and directories</h2>
+
+    <p>Returning to the <code>shell-lesson-data/exercise-data/writing</code> directory, let’s tidy up this directory by
+    removing the <code>quotes.txt</code> file we created. The Unix command we’ll use for this is <code>rm</code> for
+    <strong>r</strong>e<strong>m</strong>ove:</p>
+    <<code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-4mm">>$ rm quotes.txt</code>
+
+    <p>Confirm it is gone:</p>
+    <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-4mm">$ ls quotes.txt </code>
+<samp style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-0.25mm">ls: cannot access &#39;quotes.txt&#39;: No such file or directory</samp>
+
+    <blockquote>
+        <p><strong><em>WARNING</em></strong> ⚠️</p>
+
+            <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-4mm">$ rm text.txt</code>
+        <p style="margin-top:2mm">will remove the file completely from the machine (there is no Bin/Trash/&hellip;)</p>
+
+        <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-4mm">$ rm –i text.txt </code>
+<samp style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-0.25mm">rm: remove regular file ‘text.txt’?</samp>
+        <p style="margin-top:2mm">prompts you to confirm by typing <code>y</code> or cancel by typing <code>n</code></p>
+    </blockquote>
+
+    <p>If we try to remove the thesis directory using <code>rm thesis</code>, we get an error message:</p>
+    <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-4mm">$ rm thesis </code>
+<samp style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-0.25mm">rm: cannot remove &#39;thesis&#39;: Is a directory</samp>
+
+    <p>This happens because <code>rm</code> by default only works on files, not directories.</p>
+
+    <p><code>rm</code> can remove a directory and all its contents if we use the recursive option <code>-r</code>, and it will do so without any
+        confirmation prompts:</p>
+    <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-4mm">$ rm -r thesis</code>
+
+    <p>Given that there is no way to retrieve files deleted using the shell, <u><code>rm -r</code> should be used with great caution</u> (consider
+        adding the interactive option <code>rm -r -i</code>).</p>
+</div>
+
+<div class="box">
+    <h2 class="enum" id="toc_6">Operations with multiple files and directories</h2>
+
+    <p>Oftentimes one needs to copy or move several files at once. This can be done by providing a list of individual
+    filenames, or specifying a naming pattern using <u><em>wildcards</em></u>. Wildcards are special characters that can be
+    used to represent unknown characters or sets of characters when navigating the Unix file system.</p>
+
+    <p><code>*</code> is a wildcard, which represents zero or more characters. Let’s consider the <code>shell-lesson-data/exercise-data/alkanes</code>
+        directory: </p>
+    <ul style="margin-top:-4mm">
+        <li><code>*.pdb</code> represents <code>ethane.pdb</code>, <code>propane.pdb</code>, and every file that ends with
+        ‘.pdb’.
+        </li>
+        <li><code>p*.pdb</code> only represents <code>pentane.pdb</code> and <code>propane.pdb</code>, because the
+        <code>p</code> at the front can only represent filenames that begin with the letter ‘p’.
+        </li>
+    </ul>
+
+    <p><code>?</code> is also a wildcard, but it represents <u>exactly one</u> character:</p>
+    <ul style="margin-top:-4mm">
+        <li><code>?ethane.pdb</code> could represent <code>methane.pdb</code>,</li>
+        <li><code>*ethane.pdb</code> represents both <code>ethane.pdb</code> and <code>methane.pdb</code>.</li>
+    </ul>
+
+    <p>Wildcards can also be used in combination with each other:</p>
+    <ul style="margin-top:-4mm">
+        <li><code>???ane.pdb</code> indicates three characters followed by <code>ane.pdb</code>, giving <code>cubane.pdb
+        ethane.pdb and octane.pdb</code>.
+        </li>
+    </ul>
+
+</div>
+
+<div class="box">
+    <div class="hbox">
+    <h3 id="Using wildcards"></h3>
+
+    <p>When run in the <code>alkanes</code> directory, which <code>ls</code> command(s) will produce this output?</p>
+
+    <pre><code class="language-none">ethane.pdb methane.pdb</code></pre>
+
+    <ol>
+        <li><code>ls *t*ane.pdb</code></li>
+        <li><code>ls *t?ne.*</code></li>
+        <li><code>ls *t??ne.pdb</code></li>
+        <li><code>ls ethane.*</code></li>
+    </ol>
+
+    <p><details>
+        <summary><strong>Answer</strong></summary>
+    </p>
+
+    <ol>
+        <li>No: this shows all files whose names contain zero or more characters (<code>*</code>) followed by the letter
+            <code>t</code>, then zero or more characters (<code>*</code>) followed by <code>ane.pdb</code>. This gives
+            <code>ethane.pdb methane.pdb octane.pdb pentane.pdb.</code></li>
+        <li>No: this shows all files whose names start with zero or more characters (<code>*</code>) followed by the letter
+            <code>t</code>, then a single character (<code>?</code>), then <code>ne</code>. followed by zero or more
+            characters (<code>*</code>). This will give us <code>octane.pdb</code> and <code>pentane.pdb</code> but
+            doesn’t match anything which ends in <code>thane.pdb</code>.</li>
+        <li>✅: fixes the problems of option 2 by matching two characters (<code>??</code>) between <code>t</code> and
+            <code>ne</code>.</li>
+        <li>No: this only shows files starting with <code>ethane.</code>.</li>
+    </ol>
+    </details>
+        <p> </p>
+        </div>
+
+    <div class="bbox">
+    <h3 id="Copying directories"></h3>
+
+    <p>Sam has a directory containing calibration data, datasets, and descriptions of the datasets:</p>
+
+<pre><code class="language-bash">.
+├── 2015-10-23-calibration.txt
+├── 2015-10-23-dataset1.txt
+├── 2015-10-23-dataset2.txt
+├── 2015-10-23-dataset_overview.txt
+├── 2015-10-26-calibration.txt
+├── 2015-10-26-dataset1.txt
+├── 2015-10-26-dataset2.txt
+├── 2015-10-26-dataset_overview.txt
+├── 2015-11-23-calibration.txt
+├── 2015-11-23-dataset1.txt
+├── 2015-11-23-dataset2.txt
+├── 2015-11-23-dataset_overview.txt
+├── backup
+│   ├── calibration
+│   └── datasets
+└── send_to_bob
+    ├── all_datasets_created_on_a_23rd
+    └── all_november_files
+</code></pre>
+
+    <p>Before heading off to another field trip, she wants to back up her data and send some datasets to her colleague Bob.
+    Sam uses the following commands to get the job done:</p>
+
+<pre><code class="language-bash">$ cp *dataset* backup/datasets
+$ cp ____calibration____ backup/calibration
+$ cp 2015-____-____ send_to_bob/all_november_files/
+$ cp ____ send_to_bob/all_datasets_created_on_a_23rd/</code></pre>
+
+    <p>Help Sam by filling in the blanks.</p>
+
+    <p>The resulting directory structure should look like this</p>
+
+<pre><code class="language-bash">.
+├── 2015-10-23-calibration.txt
+├── 2015-10-23-dataset1.txt
+├── 2015-10-23-dataset2.txt
+├── 2015-10-23-dataset_overview.txt
+├── 2015-10-26-calibration.txt
+├── 2015-10-26-dataset1.txt
+├── 2015-10-26-dataset2.txt
+├── 2015-10-26-dataset_overview.txt
+├── 2015-11-23-calibration.txt
+├── 2015-11-23-dataset1.txt
+├── 2015-11-23-dataset2.txt
+├── 2015-11-23-dataset_overview.txt
+├── backup
+│   ├── calibration
+│   │   ├── 2015-10-23-calibration.txt
+│   │   ├── 2015-10-26-calibration.txt
+│   │   └── 2015-11-23-calibration.txt
+│   └── datasets
+│       ├── 2015-10-23-dataset1.txt
+│       ├── 2015-10-23-dataset2.txt
+│       ├── 2015-10-23-dataset_overview.txt
+│       ├── 2015-10-26-dataset1.txt
+│       ├── 2015-10-26-dataset2.txt
+│       ├── 2015-10-26-dataset_overview.txt
+│       ├── 2015-11-23-dataset1.txt
+│       ├── 2015-11-23-dataset2.txt
+│       └── 2015-11-23-dataset_overview.txt
+└── send_to_bob
+    ├── all_datasets_created_on_a_23rd
+    │   ├── 2015-10-23-dataset1.txt
+    │   ├── 2015-10-23-dataset2.txt
+    │   ├── 2015-10-23-dataset_overview.txt
+    │   ├── 2015-11-23-dataset1.txt
+    │   ├── 2015-11-23-dataset2.txt
+    │   └── 2015-11-23-dataset_overview.txt
+    └── all_november_files
+        ├── 2015-11-23-calibration.txt
+        ├── 2015-11-23-dataset1.txt
+        ├── 2015-11-23-dataset2.txt
+        └── 2015-11-23-dataset_overview.txt</code></pre>
+
+    <p><details>
+        <summary><strong>Solution</strong></summary>
+    </p>
+
+    <pre><code class="language-bash">$ cp *calibration.txt backup/calibration
+$ cp 2015-11-* send_to_bob/all_november_files/
+$ cp *-23-dataset* send_to_bob/all_datasets_created_on_a_23rd/</code></pre>
+
+    </details>
+        <p> </p>
+        </div>
+
+    <div class="bbox">
+    <h3 id="Reorganising files"></h3>
+
+    <p>Jamie is working on a project, and she sees that her files aren’t very well organized:
+    <pre>
+<code>$ ls -F
+analyzed/ fructose.dat raw/ sucrose.dat</code></pre>
+
+    <p>The <code>fructose.dat</code> and <code>sucrose.dat</code> files contain output from her data analysis. What
+    command(s) covered in this lesson does she need to run so that the commands below will produce the output shown?</p>
+
+<pre><code class="language-bash">$ ls
+analyzed/   raw/
+$ ls analyzed
+fructose.dat    sucrose.dat</code></pre>
+
+
+    <p><details>
+        <summary><strong>Solution</strong></summary>
+    </p>
+
+    <pre><code class="language-bash">mv *.dat analyzed</code></pre>
+
+    <p>Jamie needs to move her files <code>fructose.dat</code> and <code>sucrose.dat</code> to the <code>analyzed</code>
+        directory. The shell will expand <code>*.dat</code> to match all <code>.dat</code> files in the current
+        directory. The <code>mv</code> command then moves the list of <code>.dat</code> files to the
+        <code>analyzed</code> directory.</p>
+
+    </details>
+    <p> </p>
+        </div>
+</div>
+
+<div class="box">
+<blockquote>
+    <h3 id="toc_12">Key Points:</h3>
+
+    <ul>
+        <li><code>cp [old] [new]</code> copies a file.</li>
+        <li><code>mkdir [path]</code> creates a new directory.</li>
+        <li><code>mv [old] [new]</code> moves (renames) a file or directory.</li>
+        <li><code>rm [path]</code> removes (deletes) a file.</li>
+        <li><code>*</code> matches zero or more characters in a filename, so <code>*.txt</code> matches all files ending
+            in <code>.txt</code>.
+        </li>
+        <li><code>?</code> matches any single character in a filename, so <code>?.txt</code> matches <code>a.txt</code>
+            but not <code>any.txt</code>.
+        </li>
+        <li>The shell does not have a trash bin: <u>once something is deleted, it’s really gone</u>.</li>
+        <li>Most files’ names are <code>something.extension</code>. The extension isn’t required, and doesn’t guarantee
+            anything, but is normally used to indicate the type of data in the file.
+        </li>
+    </ul>
+</blockquote>
+
+</div>
+
+<div class="box">
+<p> &uarr; <a href="Session1.html">Go to the main menu</a> <br>
+    &larr; <a href="part1.html">Go to the previous part &ndash; Navigating Files and Directories</a> <br>
+    &rarr; <a href="part3.html">Go to the next part &ndash; Using High-Performance Computers</a> </p>
+</div>
+
+<script src="../scripts/generate_header.js"></script>
+<script src="../scripts/generate_overview.js"></script>
+<script src="../scripts/scroll_up.js"></script>
+<script src="../scripts/adjust_for_dyslexia.js"></script>
+<script>window.onload = function () {
+    generateOverview();
+    generateHeader();
+    scrollUp();
+    adjustForDyslexia()
+}</script>
+</body>
+</html>

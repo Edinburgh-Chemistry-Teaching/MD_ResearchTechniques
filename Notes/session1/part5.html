@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="en-UK">
+<!--xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html">-->
+
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0, user-scalable=yes" name="viewport"/>
+    <meta content="Session1: part 5" name="description"/>
+    <link href="https://fonts.googleapis.com" rel="preconnect">
+    <link crossorigin href="https://fonts.gstatic.com" rel="preconnect">
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,400;0,600;1,400&display=swap"
+          rel="stylesheet">
+    <link href="../scripts/style.css" rel="stylesheet"/>
+    <title>Part 5 &ndash; Loops</title>
+</head>
+
+<body>
+
+<div class="box">
+<h1 id="heading">Part 5 &ndash; Loops</h1>
+
+<p> &uarr; <a href="Session1.html">Go to the main menu</a> <br>
+    &larr; <a href="part4.html">Go to the previous part &ndash; Pipes and Filters</a><br>
+    &rarr; <a href="part6.html">Go to the next part &ndash; Shell Scripts</a></p>
+
+<p><span style="color:blue"> <strong>This is an advanced topic and extra material</strong> </span></p>
+</div>
+
+<div class="box">
+    <h2 id="overview">Contents</h2>
+</div>
+
+<div class="box">
+    <h2 class="enum" id="toc_1">What are loops?</h2>
+    <p><strong>Loops</strong> are a programming construct which allow us to repeat a command or set of commands for each item in a list. As such,
+        they are key to productivity improvements through automation. Similar to wildcards and tab completion, using loops also reduces the amount
+        of typing required (and hence reduces the number of typing mistakes).</p>
+
+    <p>Suppose we have several hundred genome data files named <code>basilisk.dat</code>, <code>minotaur.dat</code>, <code>unicorn.dat</code> etc.
+        For this example, we’ll use the <code>exercise-data/creatures</code> directory, which only has three example files, but the principles can
+        be applied to many, many more files at once.</p>
+
+    <p>The structure of these files is the same: the common name, classification, and updated dates are presented on the first three lines, with
+        DNA sequences on the following lines. Let’s look at the files:</p>
+
+    <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-4mm">$ head -n 5 basilisk.dat minotaur.dat unicorn.dat</code>
+
+    <p>We would like to print out the classification for each species, which is given on the second line of each file. For each file, we would need to
+    execute the command <code>head -n 2</code> and pipe this to <code>tail -n 1</code>. We’ll use a loop to solve this problem, but first, let’s
+        look at the general form of a loop using the pseudo-code below:</p>
+
+    <samp style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-4mm"># The word &quot;for&quot; indicates the start of a
+        &quot;For-loop&quot; command
+for thing in list_of_things
+
+#The word &quot;do&quot; indicates the start of job execution list
+do 
+    # Indentation within the loop is not required but aids legibility
+    operation_using/command $thing
+
+# The word &quot;done&quot; indicates the end of a loop
+done </samp>
+
+    <p>and we can apply this to our example:</p>
+
+    <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-4mm">$ for filename in basilisk.dat minotaur.dat unicorn.dat
+&gt; do
+&gt;     echo $filename
+&gt;     head -n 2 $filename | tail -n 1
+&gt; done</code>
+    <samp style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-0.25mm">basilisk.dat
+CLASSIFICATION: basiliscus vulgaris
+minotaur.dat
+CLASSIFICATION: bos hominus
+unicorn.dat
+CLASSIFICATION: equus monoceros</samp>
+
+    <blockquote>
+        <p>❗️ The shell prompt changes from <code>$</code> to <code>&gt;</code> and back again as we were typing in our loop. The second prompt,
+            <code>&gt;</code>, is different to remind us that we haven’t finished typing a complete command yet. A semicolon, <code>;</code>, can
+            be used to separate two commands written on a single line.</p>
+
+        <p>When the shell sees the keyword <code>for</code>, it knows to repeat a command (or group of commands) once for each item in a list. Each
+            time the loop runs (called an iteration), an item in the list is assigned in sequence to the <em>variable</em>, and the commands inside
+            the loop are executed before moving on to the next item in the list. Inside the loop, we call for the variable’s value by putting
+            <code>$</code> in front of it. The <code>$</code> tells the shell interpreter to treat the variable as a variable name and substitute
+            its value in its place, rather than treat it as text or an external command.</p>
+    </blockquote>
+
+    <p>In this example, the list is three filenames: <code>basilisk.dat</code>, <code>minotaur.dat</code>, and <code>unicorn.dat</code>. Each time
+        the loop iterates, we first use <code>echo</code> to print the value that the variable <code>$filename</code> currently holds. This is not
+        necessary for the result, but beneficial for us here to have an easier time to follow along. </p>
+    <p>Next, we will run the head command on the file currently referred to by <code>$filename</code>. The first time through the loop, <code>
+            $filename</code> is <code>basilisk.dat</code>. The interpreter runs the command <code>head</code> on <code>basilisk.dat</code> and
+        pipes the first two lines to the <code>tail</code> command, which then prints the second line of <code>basilisk.dat</code>. For the second
+        iteration, <code>$filename</code> becomes <code>minotaur.dat</code>. This time, the shell runs <code>head</code> on <code>minotaur
+            .dat</code> and pipes the first two lines to the <code>tail</code> command, which then prints the second line of <code>minotaur
+            .dat</code>. For the third iteration, <code>$filename</code> becomes <code>unicorn.dat</code>, and the second line of it gets printed.
+    </p>
+    <p>Since the list was only three items, the shell exits the for loop.</p>
+
+    <blockquote>
+        <p>❗️ Here, we see <code>&gt;</code> being used as a shell prompt, whereas <code>&gt;</code> is also used to redirect output. Similarly,
+            <code>$</code> is used as a shell prompt, but, as we saw earlier, it is also used to ask the shell to get the value of a variable.</p>
+
+        <p>If the shell prints <code>&gt;</code> or <code>$</code> then it expects you to type something, and the symbol is a prompt.</p>
+
+        <p>If you type <code>&gt;</code> or <code>$</code> yourself, it is an instruction from you that the shell should redirect output or get the
+            value of a variable.</p>
+
+        <p>When using variables, it is also possible to put the names into curly braces to clearly delimit the variable name: <code>$filename
+        </code> is equivalent to <code>${filename}</code>, but is different from <code>${file}name</code>. You may find this notation in other
+            people’s programs.</p>
+    </blockquote>
+
+    <p>We have called the variable in this loop <code>filename</code> in order to make its purpose clearer to human readers. The shell itself
+        doesn’t care what the variable is called; if we wrote this loop as:</p>
+
+    <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-4mm">$ for x in basilisk.dat minotaur.dat unicorn.dat
+&gt; do
+&gt;     head -n 2 $x | tail -n 1
+&gt; done</code>
+
+    <p>or:</p>
+
+    <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-4mm">$ for temperature in basilisk.dat minotaur.dat unicorn.dat
+&gt; do
+&gt;     head -n 2 $temperature | tail -n 1
+&gt; done</code>
+
+    <p>it would work exactly the same way. Don’t do this. Programs are only useful if people can understand them, so meaningless names (like <code>
+        x</code>) or misleading names (like <code>temperature</code>) increase the odds that the program won’t do what its readers think it does.</p>
+
+    <p>In the above examples, the variables (<code>thing</code>, <code>filename</code>, <code>x</code> and <code>temperature</code>) could have
+        been given any other name, as long as it is meaningful to both the person writing the code and the person reading it.</p>
+
+    <p>Note also that loops can be used for other things than filenames, like a list of numbers or a subset of data.</p>
+</div>
+
+<div class="box">
+    <div class="bbox">
+    <h3 id="Constructing_loops"></h3>
+
+    <p>How would you write a loop that echoes all 10 numbers from 0 to 9?</p>
+
+    <p><details>
+    <summary><strong>Solution</strong></summary>
+
+    <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:0mm">$ for loop_variable in 0 1 2 3 4 5 6 7 8 9
+&gt; do
+&gt;     echo $loop_variable
+&gt; done
+</code>
+
+    </details></p>
+
+    </div>
+    <div class="bbox">
+        <h3 id="Variables_in_loops"></h3>
+
+    <p>This exercise refers to the <code>shell-lesson-data/exercise-data/alkanes</code> directory. <code>ls *.pdb</code> gives the following
+        output:</p>
+
+    <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-4mm">cubane.pdb  ethane.pdb  methane.pdb  octane.pdb  pentane.pdb  propane.pdb</code>
+
+    <p>What is the output of the following code?</p>
+
+    <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-4mm">$ for datafile in *.pdb
+&gt; do
+&gt;     ls *.pdb
+&gt; done
+</code>
+
+    <p>Now, what is the output of the following code?</p>
+
+    <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-4mm">$ for datafile in *.pdb
+&gt; do
+&gt;     ls $datafile
+&gt; done</code>
+
+<p>Why do these two loops give different outputs?</p>
+
+<p><details>
+  <summary><strong>Solution</strong></summary></p>
+
+    <p>The first code block gives the same output on each iteration through the loop. Bash expands the wildcard <code>*.pdb</code> within the loop
+        body (as well as before the loop starts) to match all files ending in <code>.pdb</code> and then lists them using <code>ls</code>. The
+        expanded loop would look like this:</p>
+
+    <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-4mm">$ for datafile in cubane.pdb  ethane.pdb  methane.pdb  octane.pdb  pentane.pdb  propane.pdb
+&gt; do
+&gt;     ls cubane.pdb  ethane.pdb  methane.pdb  octane.pdb  pentane.pdb  propane.pdb
+&gt; done</code>
+
+        <p>The output is then: </p>
+<samp style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-4mm">cubane.pdb  ethane.pdb  methane.pdb  octane.pdb  pentane.pdb  propane.pdb
+cubane.pdb  ethane.pdb  methane.pdb  octane.pdb  pentane.pdb  propane.pdb
+cubane.pdb  ethane.pdb  methane.pdb  octane.pdb  pentane.pdb  propane.pdb
+cubane.pdb  ethane.pdb  methane.pdb  octane.pdb  pentane.pdb  propane.pdb
+cubane.pdb  ethane.pdb  methane.pdb  octane.pdb  pentane.pdb  propane.pdb
+cubane.pdb  ethane.pdb  methane.pdb  octane.pdb  pentane.pdb  propane.pdb
+</samp>
+
+    <p>The second code block lists a different file on each loop iteration. The value of the <code>datafile</code> variable is evaluated using
+        <code>$datafile</code>, and then listed using <code>ls</code>.</p>
+
+    <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-4mm">cubane.pdb
+ethane.pdb
+methane.pdb
+octane.pdb
+pentane.pdb
+propane.pdb</code>
+
+    </details>
+    <p> </p>
+
+    </div>
+</div>
+
+<div class="box">
+    <div class="hbox">
+    <h3 id="Wildcards_1"></h3>
+
+    <p>What would be the output of running the following loop in the <code>shell-lesson-data/exercise-data/alkanes</code> directory?</p>
+
+    <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-4mm">$ for filename in c*
+&gt; do
+&gt;     ls $filename
+&gt; done
+</code>
+
+    <ol style="margin-top:4mm">
+        <li>No files are listed.</li>
+        <li>All files are listed.</li>
+        <li>Only cubane.pdb, octane.pdb and pentane.pdb are listed.</li>
+        <li>Only cubane.pdb is listed.</li>
+    </ol>
+
+    <p><details>
+        <summary><strong>Answer</strong></summary></p>
+
+    <p>4 is the correct answer. <code>*</code> matches zero or more characters, so any file name starting with the letter <code>c</code>, followed
+        by zero or more other characters will be matched.</p>
+
+    </details>
+        <p> </p>
+    </div>
+
+    <div class="hbox">
+    <h3 id="Wildcards_2"></h3>
+
+    <p>How would the output differ from using this command instead?</p>
+
+    <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-4mm">$ for filename in *c*
+&gt; do
+&gt;     ls $filename
+&gt; done
+</code>
+
+    <ol style="margin-top:4mm">
+        <li>The same files would be listed.</li>
+        <li>All the files are listed this time.</li>
+        <li>No files are listed this time.</li>
+        <li>The files <code>cubane.pdb</code> and <code>octane.pdb</code> will be listed.</li>
+        <li>Only the file <code>octane.pdb</code> will be listed.</li>
+    </ol>
+
+    <p><details>
+        <summary><strong>Answer</strong></summary></p>
+
+    <p>4 is the correct answer. <code>*</code> matches zero or more characters, so a file name with zero or more characters before letter <code>c
+    </code> and zero or more characters after the letter <code>c</code> will be matched.</p>
+
+    </details>
+        <p> </p>
+
+</div>
+
+    <div class="hbox">
+    <h3 id="Controlling_output_1"></h3>
+
+    <p>In the <code>shell-lesson-data/exercise-data/alkanes</code> directory, what is the effect of this loop?</p>
+
+    <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-2mm">for alkanes in *.pdb
+do
+    echo $alkanes
+    cat $alkanes &gt; alkanes.pdb
+done</code>
+
+    <ol style="margin-top:4mm">
+        <li>Prints <code>cubane.pdb</code>, <code>ethane.pdb</code>, <code>methane.pdb</code>, <code>octane.pdb</code>, <code>pentane.pdb</code> and <code>propane.pdb</code>, and the text from <code>propane.pdb</code> will be saved to a file called <code>alkanes.pdb</code>.</li>
+        <li>Prints <code>cubane.pdb</code>, <code>ethane.pdb</code>, and <code>methane.pdb</code>, and the text from all three files would be concatenated and saved to a file called <code>alkanes.pdb</code>. </li>
+        <li>Prints <code>cubane.pdb</code>, <code>ethane.pdb</code>, <code>methane.pdb</code>, <code>octane.pdb</code>, and <code>pentane.pdb</code>, and the text from <code>propane.pd</code>b will be saved to a file called <code>alkanes.pdb</code>.</li>
+        <li>None of the above</li>
+    </ol>
+
+    <p><details>
+        <summary><strong>Answer</strong></summary></p>
+
+    <p>The text from each file in turn gets written to the <code>alkanes.pdb</code> file. However, the file gets overwritten on each loop
+            iteration, so the final content of<code>alkanes.pdb</code> is the text from the <code>propane.pdb</code> file.
+    </details>
+        <p>
+        </p>
+
+    </div>
+
+    <div class="hbox">
+    <h3 id="Controlling_output_2"></h3>
+
+    <p>Also in the <code>shell-lesson-data/exercise-data/alkanes</code> directory, what would be the output of the following loop?</p>
+
+    <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-2mm">for datafile in *.pdb
+do
+    cat $datafile &gt;&gt; all.pdb
+done</code>
+
+    <ol style="margin-top:4mm">
+        <li>All of the text from <code>cubane.pdb</code>, <code>ethane.pdb</code>, <code>methane.pdb</code>, <code>octane.pdb</code> and <code>pentane.pdb</code>  would be concatenated and saved to a file called <code>all.pdb</code>.</li>
+        <li>The text from <code>ethane.pdb</code> will be saved to a file called <code>all.pdb</code>.</li>
+        <li>All of the text from <code>cubane.pdb</code>, <code>ethane.pdb</code>, <code>methane.pdb</code>, <code>octane.pdb</code>, <code>pentane.pdb</code>, and <code>propane.pdb</code> would be concatenated and saved to a file called <code>all.pdb</code>.</li>
+        <li>All of the text from <code>cubane.pdb</code>, <code>ethane.pdb</code>, <code>methane.pdb</code>, <code>octane.pdb</code>, <code>pentane.pdb</code> and <code>propane.pdb</code> would be printed to the screen and saved to a file called <code>all.pdb</code>.</li>
+    </ol>
+
+    <p><details>
+        <summary><strong>Answer</strong></summary></p>
+
+    <p>3 is the correct answer. <code>&gt;&gt;</code> appends to a file, rather than overwriting it with the redirected output from a command.
+        Given the output from the <code>cat</code> command has been redirected, nothing is printed to the screen.</p>
+
+    </details>
+        <p> </p>
+    </div>
+</div>
+
+<div class="box">
+    <h2 class="enum" id="toc_2">Loops with wildcards</h2>
+
+    <p>Let’s continue with our example in the <code>shell-lesson-data/exercise-data/creatures</code> directory. Here’s a slightly more complicated
+        loop:</p>
+
+    <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-4mm">$ for filename in *.dat
+&gt; do
+&gt;     echo $filename
+&gt;     head -n 100 $filename | tail -n 20
+&gt; done</code>
+
+    <p>The shell starts by expanding <code>*.dat</code> to create the list of files it will process. The loop body then executes two commands for
+        each of those files. </p>
+
+    <p>The first command, <code>echo</code>, prints its command-line arguments to standard output. For example:</p>
+
+    <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-4mm">$ echo hello there</code>
+    <samp style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-0.25mm">hello there</samp>
+
+    <p>In this case, since the shell expands <code>$filename</code> to be the name of a file, <code>echo $filename</code> prints the name of the
+        file. Note that we can’t write this as:</p>
+
+    <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-4mm">$ for filename in *.dat
+&gt; do
+&gt;     $filename
+&gt;     head -n 100 $filename | tail -n 20
+&gt; done</code>
+
+    <p>because then the first time through the loop, when <code>$filename</code> expanded to <code>basilisk.dat</code>, the shell would try to run
+        <code>basilisk.dat</code> as a program. </p>
+
+    <p>The second command is <code>head</code> and <code>tail</code> combination. It selects lines 81-100 from whatever file is being processed
+        (assuming the file has at least 100 lines).</p>
+
+    <p>We would like to modify each of the files in <code>shell-lesson-data/exercise-data/creatures</code>, but also save a version of the original
+        files. We want to copy the original files to new files named <code>original-basilisk.dat</code> and <code>original-unicorn.dat</code>, for
+        example. We can’t use:</p>
+
+    <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-4mm">$ cp *.dat original-*.dat</code>
+
+    <p>because that would expand to:</p>
+
+    <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-4mm">$ cp basilisk.dat minotaur.dat unicorn.dat original-*.dat</code>
+
+    <p>This wouldn't back up our files, instead, we get an error:</p>
+
+    <samp style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-4mm">cp: target `original-*.dat&#39; is not a directory</samp>
+
+    <p>This problem arises when <code>cp</code> receives more than two inputs. When this happens, it expects the last input to be a directory where
+        it can copy all the files it was passed. Since there is no directory named <code>original-*.dat</code> in the <code>creatures</code>
+        directory, we get an error.</p>
+
+    <p>Instead, we can use a loop:</p>
+
+    <samp style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-4mm">$ for filename in *.dat
+&gt; do
+&gt;     cp $filename original-$filename
+&gt; done</samp>
+
+    <p>This loop runs the cp command once for each filename. The first time, when <code>$filename</code> expands to <code>basilisk.dat</code>, the
+        shell executes:</p>
+
+    <samp style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-4mm">cp basilisk.dat original-basilisk.dat</samp>
+
+    <p>The second time, the command is:</p>
+
+    <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-4mm">cp minotaur.dat original-minotaur.dat</code>
+
+    <p>The third and last time, the command is:</p>
+
+    <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-4mm">cp unicorn.dat original-unicorn.dat</code>
+
+    <p>Since the <code>cp</code> command does not normally produce any output, it’s hard to check that the loop is working correctly. However, we
+        learned earlier how to print strings using <code>echo</code>, and we can modify the loop to use <code>echo</code> to print our commands
+        without actually executing them. As such, we can check what commands would be run in the unmodified loop.</p>
+
+    <p>The following diagram shows what happens when the modified loop is executed and demonstrates how the judicious use of echo is a good debugging technique.</p>
+
+    <p><img src="./img/shell_script_for_loop_flow_chart.svg" alt="loop"></p>
+
+</div>
+
+<div class="box">
+    <h2 class="enum" id="toc_3">Combining multiple commands</h2>
+
+    <p>Nelle is now ready to process her data files using <code>goostats.sh</code> — a shell script written by her supervisor. This calculates some
+        statistics from a protein sample file and takes two arguments:</p>
+
+    <ol>
+        <li>an input file (containing the raw data)</li>
+        <li>an output file (to store the calculated statistics)</li>
+    </ol>
+
+    <p>Since she’s still learning how to use the shell, she decides to build up the required commands in stages. Her first step is to make sure
+        that she can select the right input files — remember, these are ones whose names end in ‘A’ or ‘B’, rather than ‘Z’. Moving to the <code>
+            north-pacific-gyre</code> directory, Nelle types:</p>
+
+    <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-4mm">$ cd
+$ cd Desktop/shell-lesson-data/north-pacific-gyre
+$ for datafile in NENE*A.txt NENE*B.txt
+&gt; do
+&gt;     echo $datafile
+&gt; done</code>
+    <samp style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-0.25mm">NENE01729A.txt
+NENE01729B.txt
+NENE01736A.txt
+...
+NENE02043A.txt
+NENE02043B.txt</samp>
+
+    <p>Her next step is to decide what to call the files that the <code>goostats.sh</code> analysis program will create. Prefixing each input
+        file’s name with ‘stats’ seems simple, so she modifies her loop to do that:</p>
+
+    <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-4mm">$ for datafile in NENE*A.txt NENE*B.txt
+&gt; do
+&gt;     echo $datafile stats-$datafile
+&gt; done</code>
+    <samp style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-0.25mm">NENE01729A.txt stats-NENE01729A.txt
+NENE01729B.txt stats-NENE01729B.txt
+NENE01736A.txt stats-NENE01736A.txt
+...
+NENE02043A.txt stats-NENE02043A.txt
+NENE02043B.txt stats-NENE02043B.txt</samp>
+
+    <p>She hasn't actually run <code>goostats.sh</code> yet, but now she’s sure she can select the right files and generate the right output
+        filenames.</p>
+
+    <p>Typing in commands over and over again is becoming tedious, though, and Nelle is worried about making mistakes, so instead of re-entering
+        her loop, she presses <code>↑</code>. In response, the shell redisplays the whole loop on one line (using semi-colons to separate the
+        pieces):</p>
+
+    <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-4mm">$ for datafile in NENE*A.txt NENE*B.txt; do echo $datafile stats-$datafile; done</code>
+
+    <p>Using the <code>←</code>, Nelle navigates to the echo command and changes it to bash <code>goostats.sh</code>:</p>
+
+    <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-4mm">$ for datafile in NENE*A.txt NENE*B.txt; do bash goostats.sh $datafile stats-$datafile; done</code>
+
+    <p>When she presses <code>Enter</code>, the shell runs the modified command. However, nothing appears to happen — there is no output. After a
+        moment, Nelle realizes that since her script doesn’t print anything to the screen any longer, she has no idea whether it is running, much
+        less how quickly. She kills the running command by typing <code>Ctrl+C</code>, uses <code>↑</code> to repeat the command, and edits it to
+        read:</p>
+
+    <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-4mm">$ for datafile in NENE*A.txt NENE*B.txt; do echo $datafile;
+bash goostats.sh $datafile stats-$datafile; done</code>
+
+    <blockquote>
+        <p>We can move to the beginning of a line in the shell by typing <code>Ctrl+A</code> and to the end using <code>Ctrl+</code>E.</p>
+    </blockquote>
+
+    <p>When she runs her program now, it produces one line of output every five seconds or so:</p>
+
+    <samp style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-4mm">NENE01729A.txt
+NENE01729B.txt
+NENE01736A.txt
+...</samp>
+
+    <p>1518 times 5 seconds, divided by 60, tells her that her script will take about two hours to run. As a final check, she opens another
+        terminal window, goes into <code>north-pacific-gyre</code>, and uses <code>cat stats-NENE01729B.txt</code> to examine one of the output
+        files. It looks good, so she decides to get some coffee and catch up on her reading.</p>
+
+    <p>Another way to repeat previous work is to use the <code>history</code> command to get a list of the last few hundred commands that have been
+        executed and then to use <code>!123</code> (where <code>123</code> is replaced by the command number) to repeat one of those commands. </p>
+
+</div>
+
+<div class="box">
+<blockquote>
+<h3 id="toc_8">Key Points:</h3>
+
+<ul>
+<li>A for loop repeats commands once for every thing in a list.</li>
+<li>Every for loop needs a variable to refer to the thing it is currently operating on.</li>
+<li>Use <code>$name</code> to expand a variable (i.e., get its value). <code>${name}</code> can also be used.</li>
+<li>Do not use spaces, quotes, or wildcard characters such as <code>*’</code> or <code>?</code> in filenames, as it complicates variable expansion.</li>
+<li>Give files consistent names that are easy to match with wildcard patterns to make it easy to select them for looping.</li>
+<li>Use the up-arrow key to scroll up through previous commands to edit and repeat them.</li>
+<li>Use <code>Ctrl+R</code> to search through the previously entered commands.</li>
+<li>Use <code>history</code> to display recent commands and <code>![number]</code> to repeat a command by number.&gt; </li>
+</ul>
+</blockquote>
+
+</div>
+<div class="box">
+<p> &uarr; <a href="Session1.html">Go to the main menu</a> <br>
+    &larr; <a href="part4.html">Go to the previous part &ndash; Pipes and Filters</a><br>
+    &rarr; <a href="part6.html">Go to the next part &ndash; Shell Scripts</a></p>
+</div>
+
+<script src="../scripts/generate_header.js"></script>
+<script src="../scripts/generate_overview.js"></script>
+<script src="../scripts/scroll_up.js"></script>
+<script src="../scripts/adjust_for_dyslexia.js"></script>
+<script>window.onload = function () {
+    generateOverview();
+    generateHeader();
+    scrollUp();
+    adjustForDyslexia()
+}</script>
+</body>
+</html>

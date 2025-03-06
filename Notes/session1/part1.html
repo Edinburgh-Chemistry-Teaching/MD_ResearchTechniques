@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en-UK">
+<!--xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html">-->
+
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0, user-scalable=yes" name="viewport"/>
+    <meta content="Session1: part 1" name="description"/>
+    <link href="https://fonts.googleapis.com" rel="preconnect">
+    <link crossorigin href="https://fonts.gstatic.com" rel="preconnect">
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,400;0,600;1,400&display=swap"
+          rel="stylesheet">
+    <link href="../scripts/style.css" rel="stylesheet"/>
+    <title>Part 1 &ndash; Navigating Files and Directories</title>
+</head>
+
+<body>
+
+<div class="box">
+    <h1 id="heading">Part 1 &ndash; Navigating Files and Directories</h1>
+    <p> &uarr; <a href="Session1.html">Go to the main menu</a> <br>
+        &rarr; <a href="part2.html">Go to the next part &ndash; Working With Files and Directories</a> </p>
+</div>
+
+<div class="box">
+    <h2 id="overview">Contents</h2>
+</div>
+
+<div class="box">
+    <h2 class="enum" id="toc_1">The terminal</h2>
+    <p>The shell is commonly accessed using a <strong>terminal</strong>, which is a text-only display. Click on the terminal app at the bottom of
+        the desktop:</p>
+    <div class="flex-figure" style="margin-top:-8mm;margin-bottom:-5mm">
+        <div class="figure" style="width: 66%">
+            <figure>
+                <img alt="how to open a terminal" src="img/terminal.png" width="100%">
+            </figure>
+        </div>
+    </div>
+
+    <p>This will open a new window: </p>
+    <div class="flex-figure" style="margin-top:-8mm;margin-bottom:-5mm">
+        <div class="figure" style="width: 66%">
+            <figure>
+                <img alt="open terminal" src="img/commandline.png" width="100%">
+            </figure>
+        </div>
+    </div>
+
+    <p>When you first open the terminal, you will be prompted for your university UUN and password. This is so that the Datastore can be accessed
+        by the machine, which is how you will get the course materials. The course materials you require will be copied to two locations:</p>
+    <ul style="margin-top:-4mm">
+        <li><code>Desktop/Sessions/</code> - the course notes that you will work through</li>
+        <li><code>practicals/</code> - any data you require to do the workshop</li>
+    </ul>
+    <p style="margin-top:-4mm">Each time a new terminal is opened, these folders will update to the most recent Datastore versions.</p>
+
+    <p> When the terminal is opened, the prompt <code>$</code> shows that the shell is waiting for an input. This is where you will type
+        commands e.g. </p>
+    <code style="display:block;white-space:pre-wrap;padding: 6px 10px; margin-top:-3mm;">$ date</code>
+    <p style="margin-top:0mm;"> will print the date and time according to the operating system.</p>
+    <blockquote style="margin-top:-2mm;">
+        <p><u><strong>IMPORTANT</strong>: Do not type the prompt<code>$</code> when typing commands!</u>
+        Only type the command that follows the prompt. This rule applies both in these lessons and in lessons from other sources.
+        After you type a command, you have to press the <code>Enter</code> key to execute it.</p>
+    </blockquote>
+
+    <p>The prompt is followed by a <em>text cursor</em>, a flashing (or solid black) cursor that indicates the position where whatever you type will
+        appear.</p>
+
+    <p>By default, most shells put some information on the user, the machine, and even the directory you are currently in. For example, in the
+        image above:
+    </p>
+    <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-4mm">[test@instance-test-2:~]$ </code>
+
+    <p>Don't worry about this, just make sure to <strong>type in only what is given after </strong><code>$</code> in your terminal.</p>
+
+    <blockquote>
+        <p class="note"> If you mistype a command shell will inform you that it doesn't exist. For example:</p>
+        <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-4mm">$ kls </code>
+        <samp style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-0.25mm">kls: command not found</samp>
+    </blockquote>
+
+</div>
+
+<div class="box">
+    <h2 class="enum" id="toc_2">The file system</h2>
+    <p>The file system section of the operating systems organises our data into <strong>files</strong>, which hold information, and
+        <strong>directories</strong> (or folders), which contain files or other directories. Let&rsquo;s have a look at how the file system is
+        organised.</p>
+    <div class="flex-figure" style="margin-top:-4mm;margin-bottom:-4mm">
+        <div class="figure" style="width: 50%">
+            <figure>
+                <img alt="filesystem" src="img/filesystem.svg" width="100%">
+            </figure>
+        </div>
+    </div>
+
+    <p>The filesystem looks like an upside-down tree. The topmost directory is the <strong>root directory</strong> that holds everything else. We
+        refer to it using a slash character <code>/</code> on its own. Inside that directory are several other directories: </p>
+
+    <ul>
+        <li><code>bin</code> - this is not the rubbish bin, but where some built-in programs are stored </li>
+        <li><code>data</code> - for miscellaneous data files </li>
+        <li><code>home</code> - where users’ personal directories are located </li>
+        <li><code>tmp</code> - for temporary files that don’t need to be stored long-term </li>
+    </ul>
+
+    <p>We know that the directory <code>/home/nelle</code> is stored inside <code>/home</code> because <code>/home</code> is the first part of its
+        name. Similarly, we know that <code>/home</code> is stored inside the root directory <code>/</code> because its name begins with <code>/</code>.</p>
+    <div class="flex-figure" style="margin-top:-4mm;margin-bottom:-4mm">
+        <div class="figure" style="width: 50%">
+            <figure>
+                <img alt="filesystem" src="img/filesystem_home.svg" width="100%">
+            </figure>
+        </div>
+    </div>
+
+    <p>Underneath <code>/home</code>, we find one directory for each user with an account on the machine, Nelle and her colleagues, Imhotep
+        and Larry.<br>
+    Their files are stored in <code>/home/imhotep</code> and in <code>/home/larry</code>, respectively, while Nelle’s are in <code>/home/nelle</code>.</p>
+
+    <h3>To navigate around the file system there are a few key commands:</h3>
+
+    <ul>
+        <li style="margin-top:-4mm">Use <code>pwd</code> to <strong>p</strong>rint the <strong>w</strong>orking <strong>d</strong>irectory
+        <p style="margin-top:2mm">When using the terminal, our current location within the file system is called the <strong>working
+            directory</strong>. Most commands tell the operating system to perform the action wherever the user is, and so knowing where you are is
+            very important.</p>
+            <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:1mm">$ pwd </code>
+            <samp style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-0.25mm">/home/nelle</samp>
+        </li>
+
+        <li style="margin-top:2mm">Use <code>ls</code> to <strong>l</strong>i<strong>s</strong>t the contents of the working directory
+            <p style="margin-top:2mm">In the current directory you should see something like:</p>
+            <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:1mm">$ ls </code>
+<samp style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-0.25mm">Desktop       Downloads       Movies       Pictures
+Documents     Library         Music        Public </samp>
+        </li>
+
+        <li style="margin-top:2mm">Use <code>cd</code> to <strong>c</strong>hange <strong>d</strong>irectory
+            <p style="margin-top:2mm">When you open a new terminal, you will be in your <strong>home directory</strong>. To navigate through directories, we use the
+                command <code>cd</code> followed by the path that we want to follow. If we <strong>only use</strong> <code>cd</code>, you will
+                return to your home directory.</p>
+            <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:1mm">$ cd Desktop
+$ pwd </code>
+<samp style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-0.25mm">/home/nelle/Desktop</samp>
+            <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:4mm">$ cd
+$ pwd </code>
+<samp style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-0.25mm">/home/nelle</samp>
+        </li>
+    </ul>
+</div>
+
+<div class="box">
+    <h2 class="enum" id="toc_3">Exploring a directory</h2>
+    <p>At the start of each session you will be required to make a copy of the material we provide. This can be done in the shell using the
+        <code>cp</code> command:</p>
+    <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-4mm">$ cp -r practicals/session1 Desktop/</code>
+    <blockquote style="margin-top:2mm">
+        <code>cp</code> stands for <strong>c</strong>o<strong>p</strong>y <br>
+        <code>-r</code> tells the shell to copy all files and folders <br>
+        <code>practicals/session1</code> is the source location <br>
+        <code>Desktop/</code> is the destination
+    </blockquote>
+
+    <p><strong><em>WARNING</em></strong> ⚠️<br>
+    <strong>Every time you open a new terminal, the <code>practicals/</code> folder will revert back to the original copy. Therefore, you will lose
+        any work if you don't copy it to a new folder.</strong></p>
+
+    <p>To navigate to this new directory, first go to <code>Desktop</code>:</p>
+    <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-4mm">$ cd Desktop</code>
+
+    <p>Check the directories on the desktop:</p>
+    <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-4mm">$ ls</code>
+
+    <p>You should see a list, with one of them called <code>session1</code>. Now, go to that directory:</p>
+    <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-4mm">$ cd session1</code>
+
+    <h3>We have now navigated from the <em>home directory</em> to a new <em>current working directory</em>.</h3>
+
+    <p>Let’s take a look at the contents of <code>session1</code> and the directory within it:</p>
+    <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-4mm">$ ls </code>
+<samp style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-0.25mm">eddie-hpc-data/    shell-lesson-data/</samp>
+
+    <p>We can also use <code>ls</code> to list the contents a different directory. Let's list the contents of <code>shell-lesson-data</code>, without
+        descending into the directory:</p>
+    <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-4mm">$ ls shell-lesson-data </code>
+<samp style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-0.25mm">exercise-data/      north-pacific-gyre/</samp>
+
+    <p>Now, let&rsquo;s descend into the <code>exercise-data</code> directory in one step:</p>
+    <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-4mm">$ cd shell-lesson-data/exercise-data</code>
+
+    <p>Run <code>pwd</code> to check the directory you are currently in:</p>
+    <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-4mm">$ pwd </code>
+<samp style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-0.25mm">/home/nelle/Desktop/session1/shell-lesson-data/exercise-data</samp>
+
+    <p>List the contents of the directory:</p>
+    <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-4mm">$ ls </code>
+<samp style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-0.25mm">alkanes/       animal-counts/       creatures/       numbers.txt       writing/</samp>
+
+    <p>From our current directory, to move into the <code>north-pacific-gyre</code> - a subdirectory of the parent directory
+        <code>shell-lesson-data</code> - we first need to move a level up:</p>
+    <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-4mm">$ cd ..</code>
+    <p style="margin-top:2mm"><code>..</code> is a special directory name meaning “the directory containing this one”, or more succinctly, the parent
+        of the current directory. </p>
+
+    <p>The special directory <code>..</code> doesn’t usually show up when we run ls. If we want to display it, we can add the <code>-a</code>
+        option to <code>ls</code>:</p>
+    <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-4mm">$ ls -a </code>
+<samp style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-0.25mm">.       ..       exercise-data/       north-pacific-gyre/</samp>
+    <p style="margin-top:2mm">The <code>-a</code> option stands for ‘show all’ (including hidden files); it forces <code>ls</code> to show us
+        file and directory names that
+        begin with <code>.</code></p>
+
+    <p>Now we can descend into the desired directory:</p>
+    <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-4mm">$ cd north-pacific-gyre</code>
+
+    <h3 class="enum" id="toc_3_1">Absolute vs relative file paths</h3>
+
+    <p>So far, when specifying directory names, or even a directory path (as above), we have been using <strong>relative paths</strong>. When you
+        use a relative path with a command like <code>ls</code> or <code>cd</code>, it tries to find that location from where we are right now,
+        rather than from the root of the file system.</p>
+
+    <p>However, it is possible to specify the <strong>absolute path</strong> to a directory by including its entire path from the root directory,
+        which is indicated by a leading slash. The leading <code>/</code> tells the computer to follow the path from the root of the file system, so
+        it always refers to exactly one directory, no matter where we are when we run the command.</p>
+
+    <p>This allows us to move to our <code>shell-lesson-data</code> directory from anywhere on the filesystem (including from inside
+        <code>exercise-data</code>). To find the absolute path we’re looking for, we can use <code>pwd</code> and then extract the piece we need to move to
+        <code>shell-lesson-data</code>.</p>
+<code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-4mm">$ pwd </code>
+<samp
+        style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-0.25mm">/home/nelle/Desktop/session1/shell-lesson-data/north-pacific-gyre </samp>
+<code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-0.25mm">$ cd /home/nelle/Desktop/session1/shell-lesson-data</code>
+
+    <p>Remember, that the commands are after the prompt <code>$</code> while the output of the terminal starts on a new line and has no prompt symbol
+        in front.</p>
+
+    <p>The other way to indicate an absolute path, with respect to the current user’s home directory, is by using the tilde <code>~</code> character
+        at the start of a path. For example, if Nelle’s home directory is <code>/home/nelle</code>, then <code>~/data</code> is equivalent to
+        <code>/home/nelle/data</code>.</p>
+    <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-4mm">$ pwd </code>
+    <samp style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-0.25mm">/home/nelle/Desktop/session1/shell-lesson-data </samp>
+    <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-0.25mm">$ cd ~/Desktop/session1/shell-lesson-data/exercise-data</code>
+
+</div>
+
+<div class="box">
+    <h2 class="enum" id="toc_4">Tab completion</h2>
+
+    <p>Knowing this much about files and directories, Nelle is ready to organize the files that the protein assay machine will create.</p>
+
+    <p>She created a directory called <code>north-pacific-gyre</code> (to remind herself where the data came from), which contains the data files
+        from the assay machine and her data processing scripts.</p>
+
+    <p>Each of her physical samples is labelled according to her lab’s convention with a unique ten-character ID, such as ‘NENE01729A’. This ID is
+        what she used in her collection log to record the location, time, depth, and other characteristics of the sample, so she decides to use it
+        within the filename of each data file. Since the output of the assay machine is plain text, she will call her files
+        <code>NENE01729A.txt</code>, <code>NENE01812A.txt</code>, and so on. All 1520 files will go into the same directory.</p>
+
+    <p>Now, in the current directory <code>shell-lesson-data</code>, Nelle can see what files she has using the command:</p>
+    <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-4mm">$ ls north-pacific-gyre/</code>
+
+    <p>This command is a lot to type, but she can let the shell do most of the work through what is called <em>tab completion</em>. If she types:</p>
+    <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-4mm">$ ls nor</code>
+    <p style="margin-top:2mm">and then presses <code>Tab</code>, the shell automatically completes the directory name for her:</p>
+    <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-2mm">$ ls north-pacific-gyre/</code>
+
+    <p>Pressing <code>Tab</code> again does nothing, since there are multiple possibilities; pressing <code>Tab</code> twice brings up a list of all
+        the files.</p>
+
+    <p>If Nelle then types <code>g</code> and then presses <code>Tab</code> again,</p>
+    <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-4mm">$ ls north-pacific-gyre/g </code>
+    <p style="margin-top:2mm"> the shell will append ‘goo’ since all files that start with ‘g’ share the first three characters ‘goo’. </p>
+    <samp style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-4mm">$ ls north-pacific-gyre/goo </samp>
+    <p style="margin-top:2mm"> Pressing <code>Tab</code> twice will then list all files that match the input.</p>
+    <samp style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-4mm">goodiff.sh   goostats.sh</samp>
+
+    <p>This is called tab completion, and we will see it in many other tools as we go on.</p>
+    <p> </p>
+</div>
+
+<div class="box">
+    <div class="hbox">
+        <h3 id="Navigating directories"></h3>
+
+        <p>Starting from <code>/home/nelle/data</code>, which of the following commands could Nelle use to navigate to her home directory? </p>
+
+        <ol>
+            <li><code>cd .</code></li>
+            <li><code>cd /</code></li>
+            <li><code>cd /home/nelle</code></li>
+            <li><code>cd ../..</code></li>
+            <li><code>cd ~</code></li>
+            <li><code>cd home</code></li>
+            <li><code>cd ~/data/..</code></li>
+            <li><code>cd</code></li>
+            <li><code>cd ..</code></li>
+        </ol>
+
+        <p><details>
+            <summary><strong>Answer</strong></summary></p>
+
+        <ol>
+            <li>No: <code>.</code> stands for the current directory.</li>
+            <li>No: <code>/</code> stands for the root directory.</li>
+            <li>No: Nelle’s home directory is <code>/home/nelle</code>.</li>
+            <li>No: this command goes up two levels, i.e. ends in <code>/home</code>.</li>
+            <li>✅: <code>~</code> stands for the user’s home directory, in this case <code>/home/nelle</code>.</li>
+            <li>No: this command would navigate into a directory home in the current directory if it exists.</li>
+            <li>✅: unnecessarily complicated, but correct.</li>
+            <li>✅: shortcut to go back to the user’s home directory.</li>
+            <li>✅: goes up one level.</li>
+        </ol></details>
+        <p> </p>
+    </div>
+
+    <p></p>
+
+    <div class="hbox">
+        <h3 id="Listing directory contents 1"></h3>
+
+        <p>Using the filesystem diagram below, if <code>pwd</code> displays <code>/home/thing</code>, what will <code>ls ../backup</code> display?</p>
+
+        <ol>
+            <li><code>../backup: No such file or directory</code></li>
+            <li><code>012-12-01 2013-01-08 2013-01-27</code></li>
+            <li><code>2012-12-01/ 2013-01-08/ 2013-01-27/</code></li>
+            <li><code>original/ pnas_final/ pnas_sub/</code></li>
+        </ol>
+
+        <p><img src="./img/filesystem-challenge.svg" alt="filesystem-challenge"></p>
+
+        <p><details>
+            <summary><strong>Answer</strong></summary></p>
+
+        <ol>
+            <li>No: there is a directory backup in <code>/home</code>.</li>
+            <li>No: this is the content of Users/thing/backup, but with <code>..</code>, we asked for one level further up.</li>
+            <li>No: see previous explanation.</li>
+            <li>✅: <code>../backup/</code> refers to <code>/home/backup/</code>.
+            </li>
+        </ol></details>
+        <p> </p>
+    </div>
+
+    <p></p>
+
+    <div class="hbox">
+        <h3 id="Listing directory contents 2"></h3>
+
+        <p>Using the filesystem diagram above, if <code>pwd</code> displays /home/backup, and <code>-r</code> tells <code>ls</code> to display things
+            in reverse order, what command(s) will result in the following output:</p>
+
+        <p><code>pnas_sub/ pnas_final/ original/</code></p>
+
+        <ol>
+            <li><code>ls pwd</code></li>
+            <li><code>ls -r</code></li>
+            <li><code>ls -r /home/backup</code></li>
+        </ol>
+
+        <p><details>
+            <summary><strong>Answer</strong></summary></p>
+
+        <ol>
+            <li>No: <code>pwd</code> is not the name of a directory.</li>
+            <li>✅: <code>ls</code> without directory argument lists files and directories in the current directory.</li>
+            <li>✅: uses the absolute path explicitly.
+            </li>
+        </ol></details>
+        <p> </p>
+    </div>
+</div>
+
+<div class="box">
+    <blockquote>
+    <h3 id="toc_10">Key Points:</h3>
+
+    <ul>
+        <li>The file system is responsible for managing information on the disk.</li>
+        <li>Information is stored in files, which are stored in directories (folders).</li>
+        <li>Directories can also store other directories, which then form a directory tree.</li>
+        <li><code>pwd</code> prints the user’s current working directory.</li>
+        <li><code>ls [path]</code> prints a listing of a specific file or directory; <code>ls</code> on its own lists the current working directory.</li>
+        <li><code>cd [path]</code> changes the current working directory.</li>
+        <li>Most commands take options that begin with a single <code>-</code>.</li>
+        <li>Directory names in a path are separated with <code>/</code> on Unix (but <code>\</code> on Windows).</li>
+        <li><code>/</code> on its own is the root directory of the whole file system.</li>
+        <li>An absolute path specifies a location from the root of the file system.</li>
+        <li>A relative path specifies a location starting from the current location.</li>
+        <li><code>.</code> on its own means ‘the current directory’; <code>..</code> means ‘the directory above the current one’.</li>
+    </ul>
+    </blockquote>
+</div>
+
+<div class="box">
+<p> &uarr; <a href="Session1.html">Go to the main menu</a> <br>
+    &rarr; <a href="part2.html">Go to the next part &ndash; Working With Files and Directories</a> </p>
+</div>
+
+<script src="../scripts/generate_header.js"></script>
+<script src="../scripts/generate_overview.js"></script>
+<script src="../scripts/scroll_up.js"></script>
+<script src="../scripts/adjust_for_dyslexia.js"></script>
+<script>window.onload = function () {
+    generateOverview();
+    scrollUp();
+    adjustForDyslexia()
+}</script>
+</body>
+</html>
