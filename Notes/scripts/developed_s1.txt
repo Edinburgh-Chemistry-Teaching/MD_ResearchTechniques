@@ -1,0 +1,2 @@
+<a href="https://swcarpentry.github.io/shell-novice/">Software Carpentry</a>
+Copyright (<a href="https://creativecommons.org/licenses/by/4.0/">c</a>) <a href="https://carpentries.org/">The Carpentries</a>
