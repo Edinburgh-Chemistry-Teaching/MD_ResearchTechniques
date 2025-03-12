@@ -28,6 +28,8 @@ bibliography: paper.bib
 
 ---
 
+ - should be max 1000 words
+
  - Describe the submission, and explain its eligibility for JOSE.
  - Include a “Statement of Need” section, explaining how the submitted artifacts contribute to computationally enabled teaching and learning, and describing how they might be adopted by others.
  - Describe the learning objectives, content, instructional design, and experience of use in teaching and learning situations.
