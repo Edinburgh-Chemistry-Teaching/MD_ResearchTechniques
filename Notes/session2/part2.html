@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en-UK">
+<!--xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html">-->
+
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0, user-scalable=yes" name="viewport"/>
+    <meta content="Session 2: Protein Simulations" name="description"/>
+    <link href="https://fonts.googleapis.com" rel="preconnect">
+    <link crossorigin href="https://fonts.gstatic.com" rel="preconnect">
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,400;0,600;1,400&display=swap"
+          rel="stylesheet">
+    <link href="../scripts/style.css" rel="stylesheet"/>
+    <title>Part 2 &ndash; Running a Molecular Dynamics Simulation</title>
+</head>
+
+<body>
+
+<div class="box">
+    <h1 id="title">Part 2 &ndash; Running a Molecular Dynamics Simulation</h1>
+    <p> &uarr; <a href="Session2.html">Go to the main menu</a> <br>
+        &larr; <a href="part1.html">Go to the previous part &ndash; Preparing the System for Simulation</a> <br>
+        &rarr; <a href="part3.html">Go to the next part &ndash; Analysis of the Simulation Data</a> </p>
+</div>
+
+<div class="box">
+    <h2 id="overview">Contents</h2>
+</div>
+
+<div class="box">
+    <p>
+        Now that the solvated protein system is prepared, you can get started with the <abbr>MD</abbr> simulations.
+        Before running the actual simulation to generate data that can be analysed, it is important to first run some
+        preparation steps to prevent the system from exploding due to atoms being too far apart or too close together
+        and to slowly allow the system to reach an equilibrium state.
+    </p>
+    <p>
+        Therefore, you will run the following sequence of energy minimisation, equilibration and a production run:</p>
+    <ol style="margin-top:-4mm">
+        <li>Energy minimisation</li>
+        <li>Restrained equilibration</li>
+        <li>Unrestrained <abbr>NPT</abbr> production run</li>
+    </ol>
+    <p style="margin-top:-2mm">The final two steps will require a bit more time and resources, so you will use the Eddie HPC to run them.
+    </p>
+</div>
+
+<div class="box">
+    <h2 class="enum" id="toc_1">Energy minimisation</h2>
+    <p> In molecular dynamics, the goal of energy minimisation is to <strong>minimise the forces</strong> acting on each atom. The total potential
+        energy of the system is reduced by changing the atomic coordinates until a minimum is found. <br>
+        With GROMACS, this is usually done with the <a target="_blank"
+                href="https://manual.gromacs.org/current/reference-manual/algorithms/energy-minimization.html"><em>steepest descent</em></a>
+        algorithm, an iterative method where at each step the coordinates are adjusted such that the energy of the system lowers. </p>
+    <p> Energy minimisation is treated as a type of <code>MD</code> run, and so a run parameter <code>.mdp</code> file is required. The key parameters
+        included are:</p>
+    <ul style="margin-top:-4mm">
+        <li><code>emtol</code> - the energy tolerance value to be targeted (in kJ mol<sup>-1</sup> nm<sup>-1</sup>) </li>
+        <li><code>nsteps</code> - maximum number of (minimisation) steps to perform</li>
+    </ul>
+        <p style="margin-top:-3mm">The run will continue until either the total number of steps reaches the user defined maximum or until the maximum
+            force on any atom <code>Fmax</code> is below <code>emtol</code>. If <code>Fmax</code> is <strong>not</strong> reached, it indicates a problem
+                in the initial atom configuration.</p>
+    <p> A successful energy minimisation will result in a negative potential energy <code>Epot</code>.
+        For a simple protein it will be in the order of 10<sup>4</sup> kJ mol<sup>-1</sup>,
+        for a bigger solvated system 10<sup>5</sup> kJ mol<sup>-1</sup>. We chose an <code>emtol</code> of 1000 kJ mol<sup>-1
+        </sup> nm<sup>-1</sup> for this system, which should give us a reasonable <code>Epot</code>.</p>
+    <div class="bbox">
+        <h3 id="Minimising_the_energy"></h3>
+        <ol>
+            <li>Run an energy minimisation of the solvated protein structure </li>
+            <li>Use <a target="_blank" href="https://manual.gromacs.org/current/onlinehelp/gmx-grompp.html"><code>grompp</code></a> to
+                prepare the <code>.tpr</code> input file for the energy minimisation:<p>
+            <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-0.1mm">$ gmx grompp -v -f MDP/em.mdp -c protein-solvated-ions.gro -p protein-solvated-ions.top -o em.tpr -po em.mdp -pp em.top</code>
+                <blockquote style="margin-top:2mm">
+                    <code>-v</code> specifies that the output should be "loud and noisy" (i.e. <strong>v</strong>erbose) <br>
+                    <code>-f</code> specifies the input run parameter file<br>
+                    <code>-c</code> specifies the coordinate file of the system<br>
+                    <code>-p</code> specifies the topology file<br>
+                    <code>-o</code> specifies the output name of the <code>.tpr</code> file <br>
+                    <code>-po</code> specifies the output name of the <code>.mdp</code> file <br>
+                    <code>-pp</code> specifies the output name of the <code>.top</code> file
+                </blockquote>
+            </li>
+            <li>Run the energy minimisation with <a target="_blank" href="https://manual.gromacs.org/current/onlinehelp/gmx-mdrun.html">
+                <code>mdrun</code></a>:
+                <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:1mm">$ gmx mdrun -v -s em.tpr -deffnm em</code>
+                <blockquote style="margin-top:2mm">
+                    <code>-v</code> specifies that the output should be "loud and noisy" (i.e. <strong>v</strong>erbose) <br>
+                    <code>-s</code> specifies the run input file, which is the output <code>.tpr</code> file from <code>grompp</code><br>
+                    <code>-deffnm</code> specifies the <strong>def</strong>ault <strong>f</strong>ile <strong>n</strong>a<strong>m</strong>e
+                    for all outputs
+                    <p class="note" style="margin-top:2mm">With the <code>-v</code> flag, the energy and force evolution will be displayed
+                        on the screen.
+                    </p>
+                </blockquote>
+            </li>
+            <li>Ensure that <code>Fmax</code> reaches <code>emtol</code> by inspecting the output of the <code>mdrun</code>.
+                <blockquote style="margin-top:2mm">
+                <p>If the system converges, at the end of the <code>mdrun</code> output you should see something like:</p>
+                <samp style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-0.1mm">Steepest Descents converged to Fmax < 1000 in 405 steps
+Potential Energy  = -4.5583720e+06
+Maximum force     =  6.0075488e+02 on atom 261
+Norm of force     =  9.6276874e+01</samp>
+                <p style="margin-top:3mm">If the system doesn't manage to converge in the maximum number of steps, you will instead see:</p>
+                <samp style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-0.1mm">Steepest Descents did not converge to Fmax < 1000 in 50001 steps.
+Potential Energy  =  4.5589925e+06
+Maximum force     =  1.3282937e+05 on atom 174
+Norm of force     =  3.5967257e+03</samp>
+                    </blockquote>
+            </li>
+
+            <li>Visualise the final structure in VMD.
+                <p style="margin-top:2mm">To create new representations, like in <a href="part1.html#change_rep">part 1</a>, go to the
+                    <code>Graphics</code> menu and select <code>Representations...</code>
+                    </p>
+                <ul>
+                    <li>Click on <code>Create Rep</code> to create a new representation for the protein. Then type
+                        <code>protein</code> in the <code>Selected Atoms</code> section and
+                        change the Drawing Method to <code>NewCartoon</code>
+                    </li>
+                    <li>Create a new representation for the water molecules with the selection command
+                        <code>water</code>
+                        Set the coloring method to ColorID, select white as the colour, set the drawing method to <code>QuickSurf</code>
+                        and the
+                        Material to <code>Ghost</code>
+                    </li>
+                    <li>Create a new representation for the ions with the selection command <code> type NA CL</code>.
+                        Set the coloring method to type, the drawing method to <code>VDW</code> and the Material to
+                        <code>AOShiny</code>
+                    </li>
+                    <li>Deactivate the default representations for protein, water and ions by double-clicking on the
+                        first line in the <code>Graphical Representations</code> window
+                    </li>
+                </ul>
+            </li>
+        </ol>
+        <div class="flex-figure" style="margin-top:-4mm;">
+            <div class="figure" style="width: 50%">
+                <figure>
+                    <img src="img/em_box.png" width="100%">
+                    <figcaption>
+                        <abbr>VMD</abbr> visualisation of protein system after energy minimisation with the above listed representations.
+                    </figcaption>
+                </figure>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="box">
+    <h2 class="enum" id="toc_2">Equilibration</h2>
+    <p>Now that the system has been energy minimised, we should have a reasonable starting system. However, before we can start an analysis run,
+        we must first equilibrate it, which will allow the atoms to "relax" into their equilibrium state. </p>
+
+    <p> For some systems (such as proteins in solvent), it is important to run <strong>restrained</strong> equilibration, as the system may
+        collapse otherwise. This is because the protein-solvent positions and interactions may not be optimised. To do this, we use
+        <code>define = -DPOSRES</code> in the run parameter <code>.mdp</code> file, which is used to turn on position restraints in the
+        topology file. In our system, we will be restraining the heavy atoms (non-hydrogens) of the protein, while the water and ions are allowed to
+        relax around it.</p>
+
+    <p>Equilibration is usually conducted in two stages:</p>
+    <ol style="margin-top:-3mm">
+        <li>an <em>NVT</em> ensemble - a constant <strong>n</strong>umber of particles, <strong>v</strong>olume and <strong>t</strong>emperature</li>
+        <li>an <em>NPT</em> ensemble - a constant <strong>n</strong>umber of particles, <strong>p</strong>ressure and <strong>t</strong>emperature
+        </li>
+    </ol>
+
+    <h3 class="enum" id="toc_2_1">Restrained <em>NVT</em> equilibration</h3>
+    <p style="margin-top:-4mm">First, we are going to bring the system to the temperature we want to simulate and ensure the proper orientation of
+        water around the protein. We use temperature coupling to heat up the system from 0 K to 300 K, regulated by rescaling the
+        velocities of the atoms in the system. </p>
+
+    <p> As this is an <code>MD</code> run, a run parameter <code>.mdp</code> file is required. The key parameters included are:</p>
+    <ul style="margin-top:-3mm">
+        <li><code>gen_vel = yes</code> - tells GROMACS to initiate velocity generation, as we don't know what they should be yet </li>
+        <li><code>dt</code> and <code>nsteps</code> - the time step and the number of steps to perform, multiplied together they give the length
+            of the simulation in ps</li>
+        <li><code>tcoupl = V-rescale</code> - the thermostat being used </li>
+    </ul>
+
+    <div class="bbox">
+        <h3 id="Equilibrating_the_system_at_constant_temperature"></h3>
+        <ol>
+            <li>Equilibrate the system at constant temperature (<abbr>NVT</abbr> ensemble) and with position restraints
+                on the protein
+            </li>
+            <li>Copy the input files to your Eddie HPC scratch directory:<br>
+                <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:1mm">$ scp -r ~/Desktop/session2 &lt;UUN&gt;@eddie.ecdf.ed.ac.uk:/exports/eddie/scratch/&lt;UUN&gt;/</code>
+                <blockquote style="margin-top:2mm">
+                    <p class="note"> Replace <code>&lt;UUN&gt;</code> with your own university username. </p>
+                </blockquote>
+            </li>
+            <li>Use <code>ssh -X</code> to in to Eddie HPC and navigate to the <code>session2</code> directory:
+                <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:1mm">$ ssh -X &lt;UUN&gt;@eddie.ecdf.ed.ac.uk</code>
+                <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-0.25mm">$ cd /exports/eddie/scratch/&lt;UUN&gt;/session2/</code>
+                <blockquote style="margin-top:2mm">
+                    <p class="note"> Replace <code>&lt;UUN&gt;</code> with your own university username. </p>
+                </blockquote>
+            </li>
+            <li>Prepare the submission script for the equilibration run on eddie:<br>
+                <p style="margin-top:2mm">Use the <code>cp</code> command to copy the template <code>eddie_run.sh</code> to<code>run_nvt.sh</code>,
+                    then use the vim text editor to open the <code>run_nvt.sh</code> script and insert the GROMACS commands to compile and run the
+                    restrained equilibration:
+                <ol>
+                    <li>Copy the template script:
+                        <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:1mm">$ cp eddie_run.sh run_nvt.sh</code>
+                    </li>
+                    <li>Open run_nvt.sh:
+                        <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:1mm">$ vim run_nvt.sh</code>
+                    </li>
+                    <li>Change the name of the job by editing the line containing <code>#$ -N </code>:
+                        <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:1mm">#$ -N nvt</code>
+                    </li>
+                    <li> Add the required options to <a target="_blank" href="https://manual.gromacs.org/current/onlinehelp/gmx-grompp.html"><code>grompp</code></a>
+                        to prepare the <code>.tpr</code> input file for the restrained equilibration:<br>
+                        <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:1mm">gmx grompp -v -f MDP/nvt.mdp -c em.gro -p protein-solvated-ions.top -r em.gro -o nvt.tpr -po nvt.mdp -pp nvt.top</code>
+                        <blockquote style="margin-top:2mm">
+                            <code>-v</code> specifies that the output should be "loud and noisy" (i.e. <strong>v</strong>erbose) <br>
+                            <code>-f</code> specifies the input run parameter file<br>
+                            <code>-c</code> specifies the coordinate file of the system<br>
+                            <code>-p</code> specifies the topology file<br>
+                            <code>-r</code> specifies the coordinate file for the restraints which can be identical to the input coordinate file <br>
+                            <code>-o</code> specifies the output name of the <code>.tpr</code> file <br>
+                            <code>-po</code> specifies the output name of the <code>.mdp</code> file <br>
+                            <code>-pp</code> specifies the output name of the <code>.top</code> file
+                        </blockquote>
+                    </li>
+                    <li>Add the restrained equilibration with <a target="_blank" href="https://manual.gromacs.org/current/onlinehelp/gmx-mdrun.html">
+                        <code>mdrun</code></a>:<br>
+                        <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:1mm">gmx mdrun -v -s nvt.tpr -deffnm nvt -ntomp 1</code>
+                        <blockquote style="margin-top:2mm">
+                            <code>-v</code> specifies that the output should be "loud and noisy" (i.e. <strong>v</strong>erbose) <br>
+                            <code>-s</code> specifies the run input file, which is the output <code>.tpr</code> file from <code>grompp</code><br>
+                            <code>-deffnm</code> specifies the <strong>def</strong>ault <strong>f</strong>ile <strong>n</strong>a<strong>m</strong>e
+                            for all outputs <br>
+                            <code>-ntomp</code> specifies the total <strong>n</strong>umber of <strong>O</strong>pen<strong>MP</strong> <strong>t
+                        </strong>hreads <br>
+                        </blockquote>
+                    </li>
+                </ol>
+            </li>
+            <li>Save the file with <code>:wq</code> and <code>Enter</code>, and submit the run:
+                <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:1mm">$ qsub run_nvt.sh</code>
+            </li>
+            <li>
+                Use <code>qstat</code> to check the status of the job:<br>
+                <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:1mm">$ qstat -u &lt;UUN&gt;</code>
+                <blockquote style="margin-top:1mm">
+                    <p>This will show information such as the job ID, priority status, name, user, state etc.</p>
+                    <samp style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:1mm">job-ID  prior    name   user   state  submit/start         queue                         slots
+-------------------------------------------------------------------------------------------------
+462678  0.11955  nvt    nelle  r      01/02/2025 12:13:09  eddie@node3b04.ecdf.ed.ac.uk  1        </samp>
+                </blockquote>
+            </li>
+            <li>Once finished, check that the job ran successfully:
+                <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:1mm">$ vim nvt.o&lt;job-ID&gt;</code>
+                <p style="margin-top:2mm">At the end of the file, you should see a performance overview of the simulation if it ran successfully. If
+                    not, search through the file to find out what error occurred.</p>
+                <blockquote style="margin-top:1mm">
+                    <p class="remember">Within <code>vim</code>, you can use <code>Shift+g</code> to go to the end of the file. You can use
+                        <code>/&lt;string&gt; Enter</code> to search through a file for &lt;string&gt;.</p>
+                </blockquote>
+            </li>
+        </ol>
+    </div>
+
+    <h3 class="enum" id="toc_2_2" style="margin-top:10mm">Restrained <em>NPT</em> equilibration</h3>
+    <p style="margin-top:-4mm"> Next, we will perform an equilibration run at constant temperature and pressure, to stabilise the pressure (and thus density) of the
+        system. We use pressure coupling to increase the pressure to 1 bar, regulated by rescaling the atom coordinates and box vectors. </p>
+
+    <p> As this is an <code>MD</code> run, a run parameter <code>.mdp</code> file is required. The key parameters included are:</p>
+    <ul style="margin-top:-3mm">
+        <li><code>gen_vel = no</code> - tells GROMACS that initial velocities will be provided using the <code>-t</code> flag</li>
+        <li><code>dt</code> and <code>nsteps</code> - the time step and the number of steps to perform, multiplied together they give the length
+            of the simulation in ps</li>
+        <li><code>pcoupl = C-rescale</code> - the barostat being used </li>
+    </ul>
+
+    <div class="bbox">
+        <h3 id="Equilibrating_the_system_at_constant_temperature_and_pressure"></h3>
+        <ol>
+            <li>Equilibrate the system at constant pressure (<abbr>NPT</abbr> ensemble) with position restrains on the protein
+            </li>
+            <li>Write a <code>run_npt.sh</code> run submission script for the <abbr>NPT</abbr> equilibration run on
+                Eddie HPC, following the same procedure as <a href="#Equilibrating_the_system_at_constant_temperature">before</a>.<br>
+                <ol>
+                    <li style="margin-top:2mm">Copy the template script:
+                        <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:1mm">$ cp eddie_run.sh run_npt.sh</code>
+                    </li>
+                    <li>Open run_npt.sh:
+                        <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:1mm">$ vim run_npt.sh</code>
+                    </li>
+                    <li>Change the name of the job by editing the line containing <code>#$ -N </code>:
+                        <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:1mm">#$ -N npt</code>
+                    </li>
+                    <li>Add the required options for <a target="_blank"
+                            href="https://manual.gromacs.org/current/onlinehelp/gmx-grompp.html"><code>grompp</code></a>
+                        and <a target="_blank" href="https://manual.gromacs.org/current/onlinehelp/gmx-mdrun.html"><code>mdrun</code></a>:
+                        <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:1mm">gmx grompp -v -f MDP/npt.mdp -c nvt.gro -p protein-solvated-ions.top -r nvt.gro -t nvt.cpt -o npt.tpr -po npt.mdp -pp npt.top</code>
+                        <blockquote style="margin-top:2mm">
+                            <p class="note" style="margin-bottom:2mm">As this is the second simulation we are running, we can use the <code>-t</code> option to conserve the velocities produced during the <em>NVT</em> equilibration.</p>
+                            <code>-v</code> specifies that the output should be "loud and noisy" (i.e. <strong>v
+                            </strong>erbose) <br>
+                            <code>-f</code> specifies the input run parameter file<br>
+                            <code>-c</code> specifies the coordinate file of the system<br>
+                            <code>-p</code> specifies the topology file<br>
+                            <code>-r</code> specifies the coordinate file for the restraints which can be identical to the input coordinate file <br>
+                            <code>-t</code> specifies the checkpoint file, with contains the velocities to use at the start of the simulation <br>
+                            <code>-o</code> specifies the output name of the <code>.tpr</code> file <br>
+                            <code>-po</code> specifies the output name of the <code>.mdp</code> file <br>
+                            <code>-pp</code> specifies the output name of the <code>.top</code> file
+                        </blockquote>
+                        <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:5mm">gmx mdrun -v -s npt.tpr -deffnm npt -ntomp 1</code>
+                        <blockquote style="margin-top:2mm">
+                            <code>-v</code> specifies that the output should be "loud and noisy" (i.e. <strong>v</strong>erbose) <br>
+                            <code>-s</code> specifies the run input file, which is the output <code>.tpr</code> file from <code>grompp</code><br>
+                            <code>-deffnm</code> specifies the <strong>def</strong>ault <strong>f</strong>ile <strong>n</strong>a<strong>m</strong>e
+                            for all outputs <br>
+                            <code>-ntomp</code> specifies the total <strong>n</strong>umber of <strong>O</strong>pen<strong>MP</strong> <strong>t
+                        </strong>hreads <br>
+                        </blockquote>
+                    </li>
+                </ol>
+            </li>
+            <li>Submit the run with <code>qsub</code><br>
+                <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:1mm">$ qsub run_npt.sh</code>
+                <blockquote style="margin-top:2mm">
+                    <p class="note">Make sure that the <code>run_nvt.sh</code> script has finished successfully before submitting the <code>run_npt.sh</code> script.
+                    </p>
+                </blockquote>
+            </li>
+        </ol>
+    </div>
+</div>
+
+<div class="box">
+    <h2 class="enum" id="toc_3">Unrestrained production run</h2>
+    <p>
+        Now that the system is equilibrated enough at the desired temperature and pressure, you can take away the position restraints and continue the
+        simulations to collect data.
+    </p>
+    <div class="bbox">
+        <h3 id="Running_an_unrestrained_NPT_equilibration"></h3>
+        <ol>
+            <li>Run an unrestrained simulation at constant temperature and pressure</li>
+            <li>Write a <code>run_prod.sh</code> run submission script for the unrestrained <abbr>MD</abbr>
+                run on Eddie HPC, following the same procedure as in the <a
+                        href="#Equilibrating_the_system_at_constant_temperature_and_pressure">previous
+                    task</a>.<br>
+                <ol>
+                    <li style="margin-top:2mm">Copy the template script:
+                        <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:1mm">$ cp eddie_run.sh run_prod.sh</code>
+                    </li>
+                    <li>Open run_prod.sh:
+                        <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:1mm">$ vim run_prod.sh</code>
+                    </li>
+                    <li>Change the name of the job by editing the line containing <code>#$ -N </code>:
+                        <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:1mm">#$ -N md</code>
+                    </li>
+                    <li>Add the required options for <a target="_blank"
+                            href="https://manual.gromacs.org/current/onlinehelp/gmx-grompp.html"><code>grompp</code></a>
+                        and <a target="_blank" href="https://manual.gromacs.org/current/onlinehelp/gmx-mdrun.html"><code>mdrun</code></a>.
+                        <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:1mm">gmx grompp -v -f MDP/prod.mdp -c npt.gro -p protein-solvated-ions.top -o prod.tpr -t npt.cpt -po prod.mdp -pp prod.top</code>
+                        <blockquote style="margin-top:2mm">
+                            <p class="note" style="margin-bottom:2mm">As this is the third simulation we are running, we can use the <code>-t</code>
+                                option to conserve the velocities produced during the <em>NPT</em> equilibration.</p>
+                            <code>-v</code> specifies that the output should be "loud and noisy" (i.e. <strong>v
+                            </strong>erbose) <br>
+                            <code>-f</code> specifies the input run parameter file<br>
+                            <code>-c</code> specifies the coordinate file of the system<br>
+                            <code>-p</code> specifies the topology file<br>
+                            <code>-t</code> specifies the checkpoint file, with contains the velocities to use at the start of the simulation <br>
+                            <code>-o</code> specifies the output name of the <code>.tpr</code> file <br>
+                            <code>-po</code> specifies the output name of the <code>.mdp</code> file <br>
+                            <code>-pp</code> specifies the output name of the <code>.top</code> file
+                        </blockquote>
+                        <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:5mm">gmx mdrun -v -s prod.tpr -deffnm prod -ntomp
+                            1</code>
+                        <blockquote style="margin-top:2mm">
+                            <code>-v</code> specifies that the output should be "loud and noisy" (i.e. <strong>v</strong>erbose) <br>
+                            <code>-s</code> specifies the run input file, which is the output <code>.tpr</code> file from <code>grompp</code><br>
+                            <code>-deffnm</code> specifies the <strong>def</strong>ault <strong>f</strong>ile <strong>n</strong>a<strong>m</strong>e
+                            for all outputs <br>
+                            <code>-ntomp</code> specifies the total <strong>n</strong>umber of <strong>O</strong>pen<strong>MP</strong> <strong>t
+                        </strong>hreads <br>
+                        </blockquote>
+                    </li>
+                </ol>
+            </li>
+            <li>Open the <code>MDP/prod.mdp</code> run parameter file and adjust the <code>nsteps</code> so that the run
+                duration is 1 ns and that the output trajectory contains 200 coordinate data points.<br>
+                <blockquote style="margin-top:1mm">
+                    <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:1mm">$ vim MDP/prod.mdp</code>
+                    <p class="note"> Make sure you provide the parameters for the <code>.mdp</code> file in the correct
+                        units.
+                        The units used by <abbr>GROMACS</abbr> can be found in the <a
+                                href="https://manual.gromacs.org/documentation/2019/reference-manual/definitions.html"
+                                rel="noopener" target="_blank">Reference Manual</a>.
+                    </p>
+                </blockquote>
+            </li>
+            <li>Submit the run with <code>qsub</code><br>
+                <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:1mm">$ qsub run_prod.sh</code>
+                <blockquote style="margin-top:2mm">
+                    <p class="note"> Make sure that the <code>run_npt.sh</code> script has finished successfully before submitting the <code>run_prod.sh</code>
+                        script.
+                    </p></blockquote>
+            </li>
+        </ol>
+    </div>
+    <p>
+        Looking at the output file of a previous simulation of a similar system, you can estimate that this simulation should run quickly once it
+        starts.
+    </p>
+    <samp style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-3mm">               Core t (s)   Wall t (s)        (%)
+       Time:      242.724      242.724      100.0
+                 (ns/day)    (hour/ns)
+Performance:      355.960        0.067</samp>
+
+</div>
+
+<div class="box">
+    <h2>Now that the simulation has been performed, it is time to analyse the data.</h2>
+    <p> &uarr; <a href="Session2.html">Go to the main menu</a> <br>
+        &larr; <a href="part1.html">Go to the previous part &ndash; Preparing the System for Simulation</a> <br>
+        &rarr; <a href="part3.html">Go to the next part &ndash; Analysis of the Simulation Data</a> </p>
+</div>
+
+<script src="../scripts/generate_header_s2.js"></script>
+<script src="../scripts/generate_overview.js"></script>
+<script src="../scripts/scroll_up.js"></script>
+<script src="../scripts/feedback.js"></script>
+<script src="../scripts/adjust_for_dyslexia.js"></script>
+<script>window.onload = function () {
+    generateOverview();
+    generateHeader();
+    scrollUp();
+    adjustForDyslexia()
+}</script>
+</body>
+</html>

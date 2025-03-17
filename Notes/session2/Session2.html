@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en-UK">
+<!--xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html">-->
+
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0, user-scalable=yes" name="viewport"/>
+    <meta content="Session 2: Protein Simulations" name="description"/>
+    <link href="https://fonts.googleapis.com" rel="preconnect">
+    <link crossorigin href="https://fonts.gstatic.com" rel="preconnect">
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,400;0,600;1,400&display=swap"
+          rel="stylesheet">
+    <link href="../scripts/style.css" rel="stylesheet"/>
+    <title>Session 2</title>
+</head>
+
+<body>
+
+<div class="box">
+    <h1 id="title">Protein Simulations</h1>
+</div>
+
+<div class="box">
+    <h2 id="overview">Contents</h2>
+</div>
+
+<div class="box">
+    <h2 id="toc_1">Session Outline</h2>
+
+    <p>This session is based upon the <a target="_blank" href="https://tutorials.gromacs.org/docs/md-intro-tutorial.html">Molecular dynamics
+        simulation of a small protein using GROMACS tutorial</a>
+        by Cathrine Bergh, Maryam Majdolhosseini and Alessandra Villa which was adapted from the <a target="_blank"
+        href="https://www.mdtutorials.com/gmx/lysozyme/index.html">Lysozyme in Water Tutorial</a>
+        by Justin A. Lemkuhl.</p>
+
+    <p>In this practical session, we will learn the basics of Molecular Dynamics (MD) simulations with GROMACS, and use of assisting software
+        (e.g. VMD, xmgrace, vim) to visualise and manipulate the data. The material is divided into 3 parts, covering all aspects of simulations
+        .</p>
+
+    <ol>
+        <li> <a href="part1.html"><strong>Preparing the System for Simulation</strong></a> </li>
+        <li> <a href="part2.html"><strong>Running a Molecular Dynamics Simulation</strong></a> </li>
+        <li> <a href="part3.html"><strong>Analysis of the Simulation Data</strong></a> </li>
+    </ol>
+
+        <p>The figure below shows a typical protocol for the simulation of protein in the box. In this tutorial, we will follow this same protocol.</p>
+    <div class="flex-figure" style="margin-top:-8mm;">
+        <div class="figure" style="width: 70%">
+            <figure>
+                <object style="margin-left: 32mm" width="70%" data="img/gmx_workflow.svg" type="image/svg+xml"></object>
+<!--                svg made using graphviz and img/gmx_workflow.gv -->
+                <figcaption>
+                    Typical flowchart of a simulation of protein in water, often a number of simulations have to be performed to prepare the system
+                    for a production MD run.
+                </figcaption>
+            </figure>
+        </div>
+    </div>
+</div>
+
+<div class="box">
+    <h2 id="toc_2">Learning Outcomes</h2>
+    <p>
+        By the end of this session you should be able to:
+    </p>
+    <ul>
+        <li>Understand the basics of molecular dynamics simulations</li>
+        <li>Set up a simulation of a protein in water</li>
+        <li>Run a simulation with GROMACS and analyse the output</li>
+        <li>Visualise the structures and trajectories in VMD</li>
+        <li>Visualise analysis results with XMGrace</li>
+    </ul>
+</div>
+
+<div class="box">
+    <h2 id="toc_3">Software</h2>
+
+    <p><span style="font-weight: bolder"><abbr>GROMACS</abbr></span> (GROningen MAchine for Chemical Simulations) is a software package for <abbr>MD</abbr>
+        simulations.</p>
+
+    <blockquote>
+        <p>GROMACS is a versatile package to perform molecular dynamics, i.e. simulate the Newtonian equations of motion for systems with hundreds
+            to millions of particles and is a community&dash;driven project. [...] It is primarily designed for biochemical molecules like proteins,
+            lipids and nucleic acids that have a lot of complicated bonded interactions, but since GROMACS is extremely fast at calculating the
+            nonbonded interactions (that usually dominate simulations) many groups are also using it for research on non&dash;biological systems, e.g.
+            polymers.</p>
+        <footer>from <cite>About GROMACS (<a target="_blank" href="https://www.gromacs.org/about.html">www.gromacs.org/about.html</a>)</cite></footer>
+    </blockquote>
+
+    <p>For everyday general molecular simulations, GROMACS is one of the fastest MD programs. It is also quite flexible, so apart from proteins and
+        biomolecules in general, it can be used to simulate a vast range of different types of molecules. If you want to use it on your own machine,
+        you can download GROMACS from <a target="_blank" href="https://manual.gromacs.org/current/download.html">manual.gromacs.org/current/download.html</a> or
+        on Linux use <code>apt&dash;get install gromacs</code> and on Mac via homebrew <code>brew install gromacs</code>.</p>
+
+    <p>GROMACS is commonly available on <abbr>HPCs</abbr> (high performance computers), including the University&rsquo;s Eddie <abbr>HPC</abbr>, and also
+        Tier 1 and Tier 2 (national) supercomputers such as Cirrus or Archer.</p>
+
+    <p>It was originally developed in the University of Groningen, but now is maintained and extended at different places, including the University
+        of Uppsala, University of Stockholm and the Max Planck Institute for Polymer Research. It is an open source software, released under the
+        <abbr>GPL</abbr> (general public licence), which means that it is free to use. There are many more tutorials for GROMACS available. Some can
+        be found on: <a target="_blank" href="http://www.mdtutorials.com/gmx/">www.mdtutorials.com/gmx</a>.</p>
+
+    <p><span style="font-weight: bolder"><abbr>VMD</abbr></span> (Visual Molecular Dynamics) is a program for visualising molecules, and can be used to view the
+        output of GROMACS simulations. It is also free and can run on Linux, Mac and Windows. It can be downloaded from
+        <a target="_blank" href="https://www.ks.uiuc.edu/Development/Download/download.cgi?PackageName=VMD">www.ks.uiuc.edu/Development/Download
+            /</a>. An extensive
+        user guide and tutorials are available at
+        <a target="_blank" href="https://www.ks.uiuc.edu/Research/vmd/current/ug/">www.ks.uiuc.edu/Research/vmd/current/ug</a>and
+        <a target="_blank" href="https://www.ks.uiuc.edu/Training/Tutorials/">www.ks.uiuc.edu/Training/Tutorials</a>.</p>
+
+    <p><span style="font-weight: bolder"><abbr>XMGrace</abbr></span> is a free program for plotting data that runs on
+        Linux, Mac and Windows. It
+        can be downloaded from <a target="_blank" href="https://plasma-gate.weizmann.ac.il/pub/grace/">plasma&dash;gate.weizmann.ac.il/pub/grace</a>.
+        A user guide for can be found at
+        <a target="_blank" href="https://plasma-gate.weizmann.ac.il/Grace/doc/UsersGuide.html">plasma&dash;gate.weizmann.ac.il/Grace/doc/UsersGuide.html</a>.</p>
+
+    <p><span style="font-weight: bolder"><abbr>gedit</abbr></span> is a free text editor for Linux, Mac and Windows. Installation instructions can be found at
+        <a target="_blank" href="https://wiki.gnome.org/Apps/Gedit">wiki.gnome.org/Apps/Gedit</a>.</p>
+
+</div>
+
+<div class="box">
+    <h2 id="toc_4">Protein Structures</h2>
+
+    <p>Every simulation needs to start with a structure. Even though a lot of computational efforts have been done, it is still not possible to
+        computationally predict the tertiary structure of the protein from its primary one, i.e. its amino acid sequence. This would require
+        inaccessible computational powers and times. </p>
+
+    <p>For this reason, normally a 3D structure predicted from X&dash;ray diffraction is used as a starting point. Here, we will be downloading a protein
+        structure from the <a target="_blank" href="https://www.rcsb.org"><abbr>PDB</abbr> (Protein Data Bank)</a> </p>
+
+    <blockquote>
+        <p><strong><em>WARNING</em></strong> ⚠️ Experimental data is not perfect. Therefore, it is possible for crystal structures in the PDB
+            database to contain errors such as missing atoms. These &ldquo;errors&ldquo; are usually caused by an experiment being unable to clearly &ldquo;see&ldquo; amino
+            acid side&dash;chains within the protein crystal because of its molecular motion. In some cases, it is necessary to &ldquo;clean up&ldquo; a protein
+            structure before using it in a simulation study. Good programs for doing this include
+            <a target="_blank" href="https://sbcb.bioch.ox.ac.uk/teaching/coot_tutorial.pdf">coot</a> and the <a target="_blank"
+                    href="https://spdbv.unil.ch/">Swiss&dash;PDBViewer
+                (DeepView)</a></p>
+    </blockquote>
+</div>
+
+<div class="box">
+    <h3> &rarr; <a href="part1.html">Go to the first part &ndash; Preparing the System for Simulation</a> </h3>
+</div>
+
+<script src="../scripts/generate_header_s2.js"></script>
+<script src="../scripts/generate_overview.js"></script>
+<script src="../scripts/scroll_up.js"></script>
+<script src="../scripts/feedback.js"></script>
+<script src="../scripts/adjust_for_dyslexia.js"></script>
+<script>window.onload = function () {
+    addFeedback('https://app.wooclap.com/XREESD/questionnaires/676aa180398c0ecbb813a0ea', 'img/session_2.png');
+    generateOverview();
+    generateHeader();
+    scrollUp();
+    adjustForDyslexia()
+}</script>
+</body>
+</html>

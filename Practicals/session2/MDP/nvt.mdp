@@ -1,0 +1,47 @@
+; RUN CONTROL PARAMETERS
+define                   = -DPOSRES  ; position restrain the protein
+integrator               = md
+dt                       = 0.002                ; 2 fs
+nsteps                   = 10000                ; 2 * 10000 = 20 ps
+
+; OUTPUT CONTROL OPTIONS
+nstxout                  = 0                    ; No output, except for last frame (coordinates)
+nstvout                  = 0                    ; No output, except for last frame (velocities)
+nstfout                  = 0                    ; No output, except for last frame (forces)
+nstlog                   = 1                    ; Write every step to the log 
+nstxout-compressed       = 0                    ; Do not write a compressed trajectory
+energygrps               = System               ; Write energy information separately for these groups
+
+; NEIGHBORSEARCHING PARAMETERS
+cutoff-scheme			 = Verlet
+vdwtype                  = cutoff
+pbc                      = xyz
+rlist                    = 1.4
+
+; OPTIONS FOR ELECTROSTATICS AND VDW
+coulombtype              = PME          ; Particle Mesh Ewald for long-range electrostatics
+fourierspacing           = 0.15         ; grid spacing for FFT
+rcoulomb                 = 1.2          ; short-range electrostatic cutoff (in nm)
+vdw-modifier             = Force-switch ;  specific CHARMM
+rvdw-switch              = 1.0
+DispCorr                 = no
+rvdw                     = 1.2          ; short-range van der Waals cutoff (in nm)
+
+; Temperature coupling
+tcoupl                   = V-rescale
+tc-grps                  = Protein  Non-Protein
+tau_t                    = 0.1      0.1
+ref_t                    = 300      300
+
+; Pressure coupling     
+pcoupl                   = no
+
+; Velocity generation
+gen_vel                 = yes                 ; assign velocities from Maxwell distribution
+gen_temp                = 300                 ; temperature for Maxwell distribution
+
+; OPTIONS FOR BONDS
+constraints              = h-bonds
+constraint-algorithm     = LINCS
+lincs_iter               = 1
+lincs_order              = 4

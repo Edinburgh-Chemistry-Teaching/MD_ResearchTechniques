@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="en-UK">
+<!--xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html">-->
+
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0, user-scalable=yes" name="viewport"/>
+    <meta content="Session 2: Protein Simulations" name="description"/>
+    <link href="https://fonts.googleapis.com" rel="preconnect">
+    <link crossorigin href="https://fonts.gstatic.com" rel="preconnect">
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,400;0,600;1,400&display=swap"
+          rel="stylesheet">
+    <link href="../scripts/style.css" rel="stylesheet"/>
+    <title>Part 1 &ndash; Preparing the System for Simulation</title>
+</head>
+
+<body>
+
+<div class="box">
+    <h1 id="heading">Part 1 &ndash; Preparing the System for Simulation</h1>
+    <p> &uarr; <a href="Session2.html">Go to the main menu</a> <br>
+        &rarr; <a href="part2.html">Go to the next part &ndash; Running a Molecular Dynamics Simulation</a> </p>
+</div>
+
+<div class="box">
+    <h2 id="overview">Contents</h2>
+</div>
+
+<div class="box">
+    <h2 class="enum" id="toc_1">Getting a protein structure</h2>
+
+    <p>Before you start on this practical, let's create a working directory for this session.</p>
+
+    <p style="font-weight: bold">In this session, all the commands will need to be typed. If you copy them from this document, they may not work! Use
+        <code>Tab</code> to autocomplete and save time.</p>
+
+    <div class="bbox">
+        <h3 id="Create the working directory"></h3>
+
+        <ol>
+            <li>Create the working directory for this session </li>
+
+            <li>Move to your home directory:
+                <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-0.1mm">$ cd </code></li>
+
+            <li>Copy the <code>session2</code> folder from practicals to your home directory:
+                <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-0.1mm">$ cp -r /home/student??/practicals/session2 /home/student??/Desktop/</code>
+                <blockquote style="margin-top:1mm">Remember to replace <code>student??</code> with your login username</blockquote>
+                </li>
+
+            <li>Change into the <code>session2</code> directory:
+                <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-0.1mm">$ cd Desktop/session2</code></li>
+
+        </ol>
+        <p><strong><em>WARNING</em></strong> ⚠️<br>
+    <strong>Every time you open a new terminal, the <code>practicals/</code> folder will revert back to the original copy. Therefore, you will lose
+        any work if you don't copy it to a new folder.</strong></p>
+    </div>
+
+    <p>Let's get started! The structures in the PDB are stored by a codename. Here is a selection of structures that do not require any further
+        processing, so select a structure to work with: </p>
+
+    <ul>
+        <li>Human prion - <a target="_blank" href="https://www.rcsb.org/structure/1QLZ">1QLZ</a></li>
+        <li>Elk prion - <a target="_blank" href="https://www.rcsb.org/structure/1XYW">1XYW</a></li>
+        <li>Chicken prion - <a target="_blank" href="https://www.rcsb.org/structure/1U3M">1U3M</a></li>
+        <li>Clawed frog prion - <a target="_blank" href="https://www.rcsb.org/structure/1XU0">1XU0</a></li>
+        <li>Hen egg-white lysozyme - <a target="_blank" href="https://www.rcsb.org/structure/1AKI">1AKI</a></li>
+        <li>Spider toxin - <a target="_blank" href="https://www.rcsb.org/structure/1OMB">1OMB</a></li>
+        <li>Ubiquin - <a target="_blank" href="https://www.rcsb.org/structure/1UBQ">1UBQ</a></li>
+    </ul>
+
+    <div class="bbox">
+        <h3 id="Download the protein structure"></h3>
+
+        <ol>
+            <li>Download the protein structure file</li>
+
+            <li>Download your chosen structure using either:
+                <ol>
+                    <li>The <code>wget</code> command in the terminal:
+                        <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-0.1mm">$ wget &lt;URL&gt; </code>
+                        <blockquote style="margin-top:3mm">
+                            <p style="margin-top:-1mm;">E.g. for the protein 1xyw.pdb, the command would be:</p>
+                            <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-0.1mm">$ wget http://www.rcsb.org/pdb/files/1xyw.pdb</code>
+                            <p style="font-weight: bolder;margin-top:2mm;">Replace <code>1xyw</code> with the code of the protein of
+                                your choice.</p>
+                        </blockquote>
+                    </li>
+
+                    <li>Manually from the web (<a target="_blank" href="https://www.rcsb.org">www.rcsb.org</a>) and move it into the<code>session2</code> directory:
+                        <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-0.1mm">$ mv ~/Downloads/1xyw.pdb ~/session2/</code>
+                    </li>
+                </ol>
+            </li>
+
+            <li>Use the <code>more</code> or <code>less</code> commands to read through the file.
+
+                <blockquote style="margin-top:1mm">
+                    <p style="margin-top:1mm;">E.g. for the protein 1xyw.pdb:</p>
+                    <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-0.1mm">$ more 1xyw.pdb</code>
+                    <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-0.25mm">$ less 1xyw.pdb</code>
+                    <p class="note"> To change page downwards use <code>Space</code>, to exit the viewer press <code>Ctrl+C</code> or <code>q</code>, to view the keybinds for other commands use <code>h</code>. <br>
+                    <p style="margin-top:2mm;">Familiarise yourself with the file format. The file contains information about the protein amino
+                    acid residue (e.g. LEU and GLY etc.) and also the atom name inside the residue. </p>
+                    <ul>
+                        <li style="margin-top:-1mm;"><code>REMARK</code> lines are comments.</li>
+                        <li><code>ATOM</code> lines contain atom coordinates</li>
+                        <li><code>CONNECT</code> lines contain connection information.
+                            <p class="note" style="margin-top:-0mm"> Where this information is absent, bonds can be inferred from atomic positions by
+                                the programs below.</p></li>
+                    </ul>
+                </blockquote>
+            </li>
+
+            <li style="margin-bottom:-0.1mm;">Rename the file to <code>protein.pdb</code>
+                <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-0.1mm">$ cp 1xyw.pdb protein.pdb</code>
+            </li>
+        </ol>
+    </div>
+
+    <p>Now that you have the protein structure, you can visualise it in VMD.</p>
+
+    <div class="bbox">
+        <h3 id="Visualise the protein in VMD"></h3>
+
+        <ol>
+            <li>Visualise the protein structure</li>
+            <li>Open VMD
+                <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-0.1mm">$ vmd</code>
+            </li>
+
+            <li>Load the protein structure into VMD:
+                <blockquote style="margin-top:1mm">
+                    <p>In the main window, click <code>File</code> &#8594;
+                        <code>New Molecule...</code> and select your <code>.pdb</code> file. If you don't see your file name there, you need to write
+                        the path to your <code>session2</code> folder in the <code>Molecule File Browser</code> window.</p>
+                    <p class="note" style="margin-top:2mm">The startup of VMD opens two separate windows: a main window and a visualisation window</p>
+                </blockquote>
+                <div class="flex-figure" style="margin-top:-4mm;">
+                    <div class="figure" style="width: 66%">
+                        <figure>
+                            <img alt="Opening files in VMD" src="img/vmd.png" width="100%">
+                            <figcaption>The two windows opened by <abbr>VMD</abbr>, and the Molecule File Browser window for opening files.
+                            </figcaption>
+                        </figure>
+                    </div>
+                </div>
+            </li>
+
+            <li>Play around with the visualisation options
+                <blockquote>
+                    <p style="margin-top:-3mm;">
+                    You can move the molecule around by clicking and dragging the mouse.
+                    <ul>
+                    <li style="margin-top:-2mm; ">Press <code>R</code> to rotate the molecule (default), <code>T</code> to
+                        translate it and
+                        <code>S</code> to scale it. </li>
+                    <li style="margin-top:-1mm;">Use <code>=</code> or click on <code>Display</code> &#8594; <code>Reset view</code> to
+                        reset the view. </li>
+                    </p>
+                </ul>
+                </blockquote>
+            </li>
+
+            <li id="change_rep">Change the representation of the molecule
+                <blockquote>
+                    <p style="margin-top:-3mm;">Click on <code>Graphics</code> &#8594; <code>Representations</code> and change <code>Drawing
+                        Method</code> or <code>Coloring Method</code> to see how the molecule representation changes.
+                    <ul> <li style="margin-top:-2mm; margin-bottom:-3mm;"> For proteins, the <code>New Cartoon</code> representation is often used.
+                    It only shows the backbone and is useful to visualise the higher structure of the protein.</li></ul> </p>
+                    <p> </p>
+                    <p>You can also change the representation of a subset of atoms by selecting them in the <code>Graphical Representations</code>
+                        window. For this, click on <code>Create Rep</code> and in the <code>Selected Atoms</code> field you can replace the <code>
+                            all</code> by a selection command. </p>
+                    <ul> <li style="margin-top:-2mm;"> E.g. to select all atoms of the residue with the number 10, you can use
+                        <code>resid 10</code>, for all atoms of the residue with the name <code>GLY</code> use <code>resname GLY</code>, etc.</li>
+                    <li style="margin-top:-1mm;"> You can find more information about selection commands in the <abbr>VMD</abbr>  <a target="_blank"
+                                href="https://www.ks.uiuc.edu/Research/vmd/current/ug/node89.html">user guide</a>. </li></ul>
+                </blockquote>
+            </li>
+        </ol>
+        <div class="flex-figure" style="margin-top:-4mm;">
+            <div class="figure" style="width: 50%">
+                <figure>
+                    <img alt="1xyw.pdb in VMD" src="img/1xyw.png" width="100%">
+                    <figcaption>New Cartoon representation of the 1xyw.pdb structure in <abbr>VMD</abbr>.</figcaption>
+                </figure>
+            </div>
+        </div>
+        <p class="note"><abbr>VMD</abbr> has a lot of other useful features, which you can explore in your own time.
+            <br>Besides visualising molecules, it can also be used to render images and movies of structures and trajectories. Among others, it
+            even has functionalities to build and manipulate molecules and analyse trajectories.
+        </p>
+        <p> To quit VMD, you can simply type <code>exit</code> in the terminal or close the main window. </p>
+    </div>
+</div>
+
+<div class="box">
+    <h2 class="enum" id="toc_2">Organising and naming files</h2>
+    <p>
+        As you start to work on the tutorial, let's think about how to organise your work. Over the course of this tutorial, a lot of files will be
+        generated. Unless you specify the names of output files, GROMACS will use default names for them. This will cause existing files to be
+        overwritten by new ones.</p>
+    <p class="note"> GROMACS does back up old files, renaming them to <code>#&lt;filename&gt;.&lt;extension&gt;.1#</code> before overwriting.</p>
+    <p>
+        To be able to retrieve your data later and to not get confused, make sure to keep your work organised and name files coherently. It would be
+        advisable to run each simulation step in a different subdirectory or to (re)name input and output files in a descriptive matter.</p>
+    <p><em>Remember:</em> You can copy files with <code>cp &lt;old_file&gt; &lt;new_file&gt;</code> and move files with <code>mv &lt;old_file&gt; &lt;new_file&gt;</code>
+    </p>
+    <p class="note"> The second option is riskier as you might not be aware of all the files that get generated by GROMACS and all the output names
+        that you might need to specify.</p>
+</div>
+
+<div class="box">
+    <h2 class="enum" id="toc_3">Checking the input protein structure</h2>
+    <p> As mentioned before, it is quite common for some residues or atoms to be missing in an experimental protein structure. It is, therefore,
+        essential to first check and fix all errors in the input structure before running any <abbr>MD</abbr> simulation.
+    </p>
+    <p> The structures of the proteins used in this tutorial are fully resolved, so you do not need to worry about this step. However, it is worth
+        mentioning that one of the biggest tasks for a biological simulation in practice is to prepare and check structures prior to simulation.
+    </p>
+    <p> Another challenge is posed by non-standard groups in molecules. These could consist of non-standard residues, modified residues
+        or ligands, for which force field parameters are not yet available. Considerable work is often required to either eliminate these groups,
+        modify them, or determine the missing force field parameters by reference to the literature and/or use of quantum chemical calculations.
+        The structures in this tutorial only consist of natural amino acids, for which quite reasonable force field parameters exist for use with
+        GROMACS.
+    </p>
+    <p> Additionally, after the refinement process in crystal structure determination, the resulting structure should be checked for:
+    </p>
+    <ul>
+        <li style="margin-top:-4mm;">Proper orientations of glutamine and asparagine amide groups</li>
+        <li style="margin-top:-1mm;">Consistent protonation state and side chain orientation of histidine residues</li>
+        <li style="margin-top:-1mm;">Any other problems with the system</li>
+    </ul>
+    <p> A number of tools have been developed specifically for this purpose, but here, we will assume that the crystal structures obtained from the
+        <abbr>PDB</abbr> are correct.
+    </p>
+</div>
+
+<div class="box">
+    <h2 class="enum" id="toc_4">Creating coordinate and topology files for the simulation with GROMACS</h2>
+    <p> Since <abbr>MD</abbr> simulations rely on force fields to describe the interactions of atoms, having an atomic structure alone is not
+        enough. We need to add a topology (i.e. a description of the system's covalent network). Connectivity information is necessary in order to
+        calculate inter-atomic interactions as defined in the force field used in the simulation. GROMACS comes with a range of internal force
+        fields and the <code>pdb2gmx</code> command can assign them to protein structures.
+    </p>
+    <p class="note" style="margin-top:-2mm"> This only works on perfect proteins.</p>
+
+    <div class="bbox">
+        <h3 id="Creating_a_topology"></h3>
+        <ul>
+            <li>Use <a target="_blank" href="https://manual.gromacs.org/current/onlinehelp/gmx-pdb2gmx.html"><code>pdb2gmx</code></a> to
+                create a topology for the protein structure
+            </li>
+            <li>
+                <p> To run a <abbr>GROMACS</abbr> command in the terminal, you need to type <code>gmx</code> followed by the name of the command
+                    and its options. </p>
+                <p> A useful resource when getting started with GROMACS is the <a target="_blank"
+                        href="https://manual.gromacs.org/documentation/current/user-guide/mdp-options.html">GROMACS user guide</a>. </p>
+                <p class="note" style="margin-top:1mm"> A help menu for all commands can be displayed with <code>-h</code> (e.g. <code>gmx pdb2gmx -h</code>).</p>
+                <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:1mm">$ gmx pdb2gmx -f protein.pdb -o protein.gro -p protein.top -ignh</code>
+                <blockquote style="margin-top:1mm;">
+                    <code>-f</code> specifies the input <code>.pdb</code> file<br>
+                    <code>-o</code> specifies the output coordinate <code>.gro</code> file<br>
+                    <code>-p</code> specifies the output topology <code>.top</code> file<br>
+                    <code>-ignh</code> specifies that <strong>h</strong>ydrogen atoms should be <strong>ign</strong>ored<br>
+                </blockquote>
+                <p style="margin-top:-2mm;">GROMACS will ask you to choose a force field. Select <code>CHARMM27</code> by <b>typing the
+                    corresponding number</b>, then hit <code>Enter</code>.</p>
+                <p>When prompted for the water model, select <code>SPC</code> in the same way.</p>
+            </li>
+        </ul>
+    </div>
+    <div class="bbox">
+        <h3 id="Inspecting_the_pdb2gmx_output_files"></h3>
+        <ol>
+            <li>Inspect the <code>pdb2gmx</code> output files</li>
+            <li >Use the <code>ls -lrth</code> command to list all files in your working directory.<br>
+                <blockquote style="margin-top:1mm">
+                    <code>-l</code> uses a <strong>l</strong>ong listing format <br>
+                    <code>-r</code> <strong>r</strong>everses the order of the files <br>
+                    <code>-t</code> sorts by <strong>t</strong>me, with the newest first <br>
+                    <code>-h</code> makes the output in a <strong>h</strong>uman-readable format <br>
+                </blockquote>
+                <p style="margin-top:-3mm">You should find the newly generated files at the bottom of the list. Which files were generated?</p>
+            </li>
+            <li style="margin-bottom:-0.1mm;">Inspect the output files using <code>more</code> or <code>less</code>.
+                <blockquote style="margin-top:2mm">
+                    <p style="margin-top:-1mm;">E.g. for protein.gro:</p>
+                    <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:0;">$ more protein.gro</code>
+                    <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-0.25mm;">$ less protein.gro</code>
+                    <p class=note>To change page use <code>Space</code>, to exit the viewer press <code>Ctrl+C</code> or <code>q</code>, to view a
+                        list of other commands use <code>h</code>. </p>
+                </blockquote>
+
+                <p>What information does each of these files contain?
+                <ol>
+                    <li><code>protein.gro</code> contains the protein coordinates in GROMACS format.<br>
+                        <blockquote style="margin-top:2mm">The file contains information about the protein amino acid residue names
+                            (e.g. <code>LEU</code>,
+                            <code>GLY</code>, ...) and atom names (e.g.  <code>C</code>, <code>CA</code>, <code>O</code>, <code>N</code>, ...) inside
+                            the residues. These descriptors link to the force field parameters included in the topology file. </blockquote>
+                    </li>
+                    <li><code>protein.top</code> contains information about the topology of your system.
+                        <blockquote style="margin-top:2mm">
+                            <p> It includes the information on the connectivity between atoms and the force field parameters used to calculate bonded
+                                 and non-bonded interactions between atoms. As you use <code>Space</code> to scroll down in the topology file,
+                                you will see entries for atom types, charges, bonds, angles, dihedral types, etc.
+                            </p>
+                            <p style="margin-top:3mm">Some of these parameters can be defined in external files. Near the top of the <code>.top
+                            </code> file, you will see a line like this:
+                            <samp style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:0.5mm">#include &quot;charmm27.ff/forcefield.itp&quot;</samp>
+                            <p style="margin-top:1mm"> This line is a link to one of the files in the <code>charmm27.ff</code> force field
+                            directory. These contain
+                            information on the force field parameters for the <abbr>CHARMM27</abbr> force field.
+                            </p>
+                            <p style="margin-top:3mm">At the bottom of the file, within the <code>[ molecules ]</code> section, you will find a
+                                list of all molecules that
+                                are present in the system. Keep an eye on how this section changes as you add solvent and ions to the system.
+                            <p class="note">A useful command to view the end of a file is <code>tail</code>. For example, to view the last 10 lines
+                                of the <code>protein.top</code> file, you can use the command <code>tail -n 10 protein.top</code>.</p>
+                            <p style="margin-top:3mm">At the moment, the system section only contains one protein chain:</p>
+                            <samp style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:0.5mm">[ molecules ]
+; Compound        #mols
+Protein_chain_A     1</samp>
+                        </blockquote>
+                    </li>
+                    <li><code>posre.itp</code> is another topology file, but it contains parameters for position restraints of all the heavy atoms in
+                        the original pdb file. Later on, we will use these to restrain the protein during the initial <abbr>MD</abbr> simulation part.
+                    </li>
+                </ol>
+            </li>
+        </ol>
+    </div>
+</div>
+
+<div class="box">
+    <h2 class="enum" id="toc_5">Creating a simulation box around the protein</h2>
+    <p>
+        Before adding solvent and ions, you need to create a box around the protein into which these can be
+        inserted.
+    </p>
+    <div class="bbox">
+        <h3 id="Creating_a_box"></h3>
+        <ol>
+            <li>Use <a target="_blank" href="https://manual.gromacs.org/current/onlinehelp/gmx-editconf.html"><code>editconf</code></a>
+                to create a box around the protein
+            </li>
+            <li>Add a dodecahedron shaped box with a minimum distance of 1.0  nm between the protein and box edge.
+                <p style="margin-top:2mm"> This minimal distance is necessary to avoid direct interactions between periodic protein images. In this
+                    case, no two neighbour proteins in adjacent boxes will be closer than 2.0  nm to each other. </p>
+                <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-0.1mm">$ gmx editconf -f protein.gro -o protein-pbc.gro -bt dodecahedron -d 1.0 -c</code>
+                <blockquote style="margin-top:2mm">
+                    <code>-f</code> specifies the input coordinate file<br>
+                    <code>-o</code> specifies the output coordinate file<br>
+                    <code>-bt</code> specifies the <strong>b</strong>ox <strong>t</strong>ype<br>
+                    <code>-d</code> specifies the minimum <strong>d</strong>istance in nm between the protein and the box edge<br>
+                    <code>-c</code> specifies that the protein should be <strong>c</strong>entred in the box<br>
+
+                    <p class="note" style="margin-top:2mm;">The box does not have to be cubic in order to be periodic (think of honeycombs).
+                        For spherical proteins, an obvious choice might be a rhombic dodecahedron, because it corresponds closely to a spherical
+                        shape, and unlike a sphere, it can be packed periodically to fill the space.
+                    </p>
+                </blockquote>
+            </li>
+            <li>Use the <code>tail</code> command to inspect the end of the new <code>protein-pbc.gro</code> file and check how the box is defined.
+                <blockquote style="margin-top:1mm">
+                    <p>GROMACS uses a triclinic matrix representation, with the first three numbers specifying the diagonal elements (<em>xx</em>,
+                        <em>yy</em>, <em>zz</em>) and the last six giving the off-diagonal elements (<em>xy</em>, <em>xz</em>, <em>yx</em>,
+                        <em>yz</em>, <em>zx</em>, <em>zy</em>).
+                    </p>
+                </blockquote>
+            </li>
+            <li>Use <abbr>VMD</abbr> to visualise the protein inside the box.
+                <p style="margin-top:2mm"> Inside the terminal type <code>vmd protein-pbc.gro</code> to open the protein structure in <abbr>VMD
+                </abbr>.
+                    <br>Then, after the <abbr>VMD</abbr> window opens, add the box to the visualisation: Inside the same terminal/console window,
+                    type <code>pbc box</code> after <code>vmd &gt;</code>.
+                </p>
+                <blockquote style="margin-top:2mm">
+                    <p class="note">You might need to first hit <code>Enter</code> to get the <abbr>VMD</abbr> window to update and display the
+                        <code>vmd &gt;</code> line.</p></blockquote>
+            </li>
+        </ol>
+        <div class="flex-figure" style="margin-top:-4mm;">
+            <div class="figure" style="width: 50%">
+                <figure>
+                    <img src="img/protein-pbc.png" width="100%">
+                    <figcaption>1xyw protein structure inside the simulation box visualised in <abbr>VMD</abbr>.
+                    </figcaption>
+                </figure>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="box">
+    <h2 class="enum" id="toc_6">Solvating the protein in the periodic box</h2>
+
+    <p>In the next step you can solvate the protein with <abbr>SPC</abbr> water. We chose this water model because it is simple and versatile.</p>
+    <div class="bbox">
+        <h3 id="Solvating_the_protein"></h3>
+        <ol>
+            <li>Solvate the protein with <abbr>SPC</abbr> water</li>
+            <li>Make a copy of the topology <code>protein.top</code> file:
+                <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:0">$ cp protein.top protein-solvated.top</code>
+                <blockquote style="margin-top:2mm">
+                    <p class="note"><code>solvate</code> will overwrite the <code>.top</code> file so it is good to make a copy of the unsolvated
+                        topology.</p>
+                </blockquote>
+            </li>
+            <li>Use <a target="_blank" href="https://manual.gromacs.org/current/onlinehelp/gmx-solvate.html"><code>solvate</code></a> to
+                solvate the protein with <abbr>SPC</abbr> water:
+                <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:0">$ gmx solvate -cp protein-pbc.gro -cs spc216.gro -o protein-solvated.gro -p protein-solvated.top</code>
+                <blockquote style="margin-top:2mm">
+                    <code>-cp</code> specifies the coordinate file of the system to solvate<br>
+                    <code>-cs</code> specifies the water model coordinate file<br>
+                    <code>-o</code> specifies the output coordinate file<br>
+                    <code>-p</code> specifies the input and output topology file<br>
+                    <p class="note" style="margin-top:2mm;">If a name for the topology file is NOT specified with <code>-p</code>, the solvent
+                        molecules won't be added to the topology file, so you will need to add them yourself.</p>
+                </blockquote>
+                <p>GROMACS will try to fill the available space with solvent and update the number of water (<code>SOL</code>) molecules in the
+                    output topology file.</p>
+            </li>
+            <li>Inspect the last 10 lines of the output <code>.top</code> file using the <code>tail</code> command.<br>
+                How many water molecules were added?
+            </li>
+        </ol>
+    </div>
+</div>
+
+<div class="box">
+    <h2 class="enum" id="toc_7">Adding ions to the box</h2>
+    <p> Under physiological conditions, the protein will be surrounded by ions. To mimic this, we will add 0.15  mol  dm<sup>-3</sup> of
+        NaCl to the system. In addition, because proteins are often charged, it is important to neutralise the total charge before proceeding to
+        the next simulation step. This can be done with the <code>-neutral</code> option of the <code>genion</code> command.
+    </p>
+    <blockquote style="margin-top:-1mm">
+        <p class="note"><code>genion</code> is treated as a type of <abbr>MD</abbr> run. This means that for this step you will need an <code>.mdp</code>
+            file which specifies the <abbr>MD</abbr> run parameters. All <code>.mdp</code> files that you are going to need for this tutorial are
+            stored in the <code>MDP/</code> directory.
+        </p>
+    </blockquote>
+    <p>In GROMACS, you need to <strong>first compile</strong> the structure, topology and run parameter files, and <strong>then run</strong> the
+        simulation. The compilation is performed with the <code>grompp</code> command. This step is also useful as it will pick up any errors from
+        the setup procedure. Subsequently, the outputted compiled topology file is used with the <code>mdrun</code> command is used to execute the
+        simulation.</p>
+
+    <div class="bbox">
+        <h3 id="Adding_ions_to the system"></h3>
+        <ol>
+            <li>Add 0.15 mol dm<sup>-3</sup> of NaCl to the system and neutralise the total charge
+            </li>
+            <li>Make a copy of the topology <code>protein-solvated.top</code> file:
+                <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-0.1mm">$ cp protein-solvated.top protein-solvated-ions.top</code>
+            </li>
+            <li>Use <a target="_blank" href="https://manual.gromacs.org/current/onlinehelp/gmx-grompp.html"><code>grompp</code></a> to generate a
+                <code>.tpr</code> file for the system:
+                <p style="margin-top:2mm">
+                    The contents of the <code>.mdp</code> input file are not important for <code>genion</code>, but it has to be given.
+                </p>
+                <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-0.1mm">$ gmx grompp -f MDP/genion.mdp -c protein-solvated.gro -p protein-solvated-ions.top -maxwarn 1</code>
+                <blockquote style="margin-top:2mm">
+                    <code>-f</code> specifies the input run parameter file<br>
+                    <code>-c</code> specifies the coordinate file of the system<br>
+                    <code>-p</code> specifies the topology file<br>
+                    <code>-maxwarn</code> specifies the <strong>max</strong>imum number of <strong>warn</strong>ings that can be ignored.
+                    If the protein has a charge, <code>grompp</code> will generate a warning that needs to be ignored.<br>
+                    <p class="note" style="margin-top:2mm">This step will generate a compiled topology with the default name <code>topol.tpr</code>
+                        and a <code>mdout.mdp</code> file with all the run parameters. Any old files with the same name will be first backed up to
+                        <code>#topol.tpr.1#</code> or <code>#mdout.mdp.1#</code> and then overwritten. <br>
+                        Instead, you can add the <code>-o</code> and <code>-po</code> arguments to <code>gmx grompp</code> to specify the output
+                        names of the <code>.tpr</code> and <code>.mdp</code> files respectively.
+                    </p>
+                </blockquote>
+            </li>
+            <li>Use <a target="_blank" href="https://manual.gromacs.org/current/onlinehelp/gmx-genion.html"><code>genion</code></a> to add NaCl:
+                <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-0.1mm">$ gmx genion -o protein-solvated-ions.gro -p protein-solvated-ions.top -pname NA -nname CL -conc 0.15 -neutral</code>
+                <blockquote style="margin-top:2mm">
+                    <code>-o</code> specifies the output coordinate file<br>
+                    <code>-p</code> specifies the input and output topology file<br>
+                    <code>-pname</code> specifies the name of the positive ion<br>
+                    <code>-nname</code> specifies the name of the negative ion<br>
+                    <code>-conc</code> specifies the concentration of ions in mol  dm<sup>-3</sup><br>
+                    <code>-neutral</code> specifies that the system should be neutralised<br>
+                    <p style="margin-top:2mm">When asked which group of molecules should be replaced, <strong>type the corresponding number</strong>
+                        for the <code>SOL</code> group.</p>
+                    <p class="note" style="margin-top:1mm">If no input files are specified, <abbr>GROMACS</abbr> will look for files with the
+                        default names, in this case <code>topol.tpr</code>.
+                    </p>
+                </blockquote>
+            </li>
+            <li>Use <code>grep</code> to check how many <em>NA</em> and <em>CL</em> ions were added to the system:
+                <blockquote style="margin-top:2mm">
+                    <p>The command searches through an input file for matches to a pattern, and prints the line. It requires two arguments: first the
+                        pattern to search for, and then the file to look in. </p>
+                    <p style="margin-top:3mm">E.g. to check for NA in the topology file you can use:</p>
+                    <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:0.5mm">$ grep NA protein-solvated-ions.top</code>
+                    <p style="margin-top:3mm">For the coordinate file it can also be useful to pipe the output of <code>grep</code> into the
+                    <code>wc -l</code> command to count the number of lines that contain a specific word:</p>
+                    <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:0.5mm">$ grep NA protein-solvated-ions.gro | wc -l</code>
+                    <p style="margin-top:3mm">The output for the <code>.top</code> file and the number of lines counted from the <code>.gro</code> file should be the
+                        same.</p>
+                </blockquote>
+            </li>
+        </ol>
+    </div>
+</div>
+
+<div class="box">
+    <h2>Now that the system has been created and prepared, it is time to run the simulation.</h2>
+    <p> &uarr; <a href="Session2.html">Go to the main menu</a> <br>
+        &rarr; <a href="part2.html">Go to the next part &ndash; Running a Molecular Dynamics Simulation</a> </p>
+</div>
+
+<script src="../scripts/generate_header_s2.js"></script>
+<script src="../scripts/generate_overview.js"></script>
+<script src="../scripts/scroll_up.js"></script>
+<script src="../scripts/feedback.js"></script>
+<script src="../scripts/adjust_for_dyslexia.js"></script>
+<script>window.onload = function () {
+    generateOverview();
+    generateHeader();
+    scrollUp();
+    adjustForDyslexia()
+}</script>
+</body>
+</html>

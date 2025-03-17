@@ -1,0 +1,21 @@
+; Lines starting with ';' are comments
+; Everything following ';' is also a comment
+
+; Parameters describing what to do, when to stop and what to save
+integrator	= steep					; Algorithm (steep = steepest descent minimization)
+emtol		= 1000  				; Stop minimization when the maximum force < 1000 kJ/mol
+nsteps		= 50000					; Maximum number of (minimization) steps to perform
+nstenergy	= 500					; Write energies to disk every nstenergy steps
+energygrps	= System				; Which energy group(s) to write to disk
+emstep      = 0.01                  ; Step size for minimization
+
+; Parameters describing how to find the neighbours of each atom and how to calculate the interactions
+coulombtype	= PME    				; Treatment of long range electrostatic interactions
+fourierspacing = 0.15				; Grid spacing for FFT
+rcoulomb	= 1.2					; long range electrostatic cut-off
+rvdw		= 1.2					; long range Van der Waals cut-off
+vdw-modifier = Force-switch		    ; Apply a force-switching function to Van der Waals interactions
+rvdw_switch = 1.0					; Distance at which to switch the LJ potential to zero
+
+constraints	= none					; Bond types to replace by constraints
+pbc			= xyz 					; Periodic Boundary Conditions (xyz/no)

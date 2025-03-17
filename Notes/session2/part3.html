@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="en-UK">
+<!--xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html">-->
+
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0, user-scalable=yes" name="viewport"/>
+    <meta content="Session 2: Protein Simulations" name="description"/>
+    <link href="https://fonts.googleapis.com" rel="preconnect">
+    <link crossorigin href="https://fonts.gstatic.com" rel="preconnect">
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,400;0,600;1,400&display=swap"
+          rel="stylesheet">
+    <link href="../scripts/style.css" rel="stylesheet"/>
+    <title>Part 3 - Analysis of the Simulation Data</title>
+</head>
+
+<body>
+
+<div class="box">
+    <h1 id="title">Part 3 - Analysis of the Simulation Data</h1>
+    <p> &uarr; <a href="Session2.html">Go to the main menu</a> <br>
+        &larr; <a href="part2.html">Go to the previous part - Running a Molecular Dynamics Simulation</a> </p>
+</div>
+
+<div class="box">
+    <h2 id="overview">Contents</h2>
+</div>
+
+<div class="box">
+    <h2 class='enum' id="toc_1">Analysis of the equilibration runs</h2>
+
+    <p>In this section you will learn some ways to check that your system is equilibrated.</p>
+
+    <h3 class="enum" id="toc_1_1">Energy minimisation</h3>
+    <p> With energy minimisation, you should have arrived at an <code>Epot</code> with an order of magnitude of 10<sup>4</sup> kJ 
+                 mol<sup>-1</sup>. We can check how the potential energy changed during the minimisation run using <a target="_blank"
+                    href="https://manual.gromacs.org/current/onlinehelp/gmx-energy.html"><code>gmx energy</code></a>.</p>
+    <div class="bbox">
+        <h3 id="Calculate_the_potential_energy_changes"></h3>
+        <ol>
+            <li>Visualise the potential energy change</li>
+            <li> To use the <code>gmx energy</code> command, you will need to start an interactive session on a compute node on Eddie HPC.
+                <ol>
+                    <li id="interactive_login" style="margin-top:2mm"> Use the <code>qlogin</code> command to request an interactive session with
+                        16 G of memory:
+                        <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:1mm">$ qlogin -l h='node1b09' -l h_vmem=16G</code>
+                        <blockquote style="margin-top:2mm">
+                            <code>-l h</code> specifies the node to use. Here we use one set aside for the course <br>
+                            <code>-l h_vmem</code> specifies the amount of memory
+                        </blockquote>
+                    </li>
+                    <li> Load GROMACS by sourcing the script provided:
+                        <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:1mm">$ cd /exports/eddie/scratch/&lt;UUN&gt;/session2/</code>
+                        <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-0.25mm">$ source load_gmx.sh</code>
+                    </li>
+                </ol>
+            </li>
+            <li>
+                Check the potential energy with <a target="_blank"
+                    href="https://manual.gromacs.org/current/onlinehelp/gmx-energy.html"><code>energy</code></a>:<br>
+                <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:1mm">$ gmx energy -f em.edr -o em.xvg</code>
+                <blockquote style="margin-top:2mm">
+                    <code>-f</code> specifies the input <code>.edr</code> file <br>
+                    <code>-o</code> specifies the output file name <br>
+                    <p style="margin-top:2mm">Choose <code>Potential</code> by entering the number next to the desired energy term and
+                        pressing <code>Enter</code> twice.</p>
+                </blockquote>
+            </li>
+            <li>Plot the energy evolution with <code>xmgrace</code>:<br>
+                <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:1mm">$ xmgrace em.xvg</code>
+                <p style="margin-top:2mm">The resulting plot should show a nice, steady convergence of <code>Epot</code>.</p>
+                <div class="flex-figure" style="margin-top:-2mm;">
+                    <div class="figure" style="width: 70%">
+                        <figure>
+                            <img src="img/em_pot.png" width="100%" alt="Example Xmgrace plot of the potential energy during energy minimisation">
+                            <figcaption>
+                                Example Xmgrace plot of the potential energy during energy minimisation.
+                            </figcaption>
+                        </figure>
+                    </div>
+                </div>
+            </li>
+            <li>You can also check the potential energy evolution during the <em>NVT</em> and <em>NPT</em> equilibration runs: <br>
+                <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:1mm">$ gmx energy -f nvt.edr -o nvt_pot.xvg</code>
+                <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-0.25mm">$ gmx energy -f npt.edr -o npt_pot.xvg</code>
+            </li>
+            <li>Plot both energy evolutions with <code>xmgrace</code>:<br>
+                <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:1mm">$ xmgrace -nxy nvt_pot.xvg npt_pot.xvg -legend load</code>
+                <p>The energy should stay steady throughout both runs, with minor differences between the runs being due to
+                    the added pressure
+                    coupling.</p>
+            </li>
+        </ol>
+    </div>
+
+    <h3 class="enum" id="toc_1_2">Temperature equilibration</h3>
+    <p>By the end of the <em>NVT</em> equilibration run, the temperature should be constant and at our target (300 K). It should also remain
+        constant during the <em>NPT</em> equilibration run. We can check how the temperature changes using <a target="_blank"
+                href="https://manual.gromacs.org/current/onlinehelp/gmx-energy.html"><code>gmx energy</code></a>. </p>
+    <div class="bbox">
+        <h3 id="Calculate_the_temperature_evolution"></h3>
+        <ol>
+            <li>Visualise the temperature evolution</li>
+            <li>
+                Make sure you're in an interactive session like <a href="#interactive_login">before</a>.
+            </li>
+            <li>Check temperature evolution using <code>gmx energy</code>:<br>
+                <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:1mm">$ gmx energy -f nvt.edr -o nvt_temp.xvg</code>
+                <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-0.25mm">$ gmx energy -f npt.edr -o npt_temp.xvg</code>
+                <blockquote style="margin-top:2mm">
+                    <code>-f</code> specifies the input <code>.edr</code> file <br>
+                    <code>-o</code> specifies the output file name <br>
+                    <p style="margin-top:2mm">Choose <code>Temperature</code> by entering the number next to the desired energy term and pressing
+                        <code>Enter</code> twice.</p>
+                </blockquote>
+            </li>
+            <li>Plot the temperature evolution with <code>xmgrace</code>:<br>
+                <p style="margin-top:2mm">To plot the temperature evolutions separately:</p>
+                <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:1mm">$ xmgrace nvt_temp.xvg</code>
+                <p style="margin-top:3mm">To plot the temperature evolutions together:</p>
+                <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:1mm">$ xmgrace -nxy *_temp.xvg -legend load</code>
+                <blockquote style="margin-top:2mm">
+                    <p class="note"> The <code>*</code> symbol is a <em>wildcard</em>, i.e. any file that ends with <code>_temp.xvg</code> will be
+                        plotted. </p>
+                </blockquote>
+                <p>You should see that the temperature of the system quickly reaches 300 K during the <em>NVT</em> equilibration and remains stable
+                    throughout both equilibrations. Your <em>NVT</em> equilibration is shorter than the one used for the example graph below, as
+                    the temperature evolutions shows that a simulation of a longer length is not required. </p>
+                <div class="flex-figure" style="margin-top:-2mm;">
+                    <div class="figure" style="width: 70%">
+                        <figure>
+                            <img src="img/nvt_npt_temp.png" width="100%">
+                            <figcaption>
+                                Example Xmgrace plot of the temperature evolution during <em>NVT</em> and <em>NPT</em> equilibrations.
+                            </figcaption>
+                        </figure>
+                    </div>
+                </div>
+            </li>
+        </ol>
+    </div>
+
+    <h3 class="enum" id="toc_1_3">Pressure equilibration</h3>
+    <p>By the end of the <em>NPT</em> equilibration run, the pressure (and density) should be constant and at our target (1 bar). We can check how
+        the both change using <a target="_blank" href="https://manual.gromacs.org/current/onlinehelp/gmx-energy.html"><code>gmx energy</code></a>. </p>
+    <div class="bbox">
+        <h3 id="Calculate_the_pressure_evolution"></h3>
+        <ol>
+            <li>Visualise the pressure evolution</li>
+            <li>
+                Make sure you're in an interactive session like <a href="#interactive_login">before</a>.
+            </li>
+            <li>Check pressure and density evolution using <code>gmx energy</code>:<br>
+                <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:1mm">$ gmx energy -f npt.edr -o npt_pres.xvg</code>
+                <blockquote style="margin-top:2mm">
+                    <code>-f</code> specifies the input <code>.edr</code> file <br>
+                    <code>-o</code> specifies the output file name <br>
+                    <p style="margin-top:2mm">Choose <code>Pressure</code> by entering the number next to the desired energy
+                        term and pressing <code>Enter</code> twice.</p>
+                </blockquote>
+            </li>
+            <li>Plot the pressure evolution with <code>xmgrace</code>:<br>
+                <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:1mm">$ xmgrace npt_pres.xvg</code>
+                <p>As you should see, the pressure increases initially to 0 bar, but then fluctuates widely over the course of the rest of the
+                    simulation around this value.  </p>
+                <ol id="running_average">
+                    <li style="margin-top:2mm">To get a clearer picture of this, you can plot a running average using <code>xmgrace</code>:
+                        <p style="margin-top:0mm">Go to <code>Data</code> &rarr; <code>Transformations</code> &rarr; <code>Running averages...</code>. In
+                        the pop-up window, set the length of average to 10.
+                        <blockquote style="margin-top:1mm">
+                            <p>From the <code>.mdp</code> file, we know the energy data is written every 500 steps (<code>nstenergy</code> )
+                                and one step is 0.002 ps (<code>dt</code>). Therefore, each data point in the graph is 1 ps and the running average
+                                window size is 10 ps. To learn more about running averages, see <a target="_blank"
+                                        href="https://en.wikipedia.org/wiki/Moving_average">here</a>. </p>
+                        </blockquote>
+                    </li>
+                    <li style="margin-top:2mm"> To add this line to the legend:
+                        <p style="margin-top:0mm">Go to <code>Plot</code> &rarr; <code>Set appearance...</code> and in the pop-up window, select
+                            the new line and add the name to <code>Legend</code> in the <code>Main</code> tab.
+                    </li>
+                    <li style="margin-top:2mm"> Try plotting the running average again with different lengths. How does the average change? What
+                        length is the best to visualise the data?
+                        <p style="margin-top:0mm">You can hide a line using <code>Plot</code> &rarr; <code>Set appearance...</code> and in the
+                            pop-up window, right-click the line you want to hide and select <code>hide</code>.</p>
+                        <div class="flex-figure" style="margin-top:-2mm;">
+                            <div class="figure" style="width: 70%">
+                                <figure>
+                                    <img src="img/npt_pres.png" width="100%">
+                                    <figcaption>
+                                        Example Xmgrace plot of the pressure evolution during <em>NPT</em> equilibration.
+                                    </figcaption>
+                                </figure>
+                             </div>
+                        </div>
+                    </li>
+                </ol>
+            </li>
+            <li id="ave_std"> Find the average and standard deviation of the pressure using <code>xmgrace</code>:
+                <ol>
+                    <li style="margin-top:2mm"> Identify at what x value the pressure seems to be "equilibrated" (starts to fluctuate around the same
+                        value).
+                    </li>
+                    <li> Go to <code>Edit</code> &rarr; <code>Data sets...</code> and in the pop-up window right-click the data set and choose
+                    <code>Edit</code> &rarr; <code>In spreadsheet</code>.
+                    </li>
+                    <li> Select the rows to exclude from the mean calculation by clicking on the row number, then go to <code>Edit</code> &rarr;
+                        <code>Delete selected rows</code>. Apply and accept the changes made.
+                    </li>
+                    <li> In the <code>Data set properties</code> window, statistics on this new section of the data should now appear. Scroll
+                        across to the read the Y mean and standard deviation.
+                    </li>
+                </ol>
+                <p style="margin-top:-4mm"> Is the average pressure acceptable, given the target was 1 bar? </p>
+                <p style="margin-top:1mm"> Pressure fluctuates widely over the course of an MD simulation, as is clear from the large standard
+                    deviation. Therefore, statistically speaking, we cannot distinguish a difference between the obtained average and the target.</p>
+            </li>
+        </ol>
+    </div>
+    <p>As we can see, the pressure evolution is not a good indicator of whether the system has equilibrated. However,the reason we equilibrate the
+        pressure is in order to stabilise density, so maybe that would be a better metric to use.
+    </p>
+    <div class="bbox">
+        <h3 id="Calculate_the_density_evolution"></h3>
+        <ol>
+            <li>Visualise the density evolution</li>
+            <li>
+                Make sure you're in an interactive session like <a href="#interactive_login">before</a>.
+            </li>
+            <li>Check density evolution using <code>gmx energy</code>:<br>
+                <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:1mm">$ gmx energy -f npt.edr -o npt_dens.xvg</code>
+                <blockquote style="margin-top:2mm">
+                    <code>-f</code> specifies the input <code>.edr</code> file <br>
+                    <code>-o</code> specifies the output file name <br>
+                    <p style="margin-top:2mm">Choose <code>Density</code> by entering the number next to the desired energy
+                        term and pressing <code>Enter</code> twice.</p>
+                </blockquote>
+            </li>
+            <li>Plot the density evolution with <code>xmgrace</code>:<br>
+                <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:1mm">$ xmgrace npt_dens.xvg</code>
+                <p>As you should see, the density increases initially to around 1000 kg m<sup>-3</sup>, and then remains steady for the rest of the
+                    simulation around this value. This indicates that the system is well-equilibrated with respect to pressure and density. </p>
+                <div class="flex-figure" style="margin-top:-2mm;">
+                    <div class="figure" style="width: 70%">
+                        <figure>
+                            <img src="img/npt_dens.png" width="100%">
+                            <figcaption>
+                                Example Xmgrace plot of the density evolution during <em>NPT</em> equilibrations.
+                            </figcaption>
+                        </figure>
+                    </div>
+                </div>
+            </li>
+            <li>Calculate the equilibrated average using the same method as <a href="#ave_std">before</a>.
+                <p style="margin-top:1mm">Compare your average to the experimental density of water (997 kg m<sup>-3</sup>) and the expected value
+                    for SPC water (1008 kg m<sup>-3</sup>).</p>
+            </li>
+        </ol>
+    </div>
+</div>
+<div class="box">
+    <h2 class='enum' id="toc_2">Analysis of the simulation data</h2>
+
+    <p> In this section you will learn some ways to inspect the data generated in an <abbr>MD</abbr> simulation.</p>
+
+    <h3 class="enum" id="toc_2_1">Calculating the root-mean-square deviation (<abbr>RMSD</abbr>)</h3>
+    <p>
+        The <abbr>RMSD</abbr> is a measure of the deviation of the protein structure from a reference structure.
+        It is calculated as the square root of the average of the squared distances between the atoms of the protein
+        in the reference structure and the atoms of the protein in the structure of interest.
+    </p>
+    <p>
+        The <abbr>RMSD</abbr> is also an important measure to determine when a simulation has reached equilibrium.
+        When the <abbr>RMSD</abbr> has reached a plateau, the system has reached equilibrium.
+    </p>
+    <p>
+        It is only after the system has reached equilibrium that you are producing meaningful data that can be
+        representative of the simulated system.
+    </p>
+    <div class="bbox">
+        <h3 id="Calculating_the_RMSD"></h3>
+        <ol>
+            <li>Use <a target="_blank" href="https://manual.gromacs.org/current/onlinehelp/gmx-rms.html"><code>gmx rms</code></a> to
+                calculate the <abbr>RMSD</abbr> of the entire system, the protein and the protein backbone.
+            </li>
+             <li>
+                Make sure you're in an interactive session like <a href="#interactive_login">before</a>.
+            </li>
+            <li> Calculate the system RMSD using <a target="_blank" href="https://manual.gromacs.org/current/onlinehelp/gmx-rms.html"><code>gmx rms</code></a>:
+                <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:1mm">$ gmx rms -s prod.tpr -f prod.xtc -o rmsd_system.xvg -tu ns</code>
+                <blockquote style="margin-top:2mm">
+                    <code>-s</code> specifies the reference structure to compare each frame of the trajectory to <br>
+                    <code>-f</code> specifies the trajectory file to analyse <br>
+                    <code>-o</code> specifies the output file name <br>
+                    <p style="margin-top:2mm">We want to compare things to themselves, so choose <code>System</code> for the least squares fit (the
+                        group we want to investigate) and then for the RMSD calculation (the group we want to compare it to).</p>
+                    <p class="note" style="margin-top:1mm"> The reference structure is usually the first frame of the simulation. </p>
+                </blockquote>
+            </li>
+            <li>Plot the system RMSD with <code>xmgrace</code>:<br>
+                <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:1mm">$ xmgrace rmsd_system.xvg</code>
+                <div class="flex-figure" style="margin-top:-2mm;">
+                    <div class="figure" style="width: 70%">
+                        <figure>
+                            <img src="img/rmsd_system.png" width="100%">
+                            <figcaption style="width:165mm; margin-left:-13mm">
+                                Example Xmgrace plot of the RMSD evolution for the entire system during an unrestrained equilibration run.
+                            </figcaption>
+                        </figure>
+                    </div>
+                </div>
+            </li>
+            <li>Calculate the RMSD of the protein and the protein backbone:
+                <p style="margin-top:1mm"> Select <code>Protein</code> or <code>Backbone</code> when prompted. Remember to change the name of the output file each time.
+                </p>
+            </li>
+            <li>Plot the protein and backbone RMSD with <code>xmgrace</code>:<br>
+                <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:1mm">$ xmgrace -nxy rmsd_protein.xvg rmsd_backbone -legend load</code>
+                <p> As you should see, the protein and backbone level off quickly to ~0.2 nm (or 2 Å). This indicates that the protein is very
+                    stable. In contrast, the system RMSD levels off much higher, just below 5 nm, and it also takes longer to reach equilibrium.
+                    This is due to the water molecules, which are much more mobile than the protein.</p>
+                <div class="flex-figure" style="margin-top:-2mm;">
+                    <div class="figure" style="width: 70%">
+                        <figure>
+                            <img src="img/rmsd_protein.png" width="100%">
+                            <figcaption style="width:160mm; margin-left:-10mm">
+                                Example Xmgrace plot of the RMSD evolution for the protein during an unrestrained equilibration run.
+                            </figcaption>
+                        </figure>
+                    </div>
+                </div>
+            </li>
+        </ol>
+    </div>
+
+    <h3 class="enum" id="toc_2_2">Calculating the radius of gyration</h3>
+
+    <p>The radius of gyration of a protein is a measure of its compactness. If a protein has a steady radius, its folded (3D) structure is
+        stable, but if the protein unfolds the R<sub>g</sub> will change over time. </p>
+
+    <div class="bbox">
+        <h3 id="Calculate_the_radius_of_gyration"></h3>
+        <ol>
+            <li>Use <a target="_blank" href="https://manual.gromacs.org/current/onlinehelp/gmx-gyrate.html"><code>gmx gyrate</code></a> to
+                calculate the <abbr>R<sub>g</sub></abbr> of protein.
+            </li>
+            <li>
+                Make sure you're in an interactive session like <a href="#interactive_login">before</a>.
+            </li>
+            <li> Calculate the protein R<sub>g</sub> using <a target="_blank" href="https://manual.gromacs.org/current/onlinehelp/gmx-gyrate.html"><code>gmx gyrate</code></a>:
+                <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:1mm">$ gmx gyrate -s prod.tpr -f prod.xtc -o gyration.xvg</code>
+                <blockquote style="margin-top:2mm">
+                    <code>-s</code> specifies the reference structure to compare each frame of the trajectory to <br>
+                    <code>-f</code> specifies the trajectory file to analyse <br>
+                    <code>-o</code> specifies the output file name <br>
+                    <p class="note">If you are using GROMACS 2024 or newer (e.g. on Eddie), you can use <code>-tu ns</code> to change the time unit.
+                    </p>
+                </blockquote>
+            </li>
+            <li>Plot the density evolution with <code>xmgrace</code>:<br>
+                <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:1mm">$ xmgrace gyration.xvg</code>
+                <p> As you should see, the R<sub>g</sub> is reasonably steady, which means that the protein is very stable within its compact form
+                    for at least 1 ns. </p>
+                <div class="flex-figure" style="margin-top:-2mm;">
+                    <div class="figure" style="width: 70%">
+                        <figure>
+                            <img src="img/gyration.png" width="100%">
+                            <figcaption style="width:160mm; margin-left:-10mm">
+                                Example Xmgrace plot of the radius of gyration for the protein during an unrestrained equilibration run.
+                            </figcaption>
+                        </figure>
+                    </div>
+                </div>
+            </li>
+        </ol>
+    </div>
+
+    <h3 class='enum' id="toc_2_3">Rendering a figure with VMD</h3>
+    <p>
+        It is useful to be able to produce an image of your simulation, for a report or a publication. In this section, we will learn how to do it
+        using your VM.
+    </p>
+
+    <div class="bbox">
+        <h3 id="Rendering_a_figure_with_VMD"></h3>
+        <ol>
+            <li>Render a figure of the protein in the simulation box with VMD</li>
+            <li>On the VM, load your system into VMD.<br>
+                <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:1mm">$ vmd em.gro</code>
+                <blockquote style="margin-top:2mm">
+                    <p class="note">You can use the <code>em.gro</code> file as the input coordinate file for this exercise. Once the production
+                        run has finished, you can copy the final coordinate file, <code>prod.gro</code> to your VM and render another figure.</p>
+                </blockquote>
+            </li>
+            <li>Use <code>pbc wrap</code> to enter the protein in the box and wrap all atoms into the box:<br>
+                <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:1mm">vmd &gt; pbc wrap -center com -centersel &quot;protein&quot; -compound residue -all</code>
+                <blockquote style="margin-top:2mm" id="wrap_protein">
+                    <code>-center</code> specifies the centering method. Here, the center of mass the protein will be used as the center of the
+                    box. <br>
+                    <code>-centersel</code> specifies the selection of atoms that should be in the centre. <br>
+                    <code>-compound</code> specifies the grouping method. Here, the protein will be grouped by residue. <br>
+                    <code>-all</code> specifies that all atoms should be wrapped into the box.
+                </blockquote>
+            </li>
+            <li>Use <code>pbc box_draw</code> to draw the simulation box:<br>
+                <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:1mm">vmd &gt; pbc box_draw -width 2 -color black -resolution 30</code>
+                <blockquote style="margin-top:2mm">
+                    <code>-width</code> specifies the width of the lines drawn <br>
+                    <code>-color</code> specifies the colour to draw the box <br>
+                    <code>-resolution</code> specifies the resolution to draw the box faces with
+                </blockquote>
+            </li>
+            <li>Change the display settings:
+                <ol>
+                    <li style="margin-top:2mm"> Set the background colour to white:
+                        <p style="margin-top:0mm"> Go to <code>Graphics</code> &rarr; <code>Colors...</code> and in the pop-up window, select
+                            <code>Display</code> &rarr; <code>Background</code> &rarr; <code>8 white</code> </p>
+                    </li>
+                    <li style="margin-top:2mm"> Change the display method:
+                        <p style="margin-top:0mm"> Select <code>Display</code> &rarr; <code>Orthographic</code>  </p>
+                    </li>
+                    <li style="margin-top:2mm"> Turn off the axes:
+                        <p style="margin-top:0mm"> Select <code>Display</code> &rarr; <code>Axes</code> &rarr; <code>Off</code> </p>
+                    </li>
+                </ol>
+            </li>
+            <li style="margin-top:-2mm">Change the visualisation of the atoms.<br>
+                <p style="margin-top:1mm">Like <a href="part1.html#change_rep">before</a> go to <code>Graphics</code> &rarr; <code>Representations..
+                    .</code>
+                </p>
+                <ol>
+                    <li>
+                        Add new representations for water, ions and the protein. Change the Coloring Method, Drawing Method
+                        and Material.
+                    </li>
+                    <li> Turn off the default representation by double-clicking on the first line with selection <code>all</code> in the
+                        <code>Graphical Representations</code> window.
+                    </li>
+                </ol>
+            </li>
+            <li>
+                Take a snapshot of the representation:<br>
+                <ol>
+                    <li style="margin-top:2mm">Exit the full screen mode of the virtual machine<br></li>
+                    <li style="margin-top:2mm">Open the Snipping Tool application<br></li>
+                    <li style="margin-top:2mm">Click on <code>New</code> and select the area of the screen you want to capture<br></li>
+                    <li style="margin-top:2mm">Save the image as <code>protein.png</code></li>
+                </ol>
+                <div style="color: darkslategray; border: darkslategray; border-width: 1px; border-style: solid; background: aliceblue; padding: 10px">
+                    <p class="note">The virtual machine does not have access to a GPU to produce really nice
+                        renderings. If you have access to a computer with a GPU, you can install VMD on it and use the
+                        <code>Tachyon (internal, in-memory)</code> option to render high-quality images:</p>
+                    <ol style="text-align: left">
+                        <li> Select <code>File</code> &rightarrow; <code>Render...</code></li>
+                        <li> In the <code>File Render Controls</code> window, select <code>Tachyon (internal, in-memory)</code> as the rendering
+                            engine and select an output file name.
+                        </li>
+                        <li> You can then add the <code>-res</code> and <code>-aasamples</code> options to specify the resolution and antialiasing
+                            samples, respectively.
+                        </li>
+                        <li> A rendering example with more advanced instructions can be found at <a href="https://skblnw.github.io/mkvmd_render/"
+                             rel="noopener" target="_blank">skblnw.github.io/mkvmd_render/</a>
+                        </li>
+                    </ol>
+                </div>
+            </li>
+        </ol>
+        <div class="flex-figure">
+            <div class="figure" style="width: 50%">
+                <figure>
+                    <img alt="render.png" src="img/render_2.png" width="100%">
+                    <figcaption>
+                        Elk prion protein in a simulation box created with VMD: Backbone is shown in red, Na ions as blue spheres, Cl ions as green
+                        spheres, water is shown as a surface representation, also highlighting the size of the simulation box.
+                    </figcaption>
+                </figure>
+            </div>
+        </div>
+    </div>
+
+    <h3 class='enum' id="toc_2_4">Visualise a trajectory with VMD</h3>
+
+    <p>To understand what is happening during a simulation, it is useful to visualise it. In this section, we will learn how to do it using your
+        VM.
+    </p>
+
+    <div class="bbox">
+        <h3 id="Visualise_a_trajectory_with_VMD"></h3>
+        <ol>
+            <li>Visualise a simulation with VMD</li>
+            <li>On the VM, load your system into VMD like <a href="#Rendering_a_figure_with_VMD">before</a>: <br>
+                <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:1mm">$ vmd prod.gro</code>
+                <blockquote style="margin-top:2mm">
+                    <p class="note">You can use the <code>prod.gro</code> file from the <code>example_data</code> folder as the input coordinate file
+                        for this exercise. Once the production run has finished, you can copy the final coordinate file, <code>prod.gro</code>, and
+                        the trajectory file, <code>prod.xtc</code>, to your VM and render another figure.</p>
+                </blockquote>
+            </li>
+            <li> Load the trajectory into the molecule:
+                <p style="margin-top:1mm"> In the main window, right-click on the molecule and select <code>Load Data into Molecule</code>. Select <code>prod.xtc</code> in
+                the file browser</p>
+                <blockquote style="margin-top:1mm">
+                    <p class="note"> Loading all the frames might take some time. You can speed up the process by hiding the molecule.</p>
+                    <p> To do this, click on <code>D</code> next to the molecule in the main window. It will turn red. Click it again to unhide the
+                        molecule. </p>
+                </blockquote>
+            </li>
+            <li>Play the trajectory using the <code>Play</code> button at the bottom of the main window.
+                <blockquote style="margin-top:1mm">
+                    You can adjust the playback speed, go forwards and backwards <em>etc.</em> using the controls at the bottom of the main window.
+                </blockquote>
+            </li>
+        </ol>
+    </div>
+</div>
+
+<div class="box">
+    <h2 class="enum" id="toc_3">Reporting on the procedure</h2>
+    <p>
+        A handy tool to produce a summary of your system info is <a target="_blank"
+            href="https://manual.gromacs.org/current/onlinehelp/gmx-report-methods.html"><code>gmx report-methods</code></a>.
+    </p>
+    <div class="bbox">
+        <h3 id="Generating_a_report_of_the_procedure"></h3>
+        <ul>
+            <li>Use <a target="_blank"
+                    href="https://manual.gromacs.org/current/onlinehelp/gmx-report-methods.html"><code>report-methods</code></a>
+                to print a report of the procedure:
+            </li>
+            <li>
+                <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:1mm">$ gmx report-methods -s prod.tpr</code>
+                <blockquote style="margin-top:1mm">
+                    <code>-s</code> specifies the run input file to make a report on
+                    <p class="note" style="margin-top:1mm">Use the <code>-o</code> option to write the report as a plain <code>.out</code> text
+                        file and the <code>-m</code> option to write the report as a LaTeX <code>.tex</code> file. You will hear more about
+                        writing documents in LaTeX in the upcoming sessions.</p>
+                    </blockquote>
+                <p>Your output will look similar to this:</p>
+                <samp style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:1mm">                  :-) GROMACS - gmx report-methods, 2024.4 (-:
+
+Executable:   /exports/applications/apps/RL9/gromacs/2024.4/bin/gmx
+Data prefix:  /exports/applications/apps/RL9/gromacs/2024.4
+Working dir:  /exports/eddie/scratch/nelle/session2
+Command line:
+  gmx report-methods -s md/prod.tpr
+
+Reading file md/prod.tpr, VERSION 2023.3 (single precision)
+Note: file tpx version 129, software tpx version 134
+section: Methods
+subsection: Simulation system
+A system of 9246 molecules (29398 atoms) was simulated.
+
+subsection: Simulation settings
+A total of 1 ns were simulated with a time step of 2 fs.
+Neighbor searching was performed every 10 steps.
+The PME algorithm was used for electrostatic interactions.
+with a cut-off of 1.2 nm.
+A reciprocal grid of 52 x 52 x 52 cells was used with 4th order B-spline interpolation.
+A single cut-off of 1.2 nm was used for Van der Waals interactions.
+Temperature coupling was done with the V-rescale algorithm.
+Pressure coupling was done with the C-rescale algorithm.
+
+GROMACS reminds you: "I think everybody should like everybody." (Andy Warhol)</samp>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<div class="box">
+    <h2>This brings us to the end of the session. Please return to the main menu and provide feedback if you have not done so already.</h2>
+    <p> &uarr; <a href="Session2.html">Go to the main menu</a> <br>
+        &larr; <a href="part2.html">Go to the previous part - Running a Molecular Dynamics Simulation</a> </p>
+</div>
+
+<script src="../scripts/generate_header_s2.js"></script>
+<script src="../scripts/generate_overview.js"></script>
+<script src="../scripts/scroll_up.js"></script>
+<script src="../scripts/feedback.js"></script>
+<script src="../scripts/adjust_for_dyslexia.js"></script>
+<script>window.onload = function () {
+    generateOverview();
+    generateHeader();
+    scrollUp();
+    adjustForDyslexia()
+}</script>
+</body>
+</html>
