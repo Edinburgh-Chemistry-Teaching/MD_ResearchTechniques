@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en-UK">
+
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0, user-scalable=yes" name="viewport"/>
+    <meta content="Session 3: Layered material simulations" name="description"/>
+    <link href="https://fonts.googleapis.com" rel="preconnect">
+    <link crossorigin href="https://fonts.gstatic.com" rel="preconnect">
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,400;0,600;1,400&display=swap"
+          rel="stylesheet">
+    <link href="../../scripts/style.css" rel="stylesheet"/>
+    <title>Session 3</title>
+</head>
+
+
+<body>
+
+<div class="box">
+    <h1 id="title">Layered Material Setup</h1>
+</div>
+
+<div class="box">
+    <h2 id="overview">Contents</h2>
+</div>
+
+<div class="box">
+    <h2 id="toc_1">Session Outline</h2>
+    <p>
+        This session is based upon the <a target="_blank" href="https://www.erastova.xyz/teaching/practical-simulations-for-molecules-and-materials/material-simulations/material-simulations-set-up/">Layered
+            material simulations set up</a> tutorial by Valentina Erastova.
+    </p>
+
+    <p>In this practical session, we will learn more advanced methods for Molecular Dynamics (MD) simulations with GROMACS, and use of assisting
+        software (e.g. VMD, xmgrace, vim) to visualise and manipulate the data. As before, the material is divided into 3 parts, covering all
+        aspects of simulations.</p>
+
+    <ol>
+        <li> <a href="part1.html"><strong>Preparing the System for Simulation</strong></a> </li>
+        <li> <a href="part2.html"><strong>Running a Molecular Dynamics Simulation</strong></a> </li>
+        <li> <a href="part3.html"><strong>Analysis of the Simulation Data</strong></a> </li>
+    </ol>
+
+    <p> The figure below shows a typical protocol for the simulation of layered materials. In this tutorial, we will follow this same protocol,
+        using a smectite clay as our layered material.</p>
+     <div class="flex-figure" style="margin-top:-8mm;">
+        <div class="figure" style="width: 70%">
+            <figure>
+                <object style="margin-left: 29mm" width="70%" data="img/gmx_workflow.svg" type="image/svg+xml"></object>
+                <!--                svg made using graphviz and img/gmx_workflow.gv -->
+                <figcaption>
+                    Typical flowchart of a simulation of layered materials, often a number of simulations have to be performed to prepare the system
+                    for a production MD run.
+                </figcaption>
+            </figure>
+        </div>
+    </div>
+</div>
+
+<div class="box">
+    <h2 id="toc_2">Learning Outcomes</h2>
+    <p>By the end of this session you should be able to:</p>
+    <ul>
+        <li>Prepare a simple input file for a simulation</li>
+        <li>Run a simple simulation of a layered material</li>
+        <li>Visualise the results of the simulation</li>
+    </ul>
+</div>
+
+<div class="box">
+    <h2 id="toc_3">Clay Minerals</h2>
+
+    <p>
+        Clays are a diverse group of minerals that are found in soils and sediments throughout the world.
+        Their basic structural unit is a layer composed of one or two sheets of silica tetrahedra,
+        [Si<sup>4+</sup>O<sub>5</sub>]
+        and one sheet of divalent or trivalent metal octahedra, [M<sup>2+</sup><sub>3</sub>(OH)<sub>2</sub>O<sub>4</sub>]
+        (M<sup>2+</sup>
+        = Mg<sup>2+</sup>, Fe<sup>2+</sup>, ...),
+        or [M<sup>3+</sup><sub>2</sub>(OH)<sub>2</sub>O<sub>4</sub>] (M<sup>3+</sup> = Al<sup>3+</sup>, Fe<sup>3+</sup>).
+        These layers are stacked on top of each other to form a 3D structure.
+        So&dash;called <em>isomorphous substitution</em> of tetrahedral Si<sup>4+</sup> by a M<sup>3+</sup> ion or
+        octahedral
+        M<sup>3+</sup>/M<sup>2+</sup> by M<sup>2+</sup>/M<sup>1+</sup> ions
+        result in a net negative charge on the clay mineral. This negative <em>layer charge</em> is balanced by the
+        presence
+        of cations (Na<sup>+</sup>, K<sup>+</sup>, Ca<sup>2+</sup>, Mg<sup>2+</sup>, ...) in the interlayer space.
+    </p>
+    <div class="flex-figure">
+        <div class="flex-figure-item">
+            <figure>
+                <img alt="" class="fit-picture" decoding="auto"
+                     src="img/clay_sheet_structure.png" width="40%"/>
+                <img alt="" class="fit-picture" decoding="auto" src="img/clay_with_IL.png"
+                     width="50%"/>
+                <figcaption>
+                    Side view illustrations of clay sheet structure and composition (left) and two stacked clay with
+                    interlayer space (right).
+                </figcaption>
+            </figure>
+        </div>
+    </div>
+
+    <p>
+        Today's system will be a montmorillonite <abbr>MMT</abbr> in contact with water, ions and organic molecules.
+        We will start by building the clay sheets from unit cell (<abbr>UC</abbr>) building blocks.
+        The composition of this unit cell is the following:
+        [Si<sup>4+</sup><sub>8</sub>O<sub>5</sub>][Al<sup>3+</sup><sub>3</sub>Mg<sup>2+</sup>(OH)<sub>2</sub>O<sub>4</sub>]<sup>
+        &dash;1</sup>. The &dash;1 charge originates from one of the octahedral Al<sup>3+</sup> atoms being substituted
+        by a
+        Mg<sup>2+</sup> atom.
+        In the session tutorial, the atoms are colour&dash;coded according to the following scheme:</p>
+
+    <table>
+        <caption>Atom type colours</caption>
+        <colgroup>
+            <col span="5">
+        </colgroup>
+        <thead>
+        <tr>
+            <th>Element</th>
+            <th>Colour</th>
+            <th style="color: transparent">empty</th>
+            <th>Element</th>
+            <th>Colour</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>Si</td>
+            <td style="background-color: yellow; font-weight: bolder">yellow</td>
+            <td style="color: transparent">empty</td>
+            <td>Al</td>
+            <td style="background-color: darkcyan; color: white; font-weight: bolder">cyan</td>
+        </tr>
+        <tr>
+            <td>O</td>
+            <td style="background-color: red; color: white; font-weight: bolder">red</td>
+            <td style="color: transparent">empty</td>
+            <td>Mg</td>
+            <td style="background-color: darkviolet; color: white; font-weight: bolder">purple</tD>
+        </tr>
+        <tr>
+            <td>H</td>
+            <td style="background-color: white; color: black; font-weight: bolder">white</td>
+            <td style="color: transparent">empty</td>
+            <td>C</td>
+            <td style="background-color: #333333; color: white; font-weight: bolder">gray</tD>
+        </tr>
+        </tbody>
+    </table>
+
+    <div class="flex-container">
+        <div class="flex-item">
+            <figure>
+                <img alt="" class="fit-picture" decoding="auto" src="img/uc_top.png"
+                     width="35%"/>
+                <img alt="" class="fit-picture" decoding="auto" src="img/uc_side.png"
+                     width="55%"/>
+                <figcaption>
+                    Montmorillonite unit cell top view (left) and side view (right).
+                </figcaption>
+            </figure>
+        </div>
+    </div>
+</div>
+
+<script src="../../scripts/generate_header_s3_clay.js"></script>
+<script src="../../scripts/generate_overview.js"></script>
+<script src="../../scripts/scroll_up.js"></script>
+<script src="../../scripts/feedback.js"></script>
+<script src="../../scripts/adjust_for_dyslexia.js"></script>
+<script>window.onload = function () {
+    addFeedback('https://app.wooclap.com/XREESD/questionnaires/676aa1ce7eea881339d0e146', 'img/session_3.png')
+    generateOverview();
+    generateHeader();
+    scrollUp();
+    adjustForDyslexia()
+}</script>
+</body>
+</html>

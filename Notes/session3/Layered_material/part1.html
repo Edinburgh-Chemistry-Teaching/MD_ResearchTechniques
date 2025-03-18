@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en-UK">
+<!--xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html">-->
+
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0, user-scalable=yes" name="viewport"/>
+    <meta content="Session 3: Layered material simulations" name="description"/>
+    <link href="https://fonts.googleapis.com" rel="preconnect">
+    <link crossorigin href="https://fonts.gstatic.com" rel="preconnect">
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,400;0,600;1,400&display=swap"
+          rel="stylesheet">
+    <link href="../../scripts/style.css" rel="stylesheet"/>
+    <title>Part 1 - Preparing the System for Simulation</title>
+</head>
+
+<body>
+
+<div class="box">
+    <h1 id="title">Part 1 - Preparing the System for Simulation</h1>
+    <p> &uarr; <a href="Session3.html">Go to the main menu</a> <br>
+        &rarr; <a href="part2.html">Go to the next part - Running a Molecular Dynamics Simulation</a> </p>
+</div>
+
+<div class="box">
+    <h2 id="overview">Contents</h2>
+</div>
+
+<div class="box">
+    <h2 class="enum" id="toc_1">Building the clay sheets</h2>
+    <p>
+        Before you start on this practical, let's create a working directory for this session.
+    </p>
+
+    <p style="font-weight: bold">In this session, all the commands will need to be typed. If you copy them from this document, they won't work! Use
+        <code>Tab</code> to autocomplete and save time.</p>
+
+    <div class="bbox">
+        <h3 id="Create the working directory"></h3>
+        <ol>
+            <li>Create the working directory for this session </li>
+
+            <li style="margin-bottom:4mm;">Move to your home directory:
+                <code style="display:block;white-space:pre;margin-top:-0.1mm;padding: 6px 10px">$ cd </code></li>
+
+            <li style="margin-bottom:-0.1mm;">Copy the <code>session3</code> folder from practicals to your home directory:
+                <code style="display:block;white-space:pre-wrap;margin-top:-0.1mm;padding: 6px 10px">$ cp -r /home/student??/practicals/session3/Layered_material /home/student??/Desktop/session3</code>
+                <blockquote style="margin-top:1mm">Remember to replace <code>student??</code> with your login username</blockquote>
+            </li>
+
+            <li style="margin-bottom:-0.1mm;">Change into the <code>session3</code> directory:
+                <code style="display:block;white-space:pre-wrap;margin-top:-0.1mm;padding: 6px 10px">$ cd Desktop/session3</code></li>
+        </ol>
+
+        <p><strong><em>WARNING</em></strong> ⚠️<br>
+        <strong>Every time you open a new terminal, the <code>practicals/</code> folder will revert back to the original copy. Therefore, you will lose
+        any work if you don't copy it to a new folder.</strong></p>
+
+    </div>
+
+    <p> Let's get started! The clay model will consist of a single montmorillonite clay sheet. The first step is to create a sheet by
+        multiplying a single <abbr>MMT</abbr> <abbr>UC</abbr>.
+        This can be done with GROMACS using <a target="_blank" href="https://manual.gromacs.org/current/onlinehelp/gmx-genconf.html"><code>genconf</code></a>. </p>
+
+    <div class="bbox">
+        <h3 id="Create_a_clay_sheet"></h3>
+        <ul>
+            <li> Use <a target="_blank" href="https://manual.gromacs.org/current/onlinehelp/gmx-genconf.html"><code>genconf</code></a> to create a
+                single clay sheet
+                from the <abbr>MMT</abbr> <abbr>UC</abbr>
+            </li>
+            <li> <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:1mm">$ gmx genconf -f STRUCTURES/MMT.gro -nbox &lt;x_ucs&gt; &lt;y_ucs&gt; &lt;z_ucs&gt; -o MMT_slab.gro</code>
+                    <blockquote style="margin-top:1mm;">
+                    <code>-f</code> specifies the structure file of the system to insert into <br>
+                    <code>-nbox</code> defines the number of unit cells to put in each of the <em>x y z</em>
+                    directions <br>
+                    <code>-o</code> specifies the output file name <br>
+                </blockquote>
+            </li>
+            <li>How many <abbr>UCs</abbr> do you need in each direction?
+                <ul>
+                    <li style="margin-top:2mm"> If we only want one layer of clay, use 1 in the <em>z</em>‐direction. </li>
+                    <li> For the <em>x</em>- and <em>y</em>-direction, we need to ensure the minimum-image convention is satisfied. <br>
+                    <blockquote style="margin-top:2mm;">
+                        <p><i>Remember:</i> The final line in the <code>.gro</code> file shows the x, y and z cell lengths in nanometers, and the
+                            size of the box has to be at least 2.5 x the size of your cutoff. So, for a cutoff at 1.2 nm you have to aim at
+                            ~3 nm on each side. </p>
+                        <p style="margin-bottom:-3mm;">  <br> </p>
+                        <p> What (whole number) do you need to multiply the cell length by in <em>x</em> or <em>y</em> to get a box big enough?
+                            This is the value to use for <code>-nbox</code> in that direction. </p>
+                    </blockquote>
+
+                </ul>
+                <div class="flex-container" style="margin-top:-6mm;">
+                    <div class="flex-item">
+                        <figure>
+                            <img alt="" class="fit-picture" decoding="auto"
+                                 src="img/sheet_top.png"
+                                 width="45%"/>
+                            <img alt="" class="fit-picture" decoding="auto"
+                                 src="img/sheet_side.png"
+                                 width="50%"/>
+                            <figcaption>
+                                Montmorillonite sheet model top view (left) and side-view (right).
+                            </figcaption>
+                        </figure>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<div class="box">
+    <h2 class="enum" id="toc_2">Adding decanoic acid molecules</h2>
+    <p> The box of this sheet model currently has no space for inserting molecules, solvent or ions. Therefore, you need to change the box height
+        before we add anything else. </p>
+
+    <div class="bbox">
+        <h3 id="Increase_the_box_height"></h3>
+        <ul>
+            <li>Increase the box height</li>
+            <li>
+                <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:1mm">$ vim MMT_slab.gro</code>
+                <blockquote style="margin-top:1mm">
+                    Where in the <code>.gro</code> file is the box size specified? Adjust the <em>z</em> cell length to 50 &#8491;. <br>
+                    <i>Remember:</i> the vim cheat sheet can help you navigate the file quickly.
+                </blockquote>
+                <div class="flex-figure" style="margin-top:-8mm;">
+                    <div class="figure" style="width:50%">
+                        <figure>
+                            <img src="img/sheet_side_ext_50A.png"
+                                 width="100%">
+                            <figcaption> Montmorillonite sheet model with an extended box in <em>z</em>.
+                            </figcaption>
+                        </figure>
+
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+    <p>  Now that you have space, you can use <a target="_blank"
+            href="https://manual.gromacs.org/current/onlinehelp/gmx-insert-molecules.html"><code>insert-molecules</code></a> to insert decanoic
+        acid molecules into the vacuum space. </p>
+    <div class="bbox">
+        <h3 id="Insert_decanoic_acid_molecules"></h3>
+        <ul>
+            <li>Use <a target="_blank"
+            href="https://manual.gromacs.org/current/onlinehelp/gmx-insert-molecules.html"><code>insert-molecules</code></a> to insert 10 decanoic
+                acid molecules
+            </li>
+            <li><code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:1mm">$ gmx insert-molecules -f MMT_slab.gro -ci STRUCTURES/decanoic_acid.gro -nmol 10 -o MMT_dec.gro</code>
+                <blockquote style="margin-top:1mm">
+                    <code>-f</code> specifies the coordinate file of the system to insert into <br>
+                    <code>-ci</code> specifies the coordinate file of the molecule to insert <br>
+                    <code>-nmol</code> specifies the number of molecules to insert <br>
+                    <code>-o</code> specifies the output coordinate file name <br>
+                    <p style="margin-top:3mm">GROMACS will try to fit the requested number of molecules in the available space. It will
+                        notify you about whether it was successful or not. <i>If unsuccessful, repeat this step until the requested total number have
+                            been added (you may need to lower <code>-nmol &lt;number&gt;</code> if it successfully added some but not all).</i>
+                    </p>
+                </blockquote>
+                <div class="flex-figure" style="margin-top:-6mm;">
+                    <div class="figure" style="width:50%">
+                        <figure>
+                            <img src="img/sheet_side_dec_50A.png" width="100%">
+                            <figcaption style="width:165mm; margin-left:-35mm">
+                                Decanoic acid molecules inserted into the vacuum space above the clay sheet.
+                            </figcaption>
+                        </figure>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<div class="box">
+    <h2 class="enum" id="toc_3">Preparing the topology file</h2>
+    <p>
+        Before proceeding to the next step in which you will solvate the box, you need to generate a topology
+        (<code>.top</code>) file
+        that includes all molecules present in the system. The following explains the structure of GROMACS
+        topology files in some more detail.
+    </p>
+    <p>
+        In the first section, the force field parameters are defined. These always include combination rules and
+        non-bonded interaction parameters (atom types, atomic masses, atomic charges, Lennard-Jones
+        parameters).
+        They can optionally include
+        bonded interaction definitions (bond, angle and dihedral types with bond, angle and dihedral interaction
+        force constants and equilibrium values in this order). A detailed explanation can be found in the GROMACS
+        documentation pages: <a
+            href="https://manual.gromacs.org/current/reference-manual/topologies/topology-file-formats.html#topfile"
+            rel="noopener"
+            target="_blank">topology files</a>,
+        <a href="https://manual.gromacs.org/current/reference-manual/topologies/topologies.html" rel="noopener"
+           target="_blank">topologies</a> and
+        <a href="https://manual.gromacs.org/current/reference-manual/functions/functions.html#ff"
+                rel="noopener"
+                target="_blank">force fields</a>.<br>
+    </p>
+    <p>
+        Even if they consist of only one atom, all atoms of the system are part of molecules. These are defined
+        in the second section, <code>[ moleculetype ]</code>. All molecule type definitions, such as the <abbr>MMT</abbr> <abbr>UC</abbr>,
+        decanoic acid, water and ions need to be included in the topology file.
+    </p>
+    <p> Elements from the first two sections are usually defined in separate files that are included in the topology
+        file.
+        The syntax for including files is <code>#include &quot;&lt;filename&gt;&quot;</code>.</p>
+    <p>
+        The third section contains the system name and the number of molecules of each type in the system. The
+        system section starts with the keyword <code>[ system ]</code> and is followed by a name chosen for the
+        system (the choice of the name does not really matter).<br>
+        The number of molecules of each type is specified in the <code>[ molecules ]</code> section. <br>
+        <em>Important:</em> The order of the molecules in the <code>[ molecules ]</code> section must match the
+        order of the molecules in the <code>.gro</code> file.
+
+    </p>
+    <p class="remember"> Everything that comes after a <code>;</code> will be treated as a comment and is not read by GROMACS.</p>
+
+    <div class="bbox">
+        <h3 id="Generate_the_topology_file"></h3>
+        <ol>
+            <li> Generate a topology file for the system</li>
+            <li> Open the topology file <code>MMT_slab.top</code> to fill in the missing sections.<br>
+                <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:1mm">$ vim MMT_slab.top</code>
+                <blockquote style="margin-top:1mm">
+                    All force field folders (<code>&lt;ForceFieldName.ff&gt;</code>) are located within the <code>FF</code> directory. The force
+                    field for clay and water is <code>ClayFF</code>, for organics it is <code>CHARMM36</code>, and for ions it is <code>Ions</code>.
+                    Inside the folders, you can find the <code>.itp</code> files that contain the various force field parameters. <br>
+                </blockquote>
+            </li>
+            <li>Complete the lines to add nonbonded parameter files (<code>ffnonbonded.itp</code>) for clay, organics and ions.
+                <blockquote style="margin-top:1mm">
+                    Clay and water share the same atom types. Therefore, no separate <code>ffnonbonded.itp</code> file needs to be added for
+                    water.<br>
+                </blockquote>
+            </li>
+            <li>Complete the lines to add bonded parameters for organics (<code>ffbonded.itp</code>).</li>
+            <li>Include molecule definitions for ions (<code>ions.itp</code>), water (<code>spc.itp</code>),
+                <abbr>MMT</abbr> (<code>MMT.itp</code>) and decanoic acid (<code>decanoic_acid.itp</code>).
+                <blockquote style="margin-top:1mm">
+                    <p class="note">The files containing the decanoic acid and MMT structure parameters are located in the
+                    <code>STRUCTURES</code> directory.</p>
+                </blockquote>
+            </li>
+            <li>Complete the molecules section.
+                <blockquote style="margin-top:1mm">
+                    <p>Add entries for all molecules in your <code>.gro</code> file.</p>
+                    <p style="margin-bottom:-5mm;"> <br></p>
+                    <p>E.g. for two <abbr>MMT</abbr> <abbr>UCs</abbr> and one decanoic acid, the entry would be:</p>
+                    <samp style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:1mm">[ molecules ]
+; Compound  # mols
+MMT           2
+DECA           1</samp>
+                </blockquote>
+            </li>
+        </ol>
+    </div>
+</div>
+
+<div class="box">
+    <h2 class="enum" id="toc_4">Solvating the system</h2>
+    <p>
+        Now that you have a topology file, you can use GROMACS to <code>solvate</code> the box with SPC water.
+    </p>
+    <div class="bbox">
+        <h3 id="Solvate_the_box"></h3>
+        <ol>
+            <li>Solvate the box with SPC water</li>
+            <li>Make a copy of the topology <code>MMT_slab.top</code> file: <br>
+                <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:1mm">$ cp MMT_slab.top MMT_dec_solv.top</code>
+                <blockquote style="margin-top:1mm">
+                    <p class="note"><code>solvate</code> will overwrite the <code>.top</code> file so it is good to make
+                        a copy of the unsolvated topology.</p>
+                </blockquote>
+            </li>
+            <li>Use <a target="_blank" href="https://manual.gromacs.org/current/onlinehelp/gmx-solvate.html"><code>solvate</code></a> to
+                solvate the box with <abbr>SPC</abbr> water: <br>
+                <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:1mm">$ gmx solvate -cp MMT_dec.gro -cs spc216.gro -o MMT_dec_solv.gro -p MMT_dec_solv.top</code>
+                <blockquote style="margin-top:1mm">
+                    <code>&dash;cp</code> specifies the coordinate file of the system to solvate<br>
+                    <code>&dash;cs</code> specifies the water model coordinate file<br>
+                    <code>&dash;o</code> specifies the output coordinate file<br>
+                    <code>&dash;p</code> specifies the input and output topology file<br>
+                    <p class="note" style="margin-top:2mm;">If a name for the topology file is NOT specified with <code>&dash;p</code>, the solvent
+                        molecules won't be added to the topology file, so you will need to add them yourself.</p>
+                </blockquote>
+                <p>GROMACS will try to fill the available space with solvent and update the number of water (<code>SOL</code>) molecules in the
+                    output topology file.</p>
+
+                <div class="flex-figure" style="margin-top:-4mm;">
+                    <div class="figure" style="width: 50%">
+                            <figure>
+                                <img alt="" src="img/sheet_side_dec_solv_50A.png" width="100%"/>
+                                <figcaption style="width:165mm; margin-left:-35mm">Solvated MMT sheet model with grey decanoic acid molecules in
+                                    simulation
+                                    box.
+                                </figcaption>
+                            </figure>
+                    </div>
+                </div>
+
+                <p>After this step, <strong>make sure to visualise the system</strong> in VMD to check that no water molecules
+                    were inserted into or very close to the clay sheets. If this was the case, you can either
+                    repeat the solvation step (make sure to delete the <code>SOL</code> line from the topology
+                    first) or remove the water molecules manually.</p>
+                <p style="margin-bottom:-5mm;"> <br> </p>
+                <p> In order to manually remove water molecules, look at the system in VMD and press <code>1</code> on your keyboard to select the
+                    water molecules that are too close to the clay. The label of the selected water molecule will then show you
+                    which residue you will need to remove from the <code>.gro</code> file. E.g. if the label
+                    shows <code>SOL60:HW1</code> (see figure below), you will need to remove the three <code>SOL60</code> lines
+                    from the <code>MMT_dec_solv.gro</code> file and change the number of atoms in the header
+                    to match the new number of atoms in the file. Make sure to also update the number of water
+                    molecules in the <code>MMT_dec_solv.top</code> file.</p>
+
+                <div class="flex-figure" style="margin-top:-2mm;">
+                    <div class="figure" style="width: 50%">
+                        <figure>
+                            <img alt="" src="img/sheet_side_water_mol.png"
+                                 width="100%"/>
+                            <figcaption>
+                                Water molecule <code>SOL60</code> inside the clay sheet.
+                            </figcaption>
+                        </figure>
+                    </div>
+                </div>
+                <div id="EM_toubleshoot"
+                     style="padding: 20px;background: aliceblue; border: darkslategray;border-width: 1px;border-style: solid;color: darkslategray">
+                    <p><em style="font-weight: bold">EM Troubleshooting:</em> Note which atom has the highest forces in the
+                        energy minimisation output of GROMACS.<br>
+                        E.g.: <code>Step= 1836, Dmax= 6.0e-05 nm, Epot= -5.42894e+05 Fmax= 1.94476e+02, atom= 19894</code>
+                    In VMD, go to the <code>Graphical Representations</code> window.
+                    Create a new representation and for <code>Selected Atoms</code> choose <code>serial &lt;problem_atom_number&gt;</code>, set
+                    the <code>Drawing Method</code> to <code>VDW</code> and the <code>Coloring Method</code> to <code>ColorID</code>.
+                    You will now be able to see which atom is causing the problem.</p>
+                    <p>If you cannot clearly see the environment of the problem atom, you can replace the <code>Selected Atoms</code>
+                        in the default representation with <code>within 5 of serial &lt;problem_atom_number&gt;</code>
+                    </p>
+                    <p>
+                        If a water molecule is causing the problem, you can follow the instructions above and remove it
+                        from the system.
+                    </p>
+                    <p>
+                        If the problem is an ion, restart the procedure beginning from the <a
+                            href="#Neutralise_the_excess_charge"> <code>genion</code></a> step.
+                    </p>
+                </div>
+            </li>
+        </ol>
+    </div>
+</div>
+
+<div class="box">
+    <h2 class="enum" id="toc_5">Adding ions to neutralise the system</h2>
+    <p>
+        Now you have a solvated system, but the system has a net negative charge because of the substitutions in the clay sheet and the
+        deprotonated decanoic acid molecules.
+        It is not possible to run a simulation with a charged system. Therefore, you need to neutralise the system
+        with cations.
+        You can use <code>genion</code> to add ions and neutralise the system.
+    </p>
+    <div class="bbox">
+        <h3 id="Neutralise_the_excess_charge"></h3>
+        <ol>
+            <li>Neutralise the system with Na<sup>+</sup> ions</li>
+            <li>Use <code>grompp</code> to generate a <abbr>TPR</abbr> file for the system:
+                <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:1mm">$ gmx grompp -f MDP/genion.mdp -c MMT_dec_solv.gro -p MMT_dec_solv.top -o MMT_dec_solv_ions.tpr -pp MMT_dec_solv_ions.top -maxwarn 1</code>
+                <blockquote style="margin-top:1mm">
+                    <code>-f</code> specifies the input run parameter file <br>
+                    <code>-c</code> specifies the coordinate file of the system to solvate <br>
+                    <code>-p</code> specifies the input topology file <br>
+                    <code>-o</code> specifies the compiled output <code>.tpr</code> file <br>
+                    <code>-pp</code> specifies the output topology file <br>
+                    <code>-maxwarn</code> specifies the maximum number of warnings that can be ignored <br>
+                    <p style="margin-bottom:-5mm;"> <br> </p>
+                    <p class="note"> Because <code>genion</code> is an <abbr>MD</abbr> run, the <code>-pp</code> option to generate a new topology
+                        file with ions is used here rather than with the <code>genion</code> command.</p>
+                    <p style="margin-bottom:-5mm;"> <br> </p>
+                    <p> <i>Remember:</i> The contents of the <code>.mdp</code> input file are not important for <code>genion</code>, but it has
+                            to be given. </p>
+                </blockquote>
+
+                <p> The command will generate a note similar to this one: </p>
+                <samp style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:1mm">NOTE 3 [file MMT_slab_dec_solv.top, line 40]:
+In moleculetype 'MMT' 32 atoms are not bound by a potential or constraint
+to any other atom in the same moleculetype. Although technically this
+might not cause issues in a simulation, this often means that the user
+forgot to add a bond/potential/constraint or put multiple molecules in
+the same moleculetype definition by mistake. Run with <code>-v</code> to get
+information for each atom.
+</samp>
+                <p>
+                    This note is a warning that the atoms in the clay sheet are not bonded to each
+                    other. As ClayFF is a non-bonded force field, this is not an error, and you can ignore
+                    this message.
+                </p>
+            </li>
+            <li>Use <a target="_blank" href="https://manual.gromacs.org/current/onlinehelp/gmx-genion.html"><code>genion</code></a> to neutralise the system with
+                Na<sup>+</sup> ions:
+                <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:1mm;word-break: break-word">$ gmx genion -s MMT_dec_solv_ions.tpr -o MMT_dec_solv_ions.gro -p MMT_dec_solv_ions.top -pname Na  -neutral</code>
+                <blockquote>
+                    <code>-s</code> specifies the input coordinate file of the system to solvate.<br>
+                    <code>-o</code> specifies the output coordinate file<br>
+                    <code>-p</code> specifies the input topology file<br>
+                    <code>-pname</code> specifies the name of the positive ion<br>
+                    <code>-neutral</code> specifies that the system should be neutralised <br>
+                    <p style="margin-top:2mm">When asked which group of molecules should be replaced, <strong>type the corresponding number</strong>
+                        for the <code>SOL</code> group. GROMACS will try to fill the available space with solvent and update the number of water
+                        (<code>SOL</code>) molecules in the output topology file.</p>
+                </blockquote>
+            </li>
+        </ol>
+        <div class="flex-figure" style="margin-top:-2mm;">
+                    <div class="figure" style="width:50%">
+                <figure>
+                    <img alt=""
+                         src="img/sheet_side_dec_solv_ions_50A.png"
+                         width="100%"/>
+                    <figcaption style="width:165mm; margin-left:-32mm">
+                        Solvated and MMT sheet model in simulation box with decanoic acid molecules and pink
+                        Na<sup>+</sup> ions.
+                    </figcaption>
+                </figure>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="box">
+    <h2>Now that the system has been created and prepared, it is time to run the simulation.</h2>
+    <p> &uarr; <a href="Session3.html">Go to the main menu</a> <br>
+        &rarr; <a href="part2.html">Go to the next part - Running a Molecular Dynamics Simulation</a> </p>
+</div>
+
+<script src="../../scripts/generate_header_s3_clay.js"></script>
+<script src="../../scripts/generate_overview.js"></script>
+<script src="../../scripts/scroll_up.js"></script>
+<script src="../../scripts/feedback.js"></script>
+<script src="../../scripts/adjust_for_dyslexia.js"></script>
+<script>window.onload = function () {
+    generateOverview();
+    generateHeader();
+    scrollUp();
+    adjustForDyslexia()
+}</script>
+</body>
+</html>

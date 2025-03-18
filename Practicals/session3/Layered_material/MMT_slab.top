@@ -1,0 +1,39 @@
+; MMT sheet topology file
+; =======================
+
+; Force field section
+; -------------------
+
+; combination rules
+#include "FF/ClayFF.ff/forcefield.itp" 
+
+; nonbonded parameters
+#include
+#include
+#include
+
+; bonded parameters
+#include
+
+; molecule definitions
+; --------------------
+
+; MMT UC
+#include
+
+; decanoic acid
+#include
+
+; SPC water
+#include
+
+; ions
+#include
+
+[ System ]
+; System name
+MMT + decanoic acid in brine
+
+[ molecules ]
+; Name  n_mols
+

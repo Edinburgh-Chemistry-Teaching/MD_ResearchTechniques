@@ -1,0 +1,18 @@
+; Lines starting with ';' ARE COMMENTS
+; Everything following ';' is also comment
+
+; Parameters describing what to do, when to stop and what to save
+integrator	= steep					; Algorithm (steep = steepest descent minimization)
+emtol		= COMPLETE HERE			; Stop minimization when the maximum force < 500.0 kJ/mol/nm
+nsteps		= COMPLETE HERE			; Maximum number of (minimization) steps to perform
+nstenergy	= 10					; Write energies to disk every nstenergy steps
+energygrps	= System				; Which energy group(s) to write to disk
+
+; Parameters describing how to find the neighbours of each atom and how to calculate the interactions
+coulombtype	= cut-off 				; Treatment of long range electrostatic interactions
+rcoulomb	= 1.2					; long range electrostatic cut-off
+vdw-type    = cut-off 				; Treatment of long range Van der Waals interactions
+rvdw		= 1.2					; long range Van der Waals cut-off
+
+constraints	= none					; Bond types to replace by constraints
+pbc			= xyz 					; Periodic Boundary Conditions (xyz/no)

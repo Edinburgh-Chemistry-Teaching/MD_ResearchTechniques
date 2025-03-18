@@ -1,0 +1,46 @@
+; RUN CONTROL PARAMETERS
+integrator               = md
+dt                       = COMPLETE HERE 				; Make the time step 2 fs
+nsteps                   = COMPLETE HERE 				; Make the total run time 10 ns
+
+; OUTPUT CONTROL OPTIONS
+nstenergy                = 500
+; Output frequency and precision for .xtc file
+nstxout-compressed       = 500
+energygrps               = System
+
+; NEIGHBORSEARCHING PARAMETERS
+cutoff-scheme            = Verlet
+pbc                      = xyz
+
+; OPTIONS FOR ELECTROSTATICS AND VDW
+coulombtype              = PME
+coulomb-modifier         = Potential-shift-Verlet
+rcoulomb                 = 1.4
+vdwtype                  = PME
+vdw-modifier             = Potential-shift-Verlet
+rvdw                     = 1.4
+rlist                    = 1.2
+
+; Temperature coupling  
+tcoupl                   = V-rescale            ; Couple temperature to external heat bath according to V-rescale method
+tc-grps                  = System               ; Use one heat bath for the whole system
+tau_t                    = 0.1                  ; Coupling time constant, controlling strength of coupling
+ref_t                    = 300                  ; Temperature of heat bath
+
+; pressure coupling
+Pcoupl                   = C-rescale
+Pcoupltype               = semiisotropic
+tau_P                    = 2.0
+compressibility          = 4.5e-5 4.5e-5
+ref_P                    = 1.0 1.0
+
+; GENERATE VELOCITIES FOR STARTUP RUN
+gen_vel                  = no    				; Assign velocities to particles by taking them randomly from a Maxwell distribution
+continuation             = yes
+
+; OPTIONS FOR BONDS    
+constraints              = h-bonds
+constraint-algorithm     = LINCS
+lincs_iter               = 1
+lincs_order              = 4
