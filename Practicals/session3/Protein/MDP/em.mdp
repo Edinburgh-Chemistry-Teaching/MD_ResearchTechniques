@@ -1,0 +1,26 @@
+; Lines starting with ';' ARE COMMENTS
+; Everything following ';' is also comment
+
+; Parameters describing what to do, when to stop and what to save
+integrator	             = steep				; Algorithm (steep = steepest descent minimization)
+emtol		             = COMPLETE HERE		; Stop minimization when the maximum force < 500.0 kJ/mol/nm
+nsteps		             = COMPLETE HERE		; Maximum number of (minimization) steps to perform
+nstenergy	             = 10					; Write energies to disk every nstenergy steps
+energygrps	             = System				; Which energy group(s) to write to disk
+
+; NEIGHBORSEARCHING PARAMETERS
+cutoff-scheme			 = Verlet
+vdwtype                  = cutoff
+pbc                      = xyz
+rlist                    = 1.4
+
+; OPTIONS FOR ELECTROSTATICS AND VDW
+coulombtype              = PME                  ; Particle Mesh Ewald for long-range electrostatics
+fourierspacing           = 0.15                 ; grid spacing for FFT
+rcoulomb                 = 1.2                  ; short-range electrostatic cutoff (in nm)
+vdw-modifier             = Force-switch         ;  specific CHARMM
+rvdw-switch              = 1.0
+DispCorr                 = no
+rvdw                     = 1.2                  ; short-range van der Waals cutoff (in nm)
+
+constraints	             = none			        ; Bond types to replace by constraints

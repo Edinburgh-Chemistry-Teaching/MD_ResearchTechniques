@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en-UK">
+<!--xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html">-->
+
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0, user-scalable=yes" name="viewport"/>
+    <meta content="Session 3: Multi-chain Protein Simulation" name="description"/>
+    <link href="https://fonts.googleapis.com" rel="preconnect">
+    <link crossorigin href="https://fonts.gstatic.com" rel="preconnect">
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,400;0,600;1,400&display=swap"
+          rel="stylesheet">
+    <link href="../../scripts/style.css" rel="stylesheet"/>
+    <title>Part 1 &ndash; Preparing the System for Simulation</title>
+</head>
+
+<body>
+
+<div class="box">
+    <h1 id="title">Part 1 &ndash; Preparing the System for Simulation</h1>
+    <p> &uarr; <a href="Session3.html">Go to the main menu</a> <br>
+        &rarr; <a href="part2.html">Go to the next part &ndash; Running a Molecular Dynamics Simulation</a> </p>
+</div>
+
+<div class="box">
+    <h2 id="overview">Contents</h2>
+</div>
+
+<div class="box">
+    <h2 class="enum" id="toc_1">Getting a clean protein structure</h2>
+    <p>
+        Before you start on this practical, let's create a working directory for this session.
+    </p>
+
+    <p style="font-weight: bold">In this session, all the commands will need to be typed. If you copy them from this document, they won't work! Use
+        <code>Tab</code> to autocomplete and save time.</p>
+
+    <div class="bbox">
+        <h3 id="Create the working directory"></h3>
+        <ol>
+            <li>Create the working directory for this session </li>
+
+            <li style="margin-bottom:4mm;">Move to your home directory:
+                <code style="display:block;white-space:pre;margin-top:-0.1mm;padding: 6px 10px">$ cd </code></li>
+
+            <li style="margin-bottom:-0.1mm;">Copy the <code>session3</code> folder from practicals to your home directory:
+                <code style="display:block;white-space:pre-wrap;margin-top:-0.1mm;padding: 6px 10px">$ cp -r /home/student??/practicals/session3/Protein /home/student??/Desktop/session3</code>
+                <blockquote style="margin-top:1mm">Remember to replace <code>student??</code> with your login username</blockquote>
+            </li>
+
+            <li style="margin-bottom:-0.1mm;">Change into the <code>session3</code> directory:
+                <code style="display:block;white-space:pre-wrap;margin-top:-0.1mm;padding: 6px 10px">$ cd Desktop/session3</code></li>
+        </ol>
+
+        <p><strong><em>WARNING</em></strong> ⚠️<br>
+        <strong>Every time you open a new terminal, the <code>practicals/</code> folder will revert back to the original copy. Therefore, you will lose
+        any work if you don't copy it to a new folder.</strong></p>
+
+    </div>
+
+    <p> Let's get started! The system we will model for this tutorial is a Factor Xa complexed with an inhibitor. Factor Xa is a protein that plays a
+        critical role in blood clotting, and consists of two chains: A and L.  The first step is to download the PDB file for 1FJS and check it for
+        errors.
+    </p>
+
+    <div class="bbox">
+        <h3 id="download_pdb"></h3>
+        <ol>
+            <li> Download the protein structure file into the <code>session3</code> directory
+            </li>
+            <li> Download the structure:
+                <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:1mm;">$ wget https://www.rcsb.org/pdb/files/1fjs.pdb</code>
+            </li>
+            <li>
+                Read through the file using either <code>vim</code> or <code>more</code>. Do you notice any new line types that weren't present in
+                the PDB file you used in <a href="../../session2/part1.html#Download the protein structure" target="_blank">session 2</a>? If
+                you're unsure, check the <a href="https://www.rcsb.org/structure/1FJS" target="_blank">RCSB webpage</a> for details about the
+                structure.
+            </li>
+            <li>
+                Check there are no <code>MISSING</code> entries, which detail either atoms or whole residues that are not present in the crystal
+                structure:
+                <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:1mm;">$ grep MISSING 1fjs.pdb </code>
+                <p style="margin-top:1mm">If nothing is returned, this <em>should</em> indicate that the structure is complete, although it is not a
+                    guarantee.</p>
+            </li>
+            <li>Visualise the protein in VMD. Can you identify which atoms belong to the new <code>HETATM</code> lines?
+                <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:1mm;">$ vmd 1fjs.pdb</code>
+                <p> Change the representation of the structure as <a href="../../session2/part1.html#change_rep" target="_blank">before</a>.
+                    Change the <code>Drawing Method</code> to <code>CPK</code> and in the <code>Selected Atoms</code> field type <code>not
+                        protein</code>.
+                    The atoms shown are from the inhibitor XK (you can visualise this using <code>resname Z34</code>), glycerol (<code>resname
+                        GOL</code>), calcium and chloride ions, and water. </p>
+                <blockquote style="margin-top:1mm">
+                    To understand where the non-protein atoms are located relative to the protein, you can create a new rep with:
+                    <code>Selected Atoms</code> as <code>protein</code>, <code>Drawing Method</code> as <code>New Cartoon</code> and
+                    <code>Material</code> as <code>Transparent</code>.
+                    <p class="note" style="margin-top:2mm">Most PDB files do not contain hydrogen atoms as they are too light to be detected with
+                        X-ray crystallography. Therefore, only the oxygen atoms in the water molecules are present.</p>
+                </blockquote>
+            </li>
+        </ol>
+        <div class="flex-figure" style="margin-top:-8mm;">
+            <div class="figure" style="width: 50%">
+                <figure>
+                    <img src="img/1fjs_extra.png" width="100%">
+                    <figcaption>1FJS non-protein atoms visualised in <abbr>VMD</abbr>.
+                    </figcaption>
+                </figure>
+            </div>
+        </div>
+    </div>
+
+    <p> Now that we have identified an issue with the PDB file, we can fix it. Depending on the type of error, different methods should be used.
+        Software, such as <a href="https://github.com/openmm/pdbfixer" target="_blank">PDBFixer</a> and <a
+                href="https://server.poissonboltzmann.org/pdb2pqr" target="_blank">PDB2PQR</a>, has been developed to tackle the different
+        problems.
+    </p>
+    <p>For our PDB, the issues are the extra atoms, which can be removed be simply deleting the lines that their coordinates are on.
+    </p>
+    <p>
+        Other errors that can be solved by simple text editing are:</p>
+        <ul style="margin-top:-4mm">
+            <li>Typos (e.g. "1" instead of "I" or "0" instead of "O")</li>
+            <li>Misaligned atom names</li>
+            <li>Missing <code>TER</code> entry</li>
+            <li>Missing or added spaces causing misaligned columns</li>
+        </ul>
+
+    <div class="bbox">
+        <h3 id="clean_pdb"></h3>
+        <ol>
+            <li> Clean the PDB file
+            </li>
+            <li> Remove non-protein atoms:
+                <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:1mm;">$ grep -v HETATM 1fjs.pdb > protein_bonds.pdb</code>
+                <blockquote style="margin-top:1mm">
+                    <code>-v</code> specifies that non-matching lines should be returned
+                </blockquote>
+            </li>
+            <li>
+                Remove bond information:
+                <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:1mm;">$ grep -v CONECT protein_bonds.pdb > protein.pdb</code>
+                <blockquote style="margin-top:1mm;">
+                    The <code>HETATM</code> bonds cannot be easily distinguished from the protein bonds, and so all bond information must be
+                    deleted. GROMACS can infer the bond information, so it is not needed.
+                </blockquote>
+            </li>
+            <li>
+                Visualise the cleaned structure in VMD. Change the representation so that the <code>Drawing Method</code> is <code>New
+                Cartoon</code> and the <code>Coloring Method</code> is <code>Chain</code>.
+            </li>
+        </ol>
+        <div class="flex-figure" style="margin-top:-8mm;">
+            <div class="figure" style="width: 50%">
+                <figure>
+                    <img src="img/protein_1fjs.png" width="100%">
+                    <figcaption>1FJS protein structure visualised in <abbr>VMD</abbr>.
+                    </figcaption>
+                </figure>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="box">
+    <h2 class="enum" id="toc_2">Creating a simulation box</h2>
+    <p>
+        Now that we have verified that only protein atoms are in the PDB file and that none are missing, we can start to prepare the system for
+        simulation. We will follow the same protocol as in <a href="../../session2/part1.html">session 2</a>.
+    </p>
+
+    <div class="bbox">
+        <h3 id="Creating_a_topology"></h3>
+        <ol>
+            <li>Create a dodecahedron box containing the protein
+            </li>
+            <li> Use <a target="_blank" href="https://manual.gromacs.org/current/onlinehelp/gmx-pdb2gmx.html"><code>pdb2gmx</code></a> to
+                create a topology for the protein structure
+                <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:1mm;">$ gmx pdb2gmx -f protein.pdb -o protein.gro -p protein.top -ignh</code>
+                <blockquote style="margin-top:1mm;">
+                    <code>&dash;f</code> specifies the input <code>.pdb</code> file<br>
+                    <code>&dash;o</code> specifies the output coordinate <code>.gro</code> file<br>
+                    <code>&dash;p</code> specifies the output topology <code>.top</code> file<br>
+                    <code>&dash;ignh</code> specifies that <strong>h</strong>ydrogen atoms should be <strong>ign</strong>ored<br>
+                </blockquote>
+                <p style="margin-top:-3mm">Select the <code>CHARMM27</code> force field by <b>typing the
+                    corresponding number</b>, then hit <code>Enter</code>. When prompted for the water model, select <code>SPC</code> in the same
+                    way.</p>
+                <p class="note" style="margin-top:3mm">As there are two protein chains, two position restraint files are generated.</p>
+            </li>
+            <li>Add a box around the protein:<br>
+                <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:1mm">$ gmx editconf -f protein.gro -o protein_pbc.gro -bt dodecahedron -d 1.0 -c</code>
+                <blockquote style="margin-top:1mm">
+                    <code>&dash;f</code> specifies the input coordinate file<br>
+                    <code>&dash;o</code> specifies the output coordinate file<br>
+                    <code>&dash;bt</code> specifies the <strong>b</strong>ox <strong>t</strong>ype<br>
+                    <code>&dash;d</code> specifies the minimum <strong>d</strong>istance in nm between the protein and the box edge<br>
+                    <code>&dash;c</code> specifies that the protein should be <strong>c</strong>entred in the box<br>
+                </blockquote>
+            </li>
+        </ol>
+    </div>
+</div>
+
+<div class="box">
+    <h2 class="enum" id="toc_6">Solvating the protein in the periodic box</h2>
+
+    <div class="bbox">
+        <h3 id="Solvating_the_protein"></h3>
+        <ol>
+            <li>Solvate the protein with <abbr>SPC</abbr> water</li>
+            <li>Make a copy of the topology <code>protein.top</code> file:
+                <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:1mm">$ cp protein.top protein_solv.top</code>
+            </li>
+            <li>Use <a target="_blank" href="https://manual.gromacs.org/current/onlinehelp/gmx-solvate.html"><code>solvate</code></a> to
+                solvate the protein with <abbr>SPC</abbr> water:
+                <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:1mm">$ gmx solvate -cp protein_pbc.gro -cs spc216.gro -o protein_solv.gro -p protein_solv.top</code>
+                <blockquote style="margin-top:1mm">
+                    <code>&dash;cp</code> specifies the coordinate file of the system to solvate<br>
+                    <code>&dash;cs</code> specifies the water model coordinate file<br>
+                    <code>&dash;o</code> specifies the output coordinate file<br>
+                    <code>&dash;p</code> specifies the input and output topology file<br>
+                    <p class="note" style="margin-top:2mm;">If a name for the topology file is NOT specified with <code>&dash;p</code>, the solvent
+                        molecules won't be added to the topology file, so you will need to add them yourself.</p>
+                </blockquote>
+                <p>GROMACS will try to fill the available space with solvent and update the number of water (<code>SOL</code>) molecules in the
+                    output topology file.</p>
+            </li>
+        </ol>
+    </div>
+</div>
+
+<div class="box">
+    <h2 class="enum" id="toc_4">Adding ions to the box</h2>
+    <p> Now we have a solvated system, but the output of <code>pdb2gmx</code> told us that the system has a net negative charge. Scroll up in the
+        terminal to find the output of the command if you didn't read it when running the command. As <a
+            href="../../session2/part1.html#Adding_ions_to the system">before</a>, we will neutralise the system using 0.15&nbsp;mol&nbsp;dm<sup>-3
+        </sup> of NaCl, to mimic physiological conditions.
+    </p>
+    <div class="bbox">
+        <h3 id="Adding_ions_to the system"></h3>
+        <ol>
+            <li>
+                Add 0.15 mol dm<sup>-3</sup> of NaCl
+            </li>
+            <li>
+                Make a copy of the topology <code>protein_solv.top</code> file:
+                <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:1mm">$ cp protein_solv.top protein_solv_ions.top</code>
+            </li>
+            <li> Use <code>grompp</code> to generate a <abbr>TPR</abbr> file for the system:
+                <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:1mm">$ gmx grompp -f MDP/genion.mdp -c protein_solv.gro -p protein_solv.top -o protein_solv_ions.tpr &#8209;maxwarn 1</code>
+                <blockquote style="margin-top:1mm">
+                    <code>-f</code> specifies the input run parameter file <br>
+                    <code>-c</code> specifies the coordinate file of the system to solvate <br>
+                    <code>-p</code> specifies the input topology file <br>
+                    <code>-o</code> specifies the compiled output <code>.tpr</code> file <br>
+                    <code>-maxwarn</code> specifies the maximum number of warnings that can be ignored <br>
+                    <p style="margin-bottom:-5mm;"> <br> </p>
+                    <p> <i>Remember:</i> The contents of the <code>.mdp</code> input file are not important for <code>genion</code>, but it has
+                            to be given. </p>
+                </blockquote>
+            </li>
+            <li>
+                Use <a target="_blank" href="https://manual.gromacs.org/current/onlinehelp/gmx-genion.html"><code>genion</code></a> to add NaCl:
+                <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:1mm">$ gmx genion -s protein_solv_ions.tpr -o protein_solv_ions.gro -p protein_solv_ions.top -pname NA &#8209;nname CL -conc 0.15 -neutral</code>
+                <blockquote style="margin-top:1mm">
+                    <code>-s</code> specifies the input coordinate file of the system to solvate.<br>
+                    <code>-o</code> specifies the output coordinate file<br>
+                    <code>-p</code> specifies the input topology file<br>
+                    <code>-pname</code> specifies the name of the positive ion<br>
+                    <code>-nname</code> specifies the name of the negative ion<br>
+                    <code>-conc</code> specifies the concentration of ions to add in mol dm<sup>-3</sup> <br>
+                    <code>-neutral</code> specifies that the system should be neutralised <br>
+                    <p style="margin-top:2mm">When asked which group of molecules should be replaced, <strong>type the corresponding number</strong>
+                        for the <code>SOL</code> group. GROMACS will try to fill the available space with solvent and update the number of water
+                        (<code>SOL</code>) molecules in the output topology file.</p>
+                </blockquote>
+            </li>
+        </ol>
+    </div>
+</div>
+
+<div class="box">
+    <h2>Now that the system has been created and prepared, it is time to run the simulation.</h2>
+    <p> &uarr; <a href="Session3.html">Go to the main menu</a> <br>
+        &rarr; <a href="part2.html">Go to the next part &ndash; Running a Molecular Dynamics Simulation</a> </p>
+</div>
+
+<script src="../../scripts/generate_header.js"></script>
+<script src="../../scripts/generate_overview.js"></script>
+<script src="../../scripts/scroll_up.js"></script>
+<script src="../../scripts/feedback.js"></script>
+<script src="../../scripts/adjust_for_dyslexia.js"></script>
+<script>window.onload = function () {
+    generateOverview();
+    generateHeader();
+    scrollUp();
+    adjustForDyslexia()
+}</script>
+</body>
+</html>

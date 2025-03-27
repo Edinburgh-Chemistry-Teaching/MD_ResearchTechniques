@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="en-UK">
+<!--xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html">-->
+
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0, user-scalable=yes" name="viewport"/>
+    <meta content="Session 3: Advanced Protein Simulation" name="description"/>
+    <link href="https://fonts.googleapis.com" rel="preconnect">
+    <link crossorigin href="https://fonts.gstatic.com" rel="preconnect">
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,400;0,600;1,400&display=swap"
+          rel="stylesheet">
+    <link href="../../scripts/style.css" rel="stylesheet"/>
+    <title>Part 3 &ndash; Analysis of the Simulation Data</title>
+</head>
+
+<body>
+
+<div class="box">
+    <h1 id="title">Part 3 &ndash; Analysis of the Simulation Data</h1>
+    <p> &uarr; <a href="Session3.html">Go to the main menu</a> <br>
+        &larr; <a href="part2.html">Go to the previous part &ndash; Running a Molecular Dynamics Simulation</a> </p>
+</div>
+
+<div class="box">
+    <h2 id="overview">Contents</h2>
+</div>
+
+<div class="box">
+    <h2 class="enum" id="toc_1">Analysis of the equilibration</h2>
+    <p>
+        As in the previous session, you should check that your system has equilibrated by looking at the temperature and pressure evolution.
+    </p>
+    <div class="bbox">
+        <h3 id="Calculate_the_temperature_evolution"></h3>
+        <ol>
+            <li>
+                Visualise the temperature evolution
+            </li>
+            <li>
+                Start an interactive session on Eddie:
+                <p>
+                    Use the instructions from <a href="../../session2/part3.html#interactive_login">Session 2</a> to
+                    start an interactive session on Eddie and load the GROMACS module.
+                </p>
+            </li>
+            <li>Refer to the <a href="../../session2/part3.html#Calculate_the_temperature_evolution">Session 2</a> for instructions on
+                how to calculate the temperature evolution of the system.
+            </li>
+            <li>Visualise the result in xmgrace. Has the temperature of your system equilibrated?
+            </li>
+            <li>Save the xmgrace plot as a <code>.png</code> file:
+                <ol>
+                    <li>In the xmgrace window open the <code>File</code> menu and select <code>Print setup</code></li>
+                    <li>In the <code>Device setup</code> field <code>PNG</code></li>
+                    <li>Set the file path in the <code>Output</code> field and include the <code>.png</code>
+                        suffix.
+                    </li>
+                    <li>Click <code>Apply</code> and <code>Accept</code></li>
+                    <li>In the <code>File</code> menu, click <code>Print</code>.</li>
+                </ol>
+            </li>
+        </ol>
+        <div class="flex-figure" style="margin-top:-8mm;">
+            <div class="figure" style="width: 70%">
+                <figure>
+                    <img src="img/temp.png" width="100%">
+                    <figcaption>
+                        Example Xmgrace plot of the temperature evolution during <em>NVT</em> and <em>NPT</em> equilibration.
+                    </figcaption>
+                </figure>
+            </div>
+        </div>
+    </div>
+
+    <div class="bbox">
+        <h3 id="Calculate_the_pressure_evolution"></h3>
+        <ol>
+            <li>
+                Visualise the pressure evolution
+            </li>
+            <li>
+                Start an interactive session on Eddie:
+                <p>
+                    Use the instructions from <a href="../../session2/part3.html#interactive_login">Session 2</a> to
+                    start an interactive session on Eddie and load the GROMACS module.
+                </p>
+            </li>
+            <li>Refer to the <a href="../../session2/part3.html#Calculate_the_pressure_evolution">Session 2</a> for instructions on
+                how to calculate the pressure of the system.
+                <blockquote style="margin-top:1mm">
+                    <p>Remember to vary the length of average until you find the best length to visualise the data trend.</p>
+                </blockquote>
+            </li>
+            <li>Visualise the result in xmgrace. Has the pressure of your system equilibrated?
+            </li>
+            <li>Save the xmgrace plot as a <code>.png</code> file.
+            </li>
+        </ol>
+         <div class="flex-figure" style="margin-top:-8mm;">
+            <div class="figure" style="width: 70%">
+                <figure>
+                    <img src="img/pres.png" width="100%">
+                    <figcaption>
+                        Example Xmgrace plot of the pressure evolution during <em>NPT</em> equilibration.
+                    </figcaption>
+                </figure>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="box">
+    <h2 class='enum' id="toc_2">Analysis of the simulation data</h2>
+    <p>In this section, you will:</p>
+    <ul>
+        <li>Calculate the root-mean-square deviation (<abbr>RMSD</abbr>) of the system to determine from which
+            point on the system is equilibrated
+        </li>
+        <li>Determine the root-mean-square fluctuation (RMSF) of the protein to assess its flexibility </li>
+        <li>Perform a principal component analysis (PCA) to determine the fundamental motions in the protein </li>
+    </ul>
+    <p><strong>For this section, you will first use the <code>example_data</code> we have provided, which is a 50 ns simulation of the system
+        . Therefore, you can run the analysis on the virtual machine.</strong></p>
+
+    <h3 class="enum" id="toc_2_1">Separating the protein chains</h3>
+    <p>
+        For the analysis, we want to treat each chain separately. Therefore, we need to use the <code>.pdb</code> to make an index file, which
+        we can supply to the analysis functions.
+    </p>
+    <div class="bbox">
+        <h3 id="Making_chain_index"></h3>
+        <ol>
+            <li>
+                Separate the protein chains
+            </li>
+            <li>
+                Use <a href="https://manual.gromacs.org/current/onlinehelp/gmx-make_ndx.html" rel="noopener"
+                       target="_blank"><code>gmx make_ndx</code></a> to create an index file
+                <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:1mm">$ gmx make_ndx -f prod.gro -o index.ndx</code>
+                <blockquote style="margin-top:1mm">
+                    <code>-f</code> specifies the input structure file <br>
+                    <code>-o</code> specifies the output index file <br>
+                </blockquote>
+            </li>
+            <li>
+                First, we need to separate the protein into to chains:
+                <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:1mm">splitch 1</code>
+                <blockquote style="margin-top:1mm">
+                    <p> This will create two new groups: <code>Protein_chain1</code> containing 3673 atoms and <code>Protein_chain2</code>
+                        containing 744 atoms. To see their group number, press <code>Enter</code>
+                    </p>
+                </blockquote>
+            </li>
+            <li>
+                Next, you can select the chain atoms you want in the interactive menu with <code>&lt;chain_group_number&gt; & &lt;atom_group_number&gt;</code>
+                <p>E.g. to create an index group containing the backbone of chain 1: </p>
+                <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:1mm">17 & 4</code>
+            </li>
+            <li>
+               Create index groups for the backbone of each chain, and the alpha carbons of each chain. To list the groups already created, press
+                <code>Enter</code>
+            </li>
+            <li>
+                Exit the interactive menu using <code>q</code>
+            </li>
+        </ol>
+    </div>
+
+    <h3 class="enum" id="toc_2_2">Removing periodic boundary effects</h3>
+    <p>
+        Before the analysis can begin, we must ensure that the protein molecule is whole, and not "jumping" from one edge of the central image to
+        the other. To aid in visualisation, we will also remove global rotation and translation. For the analysis, we also need <code>.gro</code> and
+        <code>.tpr</code> files with the protein centered.
+    </p>
+    <div class="bbox">
+        <h3 id="Making_protein_whole"></h3>
+        <ol>
+            <li>
+                Remove periodic boundary effects
+            </li>
+            <li>
+                Use <a href="https://manual.gromacs.org/current/onlinehelp/gmx-trjconv.html" rel="noopener"
+                       target="_blank"><code>gmx trjconv</code></a> to center the proteins in the trajectory <code>.xtc</code> file
+                <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:1mm">$ gmx trjconv -s prod.tpr -f prod.xtc -n index.ndx -o prod_centered.xtc -pbc mol -ur compact -center</code>
+                <blockquote style="margin-top:1mm">
+                    <code>-s</code> specifies the input topology <code>.tpr</code> file <br>
+                    <code>-f</code> specifies the input trajectory file <br>
+                    <code>-n</code> specifies the index file needed for centering <br>
+                    <code>-o</code> specifies the output trajectory file <br>
+                    <code>-pbc</code> specifies the type of periodic boundary condition treatment. We select <code>mol</code> which puts the center
+                    of mass of the molecule in the box <br>
+                    <code>-ur</code> specifies the unit cell representation for <code>-pbc</code> <br>
+                    <code>-center</code> specifies that the system should be centered in the box <br>
+                    <p style="margin-top:2mm">Then, for <strong>centering</strong> select <code>Protein_chain1_&_Backbone</code> and for <strong>
+                        output</strong> select <code>System</code> </p>
+                </blockquote>
+            </li>
+            <li>
+                Use <a href="https://manual.gromacs.org/current/onlinehelp/gmx-trjconv.html" rel="noopener"
+                       target="_blank"><code>gmx trjconv</code></a> to remove global motion in the trajectory <code>.xtc</code> file
+                <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:1mm">$ gmx trjconv -s prod.tpr -f prod_centered.xtc -o prod_cent_fit.xtc -fit rot+trans</code>
+                <blockquote style="margin-top:1mm">
+                    <code>-s</code> specifies the input topology <code>.tpr</code> file <br>
+                    <code>-f</code> specifies the input trajectory file <br>
+                    <code>-o</code> specifies the output trajectory file <br>
+                    <code>-fit</code> specifies the type of fitting to perform <br>
+                    <p style="margin-top:2mm">Then, for <strong>fitting</strong> select <code>Backbone</code> and for <strong>
+                        output</strong> select <code>System</code></p>
+                </blockquote>
+            </li>
+            <li>
+                Use <a href="https://manual.gromacs.org/current/onlinehelp/gmx-trjconv.html" rel="noopener"
+                           target="_blank"><code>gmx trjconv</code></a> to extract the first frame into a <code>.pdb</code> file
+                <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:1mm">$ gmx trjconv -s prod.tpr -f prod_cent_fit.xtc -o prod_cent_fit.pdb -dump 0</code>
+                <blockquote style="margin-top:1mm">
+                    <code>-s</code> specifies the input topology <code>.tpr</code> file <br>
+                    <code>-f</code> specifies the input coordinate file <br>
+                    <code>-o</code> specifies the output coordinate file <br>
+                    <code>-dump</code> specifies the frame we want to extract <br>
+                    <p style="margin-top:2mm">Then, for <strong>output</strong> select <code>System</code> </p>
+                </blockquote>
+            </li>
+            <li>
+                Use <a href="https://manual.gromacs.org/current/onlinehelp/gmx-grompp.html" rel="noopener"
+                           target="_blank"><code>gmx grompp</code></a> to generate a <code>.tpr</code> file of the centered protein
+                <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:1mm">$ gmx grompp -f MDP/prod.mdp -c prod_cent_fit.pdb -p protein_solv_ions.top -o prod_cent_fit.tpr</code>
+                <blockquote style="margin-top:1mm">
+                    <code>-f</code> specifies the input parameter file <br>
+                    <code>-c</code> specifies the input coordinate file <br>
+                    <code>-p</code> specifies the input topology file <br>
+                    <code>-o</code> specifies the output binary file <br>
+                </blockquote>
+            </li>
+        </ol>
+    </div>
+
+    <h3 class="enum" id="toc_2_3">Calculating the root-mean-square deviation (<abbr>RMSD</abbr>)</h3>
+    <p>
+        The RMSD is an important measure to determine when a simulation has reached equilibrium. When the RMSD has reached a plateau, the system
+        has reached equilibrium. With proteins, the side chains are often excluded from RMSD analysis as they are usually very flexible and their
+        RMSD is not necessarily indicative of any real change in the protein.
+    </p>
+    <p>
+        It is only after the system has reached equilibrium that you are producing meaningful data that can be representative of the simulated system.
+    </p>
+    <div class="bbox">
+        <h3 id="Calculate_the_RMSD"></h3>
+        <ol>
+            <li>
+                Calculate the <abbr>RMSD</abbr> of the protein backbones
+            </li>
+            <li>
+                Use <a href="https://manual.gromacs.org/current/onlinehelp/gmx-rms.html" rel="noopener"
+                           target="_blank"><code>gmx rms</code></a> to calculate the RMSD of the backbone for chain 1:
+                <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:1mm">$ gmx rms -s prod_cent_fit.tpr -f prod_cent_fit.xtc -n index.ndx -o rmsd_backbone_ch1.xvg -tu ns</code>
+                <blockquote style="margin-top:1mm">
+                    <code>-s</code> specifies the input topology <code>.tpr</code> file <br>
+                    <code>-f</code> specifies the trajectory file <br>
+                    <code>-n</code> specifies the index file <br>
+                    <code>-o</code> specifies the output file <br>
+                    <code>-tu</code> specifies the time unit for the output <br>
+                    <p style="margin-top:2mm">Then, select <code>Protein_chain1_&_Backbone</code> for the least squares fit and for the RMSD calculation </p>
+                </blockquote>
+            </li>
+            <li>
+                Repeat this to calculate the RMSD of the backbone for chain 2.
+                <blockquote style="margin-top:1mm">
+                    Make sure you change the name of the output file, so it doesn't get overwritten
+                </blockquote>
+            </li>
+            <li>Visualise the result in xmgrace and determine the time point at which the system is equilibrated.
+            </li>
+            <li>Save the xmgrace plot as a <code>.png</code> file.
+            </li>
+        </ol>
+        <div class="flex-figure" style="margin-top:-8mm;">
+            <div class="figure" style="width: 70%">
+                <figure>
+                    <img src="img/rmsd.png" width="100%">
+                    <figcaption>
+                        Example Xmgrace plot of the RMSD evolution for the protein backbones during a production run.
+                    </figcaption>
+                </figure>
+            </div>
+        </div>
+    </div>
+    <h3 class="enum" id="toc_2_4">Calculating the root-mean-square fluctuation (<abbr>RMSF</abbr>)</h3>
+    <p>
+        The RMSF is used to assess the flexibility of the protein by quantifying the oscillation of the target about an average position. It is
+        usually computed for the alpha-carbon atoms and displayed as "per residue".
+    </p>
+    <div class="bbox">
+        <h3 id="Calculate_the_RMSF"></h3>
+        <ol>
+            <li>
+                Calculate the <abbr>RMSF</abbr> of the alpha-carbons
+            </li>
+            <li>
+                Use <a href="https://manual.gromacs.org/current/onlinehelp/gmx-rmsf.html" rel="noopener"
+                           target="_blank"><code>gmx rmsf</code></a> to calculate the protein flexibility of chain 1:
+                <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:1mm">$ gmx rmsf -s prod_cent_fit.tpr -f prod_cent_fit.xtc -n index.ndx -res -b &lt;analysis_start_time&gt; -o rmsf_ch1.xvg</code>
+                <blockquote style="margin-top:1mm">
+                    <code>-s</code> specifies the input topology <code>.tpr</code> file <br>
+                    <code>-f</code> specifies the trajectory file <br>
+                    <code>-n</code> specifies the index file <br>
+                    <code>-res</code> specifies that the output should be printed per residue <br>
+                    <code>-b</code> specifies the start time for the analysis in ps<br>
+                    <code>-o</code> specifies the output file <br>
+                    <p style="margin-top:2mm">Then, select <code>Protein_chain1_&_C-alpha</code> by typing the group number and hitting <code>Enter
+                    </code>
+                    </p>
+                </blockquote>
+            </li>
+            <li>
+                Repeat this to calculate the RMSF of the alpha-carbons for chain 2.
+                <blockquote style="margin-top:1mm">
+                    Make sure you change the name of the output file, so it doesn't get overwritten
+                </blockquote>
+            </li>
+            <li>Visualise the result in xmgrace. Which residues have a high RMSF? How do these compare to the residues with the most structural
+                changes seen in VMD? Why do you think there is such a large RMSF at either end of the protein? While RMSF <i>actually</i> quantifies
+                the oscillation about an average position, residues with high RMSF values often mean that these areas undergo structural change
+                throughout the simulation.
+            </li>
+            <li>Save the xmgrace plot as a <code>.png</code> file.
+            </li>
+        </ol>
+        <div class="flex-figure" style="margin-top:-8mm;">
+            <div class="figure" style="width: 100%">
+                <figure>
+                    <img src="img/rmsf.png" width="100%">
+                    <figcaption>
+                        Example Xmgrace plot of the RMSD evolution for the protein backbones during a production run.
+                    </figcaption>
+                </figure>
+            </div>
+        </div>
+    </div>
+    <h3 class="enum" id="toc_2_5">Performing principal component analysis (<abbr>PCA</abbr>)</h3>
+    <p>
+        Principal component analysis is a dimensionality reduction technique, that is used to determine fundamental motions in biomolecules. It is
+        often difficult to identify these motions visually as both slow global motions and fast local fluctuations occur simultaneously. PCA involves
+        computing a positional covariance matrix and diagonalising it to determine characteristic eigenvectors and their eigenvalues. The
+        eigenvectors can then be used to visualise the slow motions in the biomolecule. The eigenvectors corresponding to the largest eigenvalues
+        are called "principal components".
+    </p>
+    <div class="bbox">
+        <h3 id="Calculate_the_covariance matrix"></h3>
+        <ol>
+            <li>
+                Calculate the covariance matrix of the backbones
+            </li>
+            <li>
+                Use <a href="https://manual.gromacs.org/current/onlinehelp/gmx-covar.html" rel="noopener"
+                           target="_blank"><code>gmx covar</code></a> to compute the covariance matrix for the proteins:
+                <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:1mm">$ gmx covar -s prod_cent_fit.tpr -f prod_cent_fit.xtc -n index.ndx -tu ns -mwa -o eigenval.xvg -v eigenvec.trr </code>
+                <blockquote style="margin-top:1mm">
+                    <code>-s</code> specifies the input topology <code>.tpr</code> file <br>
+                    <code>-f</code> specifies the trajectory file <br>
+                    <code>-n</code> specifies the index file <br>
+                    <code>-b</code> specifies the start time for the analysis <br>
+                    <code>-tu</code> specifies the time unit <br>
+                    <code>-mwa</code> specifies that mass-weighted analysis should be performed <br>
+                    <code>-o</code> specifies the output file for the characteristic eigenvectors <br>
+                    <code>-v</code> specifies the output file for the characteristic eigenvalues <br>
+                    <p style="margin-top:2mm">Then, select <code>Backbone</code> by typing the group number and hitting <code>Enter</code> for
+                        both fitting and covariance analysis.</p>
+                    <p class="note" style="margin-top:1mm">This command will also produce <code>average.pdb</code> and <code>covar.log</code>, but
+                        we will not be using these files.</p>
+                </blockquote>
+            </li>
+<!--            <li>-->
+<!--                Repeat this to calculate the covariance matrix of the backbone for the chains individually.-->
+<!--                <blockquote style="margin-top:1mm">-->
+<!--                    Make sure you change the name of the output files, so they don't get overwritten-->
+<!--                </blockquote>-->
+<!--            </li>-->
+            <li>Visualise the eigenvalues in xmgrace. You should see that the magnitudes get much smaller as the eigenvalue increases, with only a
+                few contributing meaningfully to the dynamics of the protein.
+                <blockquote style="margin-top:1mm">
+                    <p>Xmgrace defaults to a line graph, so to plot a bar chart go to <code>Plot</code> &rarr; <code>Set appearance...</code> and
+                        change the type from <code>XY</code> to <code>BAR</code>. Set the <code>Line properties</code> to <code>None</code> to
+                        remove the line. In the same window, select the <code>Symbols</code> tab and change the pattern for <code>Symbol
+                            fill</code> to fill in the bars. Ensure that <code>Symbol skip</code> is zero so all data is plotted.</p>
+                    <p style="margin-top:1mm"> To zoom in on the first few eigenvalues, go to <code>Plot</code> &rarr; <code>Axis properties..
+                        .</code> and change the <code>Stop</code> value. Ensure you also change the <code>Tick properties</code> to display the
+                        values on the axis.</p>
+                </blockquote>
+            </li>
+        </ol>
+        <div class="flex-figure" style="margin-top:-8mm;">
+            <div class="figure" style="width: 70%">
+                <figure>
+                    <img src="img/eigenval.png" width="100%">
+                    <figcaption>
+                        Example Xmgrace plot of the first 20 eigenvalues for the protein backbones during a production run.
+                    </figcaption>
+                </figure>
+            </div>
+        </div>
+    </div>
+    <div class="bbox">
+        <h3 id="one_eigenvector"></h3>
+        <ol>
+            <li>
+                Analyse the trajectory along an eigenvector
+            </li>
+            <li>
+                Use <a href="https://manual.gromacs.org/documentation/2019/onlinehelp/gmx-anaeig.html" rel="noopener"
+                           target="_blank"><code>gmx anaeig</code></a> to filter the trajectory along the first eigenvector:
+                <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:1mm">$ gmx anaeig -s prod_cent_fit.tpr -f prod_cent_fit.xtc -v eigenvec.trr -filt filter1.pdb -first 1 -last 1 -tu ns</code>
+                <blockquote style="margin-top:1mm">
+                    <code>-s</code> specifies the input topology <code>.tpr</code> file <br>
+                    <code>-f</code> specifies the trajectory file <br>
+                    <code>-v</code> specifies the trajectory file <br>
+                    <code>-filt</code> filters the trajectory to show the motion only along the selected eigenvector <br>
+                    <code>-first</code> specifies the first eigenvector for analysis <br>
+                    <code>-last</code> specifies the last eigenvector for analysis <br>
+                    <code>-tu</code> specifies the time unit <br>
+                    <p style="margin-top:2mm">Then, select <code>Backbone</code> for both fitting and covariance analysis</p>
+                </blockquote>
+            </li>
+            <li>Visualise the motion in VMD. What type of motion does the first eigenvector represent. Compare it to the unprocessed trajectory.
+            </li>
+            <li>
+                To get a clearer picture we can use the extreme conformations and interpolate between them:
+                <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:1mm">$ gmx anaeig -s prod_cent_fit.tpr -f prod_cent_fit.xtc -v eigenvec.trr -extr extreme1.pdb -first 1 -last 1 -tu ns -nframes 30</code>
+                <blockquote style="margin-top:1mm">
+                    <code>-s</code> specifies the input topology <code>.tpr</code> file <br>
+                    <code>-f</code> specifies the trajectory file <br>
+                    <code>-v</code> specifies the trajectory file <br>
+                    <code>-extr</code> calculates two extreme projections on the trajectory along the selected eigenvector <br>
+                    <code>-first</code> specifies the first eigenvector for analysis <br>
+                    <code>-last</code> specifies the last eigenvector for analysis <br>
+                    <code>-tu</code> specifies the time unit <br>
+                    <code>-nframes</code> specifies how many frames to include in the output. Here we use 30, so the middle 28 frames will be
+                    interpolated <br>
+                    <p style="margin-top:2mm">Select <code>Backbone</code> by typing the group number and hitting <code>Enter</code> for both
+                    fitting and covariance analysis</p>
+                </blockquote>
+            </li>
+            <li>Visualise the motion in VMD. What part of the molecule is involved in the movement? Are the residues the same as those identified
+                with RMSF?
+                <div class="flex-figure" style="margin-top:-8mm;">
+                    <div class="figure" style="width: 60%">
+                        <figure>
+                            <img src="img/extreme1.gif" width="100%">
+                            <figcaption>
+                                Example VMD movie of the extremes along the first eigenvector for the backbones during a production run.
+                            </figcaption>
+                        </figure>
+                    </div>
+                </div>
+            </li>
+            <li> Repeat the analysis for eigenvector 2. How similar/different are the motions? Literature says the catalytic sites are on residues
+                11, 20 and 26, how do the motions effect them? What role does this motion play in the enzymatic action of the lysozyme?
+                <blockquote style="margin-top:1mm">
+                    <p> <em>Remember:</em> Change the name of the outputs, so you don't overwrite the ones for eigenvector 1 </p>
+                    <p style="margin-top:1mm"> Compare the structure to the uncleaned <code>.pdb</code> file to see where the substrate binds if
+                        you are unsure.</p>
+                </blockquote>
+            </li>
+            <li> To contrast these motions with the smaller, less impactful motions you can repeat the analysis using any eigenvector greater than 15.
+            </li>
+        </ol>
+    </div>
+    <div class="bbox">
+        <h3 id="two_eigenvector"></h3>
+        <ol>
+            <li>
+                Analyse the trajectory along two eigenvectors
+            </li>
+            <li>
+               Another way to visualise the sampled conformations along the eigenvectors is two-dimensional projection:
+                <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:1mm">$ gmx anaeig -s prod_cent_fit.tpr -f prod_cent_fit.xtc -v eigenvec.trr -2d 2dproj.xvg -first 1 -last 2</code>
+                <blockquote style="margin-top:1mm">
+                    <code>-s</code> specifies the input topology <code>.tpr</code> file <br>
+                    <code>-f</code> specifies the trajectory file <br>
+                    <code>-v</code> specifies the trajectory file <br>
+                    <code>-2d</code> calculates a 2d projection of the trajectory on <code>-first</code> and <code>-last</code> eigenvectors <br>
+                    <code>-first</code> specifies the first eigenvector for analysis <br>
+                    <code>-last</code> specifies the last eigenvector for analysis <br>
+                    <p style="margin-top:2mm">Select <code>Backbone</code> by typing the group number and hitting <code>Enter</code> for both
+                    fitting and covariance analysis</p>
+                </blockquote>
+            </li>
+            <li>Visualise the 2D projection in xmgrace. Each point represents a snapshot from the simulation, and the distribution
+                    shows the sampled region along the first two eigenvectors during the simulation.
+                <blockquote style="margin-top:1mm">
+                    <p>To plot the data as points, go to <code>Plot</code> &rarr; <code>Set appearance...</code> and
+                        change the symbol to a circle and the size to 16. Ensure that <code>Symbol skip</code> is zero so all data is plotted.</p>
+                </blockquote>
+            <div class="flex-figure" style="margin-top:-8mm;">
+                <div class="figure" style="width: 70%">
+                    <figure>
+                        <img src="img/2dproj.png" width="100%">
+                        <figcaption>
+                            Example Xmgrace plot of the 2D projection.
+                        </figcaption>
+                    </figure>
+                </div>
+            </div>
+            </li>
+            <li>
+                Repeat the PCA analysis for the two chains separately (starting from <a href="#Calculate_the_covariance matrix">calculating a
+                covariance matrix</a>). What differences do you notice? Chain 1 is much longer than chain 2 (702 vs 156 residues), so any movement
+                in chain 1 overshadows movement in chain 2 when we analyse both chains together.
+                <blockquote style="margin-top:1mm">
+                    <p>You will need to add <code>-n index.ndx</code> to all the analysis commands in order to select the different chains.</p>
+                </blockquote>
+            </li>
+        </ol>
+    </div>
+</div>
+
+<div class="box">
+    <h2 class="enum" id="toc_3">Compare to your results</h2>
+    <p>
+        Once your simulation has finished running, perform the above analysis on your system and compare the results. In what ways are they
+        similar, and in what ways are they different? Do you think 5 ns is long enough to capture the main movements of this system?
+    </p>
+    <div class="bbox">
+        <h3 id="Render_trajectory_in_VMD"></h3>
+        <ol>
+            <li>Analyse your results</li>
+            <li>Transfer the files you need to your VM:
+            <pre style="margin-top:1mm">$ scp -r &lt;UUN&gt;@eddie.ecdf.ed.ac.uk:/exports/eddie/scratch/&lt;UUN&gt;/session3/ ~/Desktop/session3/</pre>
+            </li>
+            <li>Follow the same procedure as in <a href="#toc_2">section 2</a>
+        </ol>
+    </div>
+</div>
+
+
+<div class="box">
+    <h2>This brings us to the end of the session. Please return to the main menu and provide feedback if you have not done so already.</h2>
+    <p> &uarr; <a href="Session3.html">Go to the main menu</a> <br>
+        &larr; <a href="part2.html">Go to the previous part &ndash; Running a Molecular Dynamics Simulation</a> </p>
+</div>
+
+<script src="../../scripts/generate_header.js"></script>
+<script src="../../scripts/generate_overview.js"></script>
+<script src="../../scripts/scroll_up.js"></script>
+<script src="../../scripts/feedback.js"></script>
+<script src="../../scripts/adjust_for_dyslexia.js"></script>
+<script>window.onload = function () {
+    generateOverview();
+    generateHeader();
+    scrollUp();
+    adjustForDyslexia()
+}</script>
+</body>
+</html>
