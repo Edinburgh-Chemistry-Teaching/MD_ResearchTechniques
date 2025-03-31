@@ -1,7 +1,9 @@
 ---
-title: ''
+title: 'Course Materials for an Introduction to Computational Chemistry Techniques'
 tags:
-  - 
+  - chemistry
+  - molecular dynamics
+  - postgraduate
 authors:
   - name: Sarah Victoria Stewart
     orcid: 0000-0003-1663-5206
@@ -10,15 +12,15 @@ authors:
     orcid: 0000-0002-6747-3297
     affiliation: "1, 2"
   - name: Hannah Pollak
-    orcid: 
+    orcid: 0000-0003-1011-8478
     affiliation: 1
   - name: Audrey Ngambia
-    orcid: 
+    orcid: 0000-0003-1951-8742
     affiliation: 1
   - name: Tim Spankie
-    orcid: 
+    orcid: 0000-0001-5123-7049
     affiliation: 1
-  - name: Angela
+  - name: Angela Chitzanidi
     orchid:
     affiliation: 3
 affiliations:
@@ -40,7 +42,49 @@ bibliography: paper.bib
  - Cite key references, including a link to the open archive of the software or the learning module.
 
 # Summary
+An Introduction to Computational Chemistry Techniques is a resource designed to teach students the practical aspects of molecular dynamics 
+simulations. It is a module aimed at postgraduate chemistry students with no prior knowledge of programming 
+or practical computational chemistry. The course is designed to be taught over three workshops, introducing Unix command-line and the use of 
+GROMACS for molecular dynamics simulations, in a computer-lab environment where the students work through the material at their own pace. 
 
+# Statement of Need
+[//]: # (taken from course overview)
+Computational techniques have become an integral part of the research, with their importance and contribution to scientific discovery growing rapidly in recent years. The use of computational techniques in chemistry has made it possible to simulate chemical reactions and predict the properties of molecules with a high degree of accuracy.
+Additionally, molecular simulations have made it possible to study complex systems that are difficult, if not impossible, to study experimentally, such as large protein complexes, biological membranes, interactions of molecules and materials at the interface, and processes in space or in extreme conditions. These methods have had a positive impact on society by accelerating the development of new drugs, materials, and technologies.
+Therefore, it is essential for students to have a solid understanding of computational techniques and their applications in modern scientific 
+methods. This module focuses on molecular dynamics simulations, one of the most commonly used methodologies in current research. 
+
+# Content and Instructional Design
+
+## Resources used to run the course
+[//]: # (Angela to fill in)
+
+## Learning objectives
+The overarching aim of the course is to understand the practical aspects of molecular simulations. Within this, the aims are:
+
+- Use basic command-line interfaces.
+- Use and understand high-performance computing resources.
+- Prepare systems for molecular dynamics simulations and troubleshoot the set-up, simulations and analysis steps.
+- Understand the limitations of the computational chemistry techniques used.
+
+## Session 1
+
+## Session 2
+
+## Session 3
+
+## Assessment
+- Report the methodology and observations in a condensed written format.
+
+
+# Reuse, implementation and modification
+
+
+# Conclusion
+
+
+
+# Acknowledgements
 
 
 # Citations
@@ -57,8 +101,6 @@ For a quick reference, the following citation commands can be used:
 # Figures
 
 Figures can be included like this: ![Example figure.](figure.png)
-
-# Acknowledgements
 
 
 
