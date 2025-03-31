@@ -21,13 +21,15 @@ authors:
     orcid: 0000-0001-5123-7049
     affiliation: 1
   - name: Angela Chitzanidi
-    orchid:
+    orcid:
     affiliation: 3
 affiliations:
   - name: School of Chemistry, University of Edinburgh, Joseph Black Building, David Brewster Road, Edinburgh EH9 3FJ, United Kingdom
     index: 1
   - name: UK Centre for Astrobiology, School of Physics and Astronomy, University of Edinburgh, James Clerk Maxwell Building, Peter Guthrie Tait Road, Edinburgh EH9 3FD, United Kingdom
     index: 2
+  - name:
+    index: 3
 date: 
 bibliography: paper.bib
 
@@ -56,9 +58,6 @@ methods. This module focuses on molecular dynamics simulations, one of the most 
 
 # Content and Instructional Design
 
-## Resources used to run the course
-[//]: # (Angela to fill in)
-
 ## Learning objectives
 The overarching aim of the course is to understand the practical aspects of molecular simulations. Within this, the aims are:
 
@@ -74,7 +73,7 @@ The overarching aim of the course is to understand the practical aspects of mole
 ## Session 3
 
 ## Assessment
-- Report the methodology and observations in a condensed written format.
+The course is designed to be assessed in two ways. Overall comprehension of the Report the methodology and observations in a condensed written format.
 
 
 # Reuse, implementation and modification
