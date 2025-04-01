@@ -44,10 +44,11 @@ bibliography: paper.bib
  - Cite key references, including a link to the open archive of the software or the learning module.
 
 # Summary
-An Introduction to Computational Chemistry Techniques is a resource designed to teach students the practical aspects of molecular dynamics 
-simulations. It is a module aimed at postgraduate chemistry students with no prior knowledge of programming 
-or practical computational chemistry. The course is designed to be taught over three workshops, introducing Unix command-line and the use of 
-GROMACS for molecular dynamics simulations, in a computer-lab environment where the students work through the material at their own pace. 
+An Introduction to Computational Chemistry Techniques is a resource designed to teach students the practical aspects of molecular dynamics simulations. 
+It is a module was designed for taught postgraduate chemistry students with no prior knowledge of programming or practical computational chemistry. 
+The course is taught over three 3-hour long workshops, introducing Unix command-line and use of 
+GROMACS for molecular dynamics simulations, performing simulations on a high-performace computer. 
+The corse is delivered in a computer-lab environment where the students work through the material at their own pace, assisted by demonstrators. 
 
 # Statement of Need
 [//]: # (taken from course overview)
@@ -58,13 +59,17 @@ methods. This module focuses on molecular dynamics simulations, one of the most 
 
 # Content and Instructional Design
 
+- talk about lectures at the start of the session + share the slides
+- say that it is aimed at the students doing courses in materials, analytical and medbio. hence some modifications of the corse
+
 ## Learning objectives
-The overarching aim of the course is to understand the practical aspects of molecular simulations. Within this, the aims are:
+The overarching aim of the course is to learn and understand the practical aspects of molecular simulations. Within this, the aims are:
 
 - Use basic command-line interfaces.
 - Use and understand the basics of high-performance computing resources.
 - Prepare systems for molecular dynamics simulations and troubleshoot the set-up, simulations and analysis steps.
 - Understand the limitations of the computational chemistry techniques used.
+- Apply the skills independently onto a complex, real research systems.
 
 ## Session 1
 
@@ -80,12 +85,15 @@ students are tasked with completing an individual project building off of what t
 
 # Reuse, implementation and modification
 
+- also add the claycode w/sh for those who want to learn more
 
 # Conclusion
 
 
 
 # Acknowledgements
+demos, Rosa for feedback
+
 
 
 # Citations
