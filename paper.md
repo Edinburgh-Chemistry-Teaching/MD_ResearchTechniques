@@ -62,7 +62,7 @@ methods. This module focuses on molecular dynamics simulations, one of the most 
 The overarching aim of the course is to understand the practical aspects of molecular simulations. Within this, the aims are:
 
 - Use basic command-line interfaces.
-- Use and understand high-performance computing resources.
+- Use and understand the basics of high-performance computing resources.
 - Prepare systems for molecular dynamics simulations and troubleshoot the set-up, simulations and analysis steps.
 - Understand the limitations of the computational chemistry techniques used.
 
@@ -73,7 +73,9 @@ The overarching aim of the course is to understand the practical aspects of mole
 ## Session 3
 
 ## Assessment
-The course is designed to be assessed in two ways. Overall comprehension of the Report the methodology and observations in a condensed written format.
+The module was originally created as part of a postgraduate Research Techniques course at the University of Edinburgh, which aimed to teach students practical aspects of chemistry. The module contributes 40% of the total grade for the course. 
+The module was assessed in two ways. Overall comprehension of the first two sessions is assessed based on multiple choice quizzes. Secondly, the 
+students are tasked with completing an individual project building off of what they learn in session 3 and writing a short report on it.
 
 
 # Reuse, implementation and modification
