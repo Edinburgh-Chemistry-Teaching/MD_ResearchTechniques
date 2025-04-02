@@ -44,55 +44,112 @@ bibliography: paper.bib
  - Cite key references, including a link to the open archive of the software or the learning module.
 
 # Summary
-An Introduction to Computational Chemistry Techniques is a resource designed to teach students the practical aspects of molecular dynamics simulations. 
-It is a module was designed for taught postgraduate chemistry students with no prior knowledge of programming or practical computational chemistry. 
-The course is taught over three 3-hour long workshops, introducing Unix command-line and use of 
-GROMACS for molecular dynamics simulations, performing simulations on a high-performace computer. 
-The corse is delivered in a computer-lab environment where the students work through the material at their own pace, assisted by demonstrators. 
+An Introduction to Computational Chemistry Techniques is an open educational resource designed to teach postgraduate chemistry students the practical aspects of molecular dynamics simulations. 
+Targeted at students with no prior programming or computational chemistry experience, this module is delivered over three 3-hour workshops in a computer-lab setting.
+This course introduces Unix command-line basics, the use of GROMACS for MD simulations, and running simulations on high-performance computing (HPC) systems.
+Students work through materials at their own pace, supported by demonstrators, with all resources available as HTML guides.
+With this paper we share the course materials (https://github.com/Edinburgh-Chemistry-Teaching/MD_ResearchTechniques) providing open, accessible and reusable teaching materials to assist in delivering core training in computational chemistry.
+
 
 # Statement of Need
 [//]: # (taken from course overview)
-Computational techniques have become an integral part of the research, with their importance and contribution to scientific discovery growing rapidly in recent years. The use of computational techniques in chemistry has made it possible to simulate chemical reactions and predict the properties of molecules with a high degree of accuracy.
-Additionally, molecular simulations have made it possible to study complex systems that are difficult, if not impossible, to study experimentally, such as large protein complexes, biological membranes, interactions of molecules and materials at the interface, and processes in space or in extreme conditions. These methods have had a positive impact on society by accelerating the development of new drugs, materials, and technologies.
+
+Computational techniques have become an integral part of research, contributing to scientific discovery. 
+The use of computational techniques in chemistry has made it possible to simulate chemical reactions and predict properties of molecules with a high degree of accuracy.
+Additionally, molecular simulations have made it possible to study complex systems that are difficult, if not impossible, to study experimentally, such as large protein complexes, biological membranes, interactions of molecules and materials at the interface, and processes in space or in extreme conditions.
+These methods have had a positive impact on society by accelerating the development of new drugs, materials, and technologies.
 Therefore, it is essential for students to have a solid understanding of computational techniques and their applications in modern scientific 
-methods. This module focuses on molecular dynamics simulations, one of the most commonly used methodologies in current research. 
+methods. 
+This module focuses on molecular dynamics simulations, one of the most commonly used methodologies in current research, introducing the practical skills necessary to be able to perform the simulations using modern computational resources and softwares.
+Our goal is to facilitate educators globally by sharing this material allowing them to adopt or adapt it, fostering computationally-enabled teaching and learning in chemistry and related fields.
+[//]: # (we need to cite smth)
+
+
+
 
 # Content and Instructional Design
 
+The course comprises three 3-hour long workshops, each beginning with a short lecture (slides shared via GitHub) to contextualize the material.
+Designed for taught postgraduate masters students taking the degree in Materials Chemistry, Analytical Chemistry, and Medicinal and Biological Chemistry, the content is adjusted to suit these diverse backgrounds.
+
+
 - talk about lectures at the start of the session + share the slides
-- say that it is aimed at the students doing courses in materials, analytical and medbio. hence some modifications of the corse
+- say that it is aimed at the students doing courses in materials, analytical and medbio. hence some modifications of the course
+
+
+
 
 ## Learning objectives
-The overarching aim of the course is to learn and understand the practical aspects of molecular simulations. Within this, the aims are:
 
+The course aims to equip students with practical molecular dynamics simulation skills: 
 - Use basic command-line interfaces.
-- Use and understand the basics of high-performance computing resources.
-- Prepare systems for molecular dynamics simulations and troubleshoot the set-up, simulations and analysis steps.
+- Navigate and utilize high-performance computing resources.
+- Prepare, run, and troubleshoot molecular dynamics simulations using GROMACS.
+- Recognize the limitations of computational chemistry methods.
 - Understand the limitations of the computational chemistry techniques used.
-- Apply the skills independently onto a complex, real research systems.
+- Apply these skills independently to real research systems.
+
+
 
 ## Session 1
+need to check the specific learnign objectives for each session
+
+- Students learn Unix basic commands
+- how to write the files 
+- adapted from software carpentry, there should also be a citation
+- learnign the use of HPC resource, here on out own Eddie HPC, log in, move data, submit and kill jobs.
+- some info about the material covered in the lecture (for each session)
+
+
 
 ## Session 2
+- learning first steps of gromacs + vmd + xmgrace 
+- there is also a citation for this material, that we adapt
+- performing simulations on hpc
+
 
 ## Session 3
+- for medbio - protein thing
+- for others clay system
+
+
+## Session 4 
+Intro to the projects, learnign Latex/overleaf. help to get started with the projects. The projects are ... 
+
 
 ## Assessment
-The module was originally created as part of a postgraduate Research Techniques course at the University of Edinburgh, which aimed to teach students practical aspects of chemistry. The module contributes 40% of the total grade for the course. 
-The module was assessed in two ways. Overall comprehension of the first two sessions is assessed based on multiple choice quizzes. Secondly, the 
-students are tasked with completing an individual project building off of what they learn in session 3 and writing a short report on it.
+The module was originally created as part of a postgraduate Research Techniques course at the University of Edinburgh, which aimed to teach students practical aspects of chemistry. 
+The module contributes 40% of the total grade for the course. 
+The module was assessed in two ways.
+Overall comprehension of the first two sessions is assessed based on multiple choice quizzes, accessing the general understanding of the material (shall we give example?)
+Students are provided a trial quiz to make sure they are familiar with how to operate the quiz and what type of knowledge is expected. when scoring over 80% they can access to the summative.
+Secondly, the students are tasked with completing an individual project building off of what they learn in session 3 and writing a short report on it.
+this is done via the projects that are written in a form of a mino-paper. the focus is on accessing XXXXX
+
+
+## Virtual Machines 
+
+Discuss set up of VMs and access to Linux machines through it + simulations on Eddie HPC
+
+Implementation requires a computer lab with GROMACS and HPC access, though local adaptations (e.g., using desktop simulations) are feasible.
+
 
 
 # Reuse, implementation and modification
+The GitHub repository provides all materials—scripts, slides, and tutorials—under an open license, enabling educators to adopt the module as-is or modify it. 
 
-- also add the claycode w/sh for those who want to learn more
+We have been using this material for ur BSc students to get them started on sims
+
+
+
 
 # Conclusion
+- also add the claycode w/sh for those who want to learn more
 
 
 
 # Acknowledgements
-demos, Rosa for feedback
+demos, Rosa for feedback 
 
 
 
