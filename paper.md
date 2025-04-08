@@ -30,7 +30,7 @@ affiliations:
     index: 2
   - name:
     index: 3
-date: 
+date:  
 bibliography: paper.bib
 
 ---
@@ -62,6 +62,7 @@ Therefore, it is essential for students to have a solid understanding of computa
 methods. 
 This module focuses on molecular dynamics simulations, one of the most commonly used methodologies in current research, introducing the practical skills necessary to be able to perform the simulations using modern computational resources and softwares.
 Our goal is to facilitate educators globally by sharing this material allowing them to adopt or adapt it, fostering computationally-enabled teaching and learning in chemistry and related fields.
+
 [//]: # (we need to cite smth)
 
 
@@ -69,30 +70,25 @@ Our goal is to facilitate educators globally by sharing this material allowing t
 
 # Content and Instructional Design
 
-The course comprises three 3-hour long workshops, each beginning with a short lecture (slides shared via GitHub) to contextualize the material.
-Designed for taught postgraduate masters students taking the degree in Materials Chemistry, Analytical Chemistry, and Medicinal and Biological Chemistry, the content is adjusted to suit these diverse backgrounds.
-
-
-- talk about lectures at the start of the session + share the slides
-- say that it is aimed at the students doing courses in materials, analytical and medbio. hence some modifications of the course
-
-
+The course comprises three 3-hour long workshops, each beginning with a short lecture (slides shared via GitHub) to contextualize the material. A final 3-hour session is used to introduce individual projects to the student and to allow them to get started on these.
+The material is designed for taught postgraduate masters students taking degrees in Materials Chemistry, Analytical Chemistry, and Medicinal and Biological Chemistry, and so the content for the third workshop is adjusted to suit these diverse backgrounds.
 
 
 ## Learning objectives
 
-The course aims to equip students with practical molecular dynamics simulation skills: 
-- Use basic command-line interfaces.
-- Navigate and utilize high-performance computing resources.
-- Prepare, run, and troubleshoot molecular dynamics simulations using GROMACS.
-- Recognize the limitations of computational chemistry methods.
-- Understand the limitations of the computational chemistry techniques used.
-- Apply these skills independently to real research systems.
+The course aims to equip students with practical molecular dynamics simulation skills such as: 
+- Using basic command-line interfaces.
+- Navigating and utilizing high-performance computing resources.
+- Preparing, running, and troubleshooting molecular dynamics simulations using GROMACS.
+- Recognizing the limitations of computational chemistry methods.
+- Understanding the limitations of the computational chemistry techniques used.
+- Applying these skills independently to real research systems.
 
 
+## Session 1 
+The first session is an "Introduction to Linux and command-line". This workshop is based on material Copyright © Software Carpentry ("The Unix Shell", "Using Shell with HPC" and "Introduction to HPC").
 
-## Session 1
-need to check the specific learnign objectives for each session
+need to check the specific learning objectives for each session
 
 - Students learn Unix basic commands
 - how to write the files 
@@ -124,7 +120,7 @@ The module was assessed in two ways.
 Overall comprehension of the first two sessions is assessed based on multiple choice quizzes, accessing the general understanding of the material (shall we give example?)
 Students are provided a trial quiz to make sure they are familiar with how to operate the quiz and what type of knowledge is expected. when scoring over 80% they can access to the summative.
 Secondly, the students are tasked with completing an individual project building off of what they learn in session 3 and writing a short report on it.
-this is done via the projects that are written in a form of a mino-paper. the focus is on accessing XXXXX
+this is done via the projects that are written in a form of a mini-paper. the focus is on accessing XXXXX
 
 
 ## Virtual Machines 
