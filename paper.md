@@ -86,14 +86,22 @@ The course aims to equip students with practical molecular dynamics simulation s
 
 
 ## Session 1 
-The first session is an "Introduction to Linux and command-line". This workshop is based on material Copyright © Software Carpentry ("The Unix Shell", "Using Shell with HPC" and "Introduction to HPC").
+The first session is an "Introduction to Linux and command-line". This workshop is based on material Copyright © Software Carpentry ("The Unix 
+Shell", "Using Shell with HPC" and "Introduction to HPC"). A lecture at the beginning of the workshop introduces the course and give an overview 
+of computational techniques. This is followed by a walk-through of connecting to the virtual machines that we used to run the course (details 
+given below). The material is divided into 7 parts, with only 3 required to complete the other workshops. Six parts are designed to 
+introduce the shell and simple BASH commands, such as navigating around directories and writing files. Unlike the Software Carpentry lessons, we 
+decided to use Vim as the text-editor taught due to its advanced functionality (such as quickly navigating through files). The other part 
+introduces high-performance computing and how to use the University of Edinburgh's Research Compute Cluster, Eddie.
+
+
+and high-performance computing, which the students will 
+use to complete the other workshops.
 
 need to check the specific learning objectives for each session
 
 - Students learn Unix basic commands
 - how to write the files 
-- adapted from software carpentry, there should also be a citation
-- learnign the use of HPC resource, here on out own Eddie HPC, log in, move data, submit and kill jobs.
 - some info about the material covered in the lecture (for each session)
 
 
