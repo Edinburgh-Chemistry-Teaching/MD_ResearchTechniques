@@ -57,13 +57,8 @@ molecular properties with high precision. Molecular dynamics (MD), in particular
 
 These methods have had a positive impact on society by accelerating the development of new drugs, materials, and technologies.
 
-Despite its growing importance, many chemistry curricula lack hands-on training in computational techniques.
-
-[//]: # (cite: doi.org/10.1021/bk-2019-1312.ch001)
-
-[//]: # (Without foundational knowledge in tools like Linux, high-performance computing &#40;HPC&#41;, and simulation software such as GROMACS, students may struggle to access or interpret computational literature and methods relevant to their research.)
-
-This module addresses that gap by 
+Despite its growing importance, many chemistry curricula lack hands-on training in computational techniques.`[@dahl2020]` Without foundational 
+knowledge in tools like Linux, high-performance computing (HPC), and simulation software such as GROMACS, students may struggle to access or interpret computational literature and methods relevant to their research. This module addresses that gap by 
 introducing practical MD simulation skills in a structured and accessible format, empowering students to perform computational tasks of their own. 
 TBy sharing our resources openly, our goal is to facilitate educators globally, allowing them to adopt or adapt it, 
 fostering computationally-enabled teaching and learning in chemistry and related fields.
@@ -164,12 +159,13 @@ Secondly, the students are tasked with completing an individual project building
 
 ## Computational Resources
 To facilitate give students access to a Linux machine for the course, each student was given access to a virtual machine, created using the 
-University of Edinburgh’s Research Cloud Computing Service, Eleanor, which has been deployed on the OpenStack cloud computing platform.`[@ECDF]`
+University of Edinburgh’s Research Cloud Computing Service, Eleanor, which has been deployed on the OpenStack cloud computing platform.`[@ecdf]`
 The machines were launched from an Ubuntu 22.04.3 LTS with Xfce Desktop Environment image, which has been saved to be re-used for future instances of the course.
 Each virtual machine was provisioned with 4 virtual CPU cores, 8GB of RAM and 80GB of local disk. These resources could easily be increased using the OpenStack platform if required. Network storage was also mounted on each machine to enable access to the course materials and the transfer of outputs off the machine.
 Local accounts with randomly generated passwords were created for the students on the machines. Each student accessed their assigned machine through Remote Desktop using their assigned username and password.
 
-The resource-heavy simulations (i.e. equilibration and production runs) were performed on NVIDIA A100 20GB Multi Instance GPUs (MIGs) on the University of Edinburgh’s Research Compute Cluster, Eddie.`[@ECDF]`
+The resource-heavy simulations (i.e. equilibration and production runs) were performed on NVIDIA A100 20GB Multi Instance GPUs (MIGs) on the 
+University of Edinburgh’s Research Compute Cluster, Eddie.`[@ecdf]`
 The Eddie compute cluster uses the Altair Grid Engine Scheduler and the Rocky Linux 9 operating system. 
 To enable shorter queuing times for the students, 10 MIGs were ringfenced for them for the duration of the course. The ringfenced MIGs were on a single compute node with 64 CPU cores and 768GB of system RAM. 
 On Eddie, each student had access to a 2TB scratch area where they could perform the simulations.
@@ -188,9 +184,8 @@ simulations) are feasible.
 # Conclusion
 This module enables postgraduate students to gain practical skills in computational chemistry with an emphasis on reproducibility and open science. It is particularly suited to courses seeking to integrate computational methods with experimental and theoretical chemistry.
 
-For those interested in learning more about simulating clay surfaces, we have also created a [workshop](https://github.com/Erastova-group/ClayCode-workshop) for the ClayCode software.
-
-[//]: # (cite: https://pubs.acs.org/doi/10.1021/acs.jctc.4c00987)
+For those interested in learning more about simulating clay surfaces, we have also created a [workshop](https://github.
+com/Erastova-group/ClayCode-workshop) for the ClayCode software. `[pollak2024]`
 
 
 
