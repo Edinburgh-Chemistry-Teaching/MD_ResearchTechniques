@@ -51,11 +51,10 @@ and adaptation of accessible, computation-rich learning materials in chemistry e
 # Statement of Need
 
 Computational techniques have become an integral part of modern chemical research, enabling simulation of chemical systems and prediction of 
-molecular properties with high precision. Molecular dynamics (MD), in particular, allows researchers to investigate complex system, such as large protein complexes, biological membranes, interactions of molecules and materials at the interface, and processes in space or in extreme conditions.
+molecular properties with high precision. Molecular dynamics (MD), in particular, allows researchers to investigate complex system, such as large 
+protein complexes, biological membranes, interactions of molecules and materials at the interface, and processes in space or in extreme conditions. These methods have had a positive impact on society by accelerating the development of new drugs, materials, and technologies.
 
 [//]: # (Does this ^ need a citation?)
-
-These methods have had a positive impact on society by accelerating the development of new drugs, materials, and technologies.
 
 Despite its growing importance, many chemistry curricula lack hands-on training in computational techniques.[@dahl2020] Without foundational 
 knowledge in tools like Linux, high-performance computing (HPC), and simulation software such as GROMACS, students may struggle to access or interpret computational literature and methods relevant to their research. This module addresses that gap by 
@@ -105,12 +104,12 @@ This workshop is adapted from a GROMACS tutorial by Cathrine Bergh, Maryam Majdo
 A short lecture at the start introduces theoretical background topics in molecular simulations, such as force fields, thermodynamic 
 ensembles, and typical system requirements. 
 
-The hands-on component walks students through the three main aspects of practical molecular simulation via a simple protein. This includes 
-pre-processing input files, running energy minimization, and equilibrating the system. Students visualise the resulting trajectories using VMD and 
+The hands-on component walks students through the three main aspects of practical molecular simulation via a simple protein, using the GROMACS 
+software. This includes 
+pre-processing input files, running energy minimization, and equilibrating the system. Students visualise the resulting trajectories using VMD[@vmd] 
+and 
 analyse 
-the outputs using in-build GROMACS commands and Xmgrace.
-
-[//]: # (cite VMD, GROMACS and Xmgrace)
+the outputs using in-build GROMACS[@gromacs] commands and Xmgrace.[@xmgrace]
 
 
 ## Session 3
@@ -155,7 +154,8 @@ Secondly, the students are tasked with completing an individual project building
 ## Computational Resources
 To facilitate give students access to a Linux machine for the course, each student was given access to a virtual machine, created using the 
 University of Edinburgh’s Research Cloud Computing Service, Eleanor, which has been deployed on the OpenStack cloud computing platform.[@ecdf]
-The machines were launched from an Ubuntu 22.04.3 LTS with Xfce Desktop Environment image, which has been saved to be re-used for future instances of the course.
+The machines were launched from an Ubuntu 22.04.3 LTS with Xfce Desktop Environment image, which has been saved to be re-used for future instances 
+of the course. The machines had GROMACS 2024.4, VMD 1.9.4 and Xmgrace 5.1.25 software installed.  
 Each virtual machine was provisioned with 4 virtual CPU cores, 8GB of RAM and 80GB of local disk. These resources could easily be increased using the OpenStack platform if required. Network storage was also mounted on each machine to enable access to the course materials and the transfer of outputs off the machine.
 Local accounts with randomly generated passwords were created for the students on the machines. Each student accessed their assigned machine through Remote Desktop using their assigned username and password.
 
@@ -163,7 +163,10 @@ The resource-heavy simulations (i.e. equilibration and production runs) were per
 University of Edinburgh’s Research Compute Cluster, Eddie.[@ecdf]
 The Eddie compute cluster uses the Altair Grid Engine Scheduler and the Rocky Linux 9 operating system. 
 To enable shorter queuing times for the students, 10 MIGs were ringfenced for them for the duration of the course. The ringfenced MIGs were on a single compute node with 64 CPU cores and 768GB of system RAM. 
-On Eddie, each student had access to a 2TB scratch area where they could perform the simulations.
+On Eddie, each student had access to a 2TB scratch area where they could perform the simulations, and used GROMACS 2024.4 with GPU 
+support and Xmgrace 5.1.25 software.
+
+[//]: # (do we need to re-cite gromacs, vmd and xmgrace?)  
 
 
 # Reuse, implementation and modification
