@@ -8,20 +8,20 @@ authors:
   - name: Sarah Victoria Stewart
     orcid: 0000-0003-1663-5206
     affiliation: "1, 2"
-  - name: Valentina Erastova
-    orcid: 0000-0002-6747-3297
-    affiliation: "1, 2"
   - name: Hannah Pollak
     orcid: 0000-0003-1011-8478
-    affiliation: 1
-  - name: Audrey Ngambia
-    orcid: 0000-0003-1951-8742
     affiliation: 1
   - name: Tim Spankie
     orcid: 0000-0001-5123-7049
     affiliation: 1
+  - name: Audrey Ngambia
+    orcid: 0000-0003-1951-8742
+    affiliation: 1
   - name: Angela Chitzanidi
     affiliation: 3
+  - name: Valentina Erastova
+    orcid: 0000-0002-6747-3297
+    affiliation: "1, 2"
 affiliations:
   - name: School of Chemistry, University of Edinburgh, Joseph Black Building, David Brewster Road, Edinburgh EH9 3FJ, United Kingdom
     index: 1
@@ -29,7 +29,7 @@ affiliations:
     index: 2
   - name:
     index: 3
-date:  
+date:  16 April 2025
 bibliography: paper.bib
 
 ---
@@ -57,7 +57,7 @@ molecular properties with high precision. Molecular dynamics (MD), in particular
 
 These methods have had a positive impact on society by accelerating the development of new drugs, materials, and technologies.
 
-Despite its growing importance, many chemistry curricula lack hands-on training in computational techniques.`[@dahl2020]` Without foundational 
+Despite its growing importance, many chemistry curricula lack hands-on training in computational techniques.[@dahl2020] Without foundational 
 knowledge in tools like Linux, high-performance computing (HPC), and simulation software such as GROMACS, students may struggle to access or interpret computational literature and methods relevant to their research. This module addresses that gap by 
 introducing practical MD simulation skills in a structured and accessible format, empowering students to perform computational tasks of their own. 
 TBy sharing our resources openly, our goal is to facilitate educators globally, allowing them to adopt or adapt it, 
@@ -85,9 +85,7 @@ The course aims to equip students with practical molecular dynamics simulation s
 ## Session 1 
 The first session is an "Introduction to Linux and command-line". 
 This workshop is based on material Copyright © Software Carpentry ("The Unix 
-Shell", "Using Shell with HPC" and "Introduction to HPC").
-
-[//]: # (need to cite)
+Shell",[@unix_shell] "Using Shell with HPC",[@hpc_shell] and "Introduction to HPC"[@hpc_intro]).
 
 A lecture at the beginning of the workshop introduces the course and provides an overview 
 of computational techniques in chemistry. This is followed by a walkthrough of connecting to the virtual machines used to run the course (details in the Computational Resources section). 
@@ -103,10 +101,7 @@ will use in subsequent sessions.
 
 ## Session 2
 The second session is an "Introduction to molecular dynamics simulations". 
-This workshop is adapted from a GROMACS tutorial by Cathrine Bergh, Maryam Majdolhosseini and Alessandra Villa.
-
-[//]: # (need to cite)
-
+This workshop is adapted from a GROMACS tutorial by Cathrine Bergh, Maryam Majdolhosseini and Alessandra Villa.[@lysozyme]
 A short lecture at the start introduces theoretical background topics in molecular simulations, such as force fields, thermodynamic 
 ensembles, and typical system requirements. 
 
@@ -159,13 +154,13 @@ Secondly, the students are tasked with completing an individual project building
 
 ## Computational Resources
 To facilitate give students access to a Linux machine for the course, each student was given access to a virtual machine, created using the 
-University of Edinburgh’s Research Cloud Computing Service, Eleanor, which has been deployed on the OpenStack cloud computing platform.`[@ecdf]`
+University of Edinburgh’s Research Cloud Computing Service, Eleanor, which has been deployed on the OpenStack cloud computing platform.[@ecdf]
 The machines were launched from an Ubuntu 22.04.3 LTS with Xfce Desktop Environment image, which has been saved to be re-used for future instances of the course.
 Each virtual machine was provisioned with 4 virtual CPU cores, 8GB of RAM and 80GB of local disk. These resources could easily be increased using the OpenStack platform if required. Network storage was also mounted on each machine to enable access to the course materials and the transfer of outputs off the machine.
 Local accounts with randomly generated passwords were created for the students on the machines. Each student accessed their assigned machine through Remote Desktop using their assigned username and password.
 
 The resource-heavy simulations (i.e. equilibration and production runs) were performed on NVIDIA A100 20GB Multi Instance GPUs (MIGs) on the 
-University of Edinburgh’s Research Compute Cluster, Eddie.`[@ecdf]`
+University of Edinburgh’s Research Compute Cluster, Eddie.[@ecdf]
 The Eddie compute cluster uses the Altair Grid Engine Scheduler and the Rocky Linux 9 operating system. 
 To enable shorter queuing times for the students, 10 MIGs were ringfenced for them for the duration of the course. The ringfenced MIGs were on a single compute node with 64 CPU cores and 768GB of system RAM. 
 On Eddie, each student had access to a 2TB scratch area where they could perform the simulations.
@@ -185,7 +180,7 @@ simulations) are feasible.
 This module enables postgraduate students to gain practical skills in computational chemistry with an emphasis on reproducibility and open science. It is particularly suited to courses seeking to integrate computational methods with experimental and theoretical chemistry.
 
 For those interested in learning more about simulating clay surfaces, we have also created a [workshop](https://github.
-com/Erastova-group/ClayCode-workshop) for the ClayCode software. `[pollak2024]`
+com/Erastova-group/ClayCode-workshop) for the ClayCode software.[pollak2024]
 
 
 
