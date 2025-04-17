@@ -49,7 +49,6 @@ and adaptation of accessible, computation-rich learning materials in chemistry e
 
 
 # Statement of Need
-
 Computational techniques have become an integral part of modern chemical research, enabling simulation of chemical systems and prediction of 
 molecular properties with high precision. Molecular dynamics (MD), in particular, allows researchers to investigate complex system, such as large 
 protein complexes, biological membranes, interactions of molecules and materials at the interface, and processes in space or in extreme conditions. These methods have had a positive impact on society by accelerating the development of new drugs, materials, and technologies.
@@ -65,13 +64,11 @@ fostering computationally-enabled teaching and learning in chemistry and related
 
 
 # Content and Instructional Design
-
 The course comprises three 3-hour long workshops, each beginning with a short lecture (slides shared via GitHub) to contextualize the material. A final 3-hour session is used to introduce individual projects to the student and to allow them to get started on these.
 The material is designed for taught postgraduate masters students taking degrees in Materials Chemistry, Analytical Chemistry, and Medicinal and Biological Chemistry, and so the content for the third workshop is adjusted to suit these diverse backgrounds.
 
 
 ## Learning objectives
-
 The course aims to equip students with practical molecular dynamics simulation skills such as: 
 - Using basic command-line interfaces.
 - Navigating and utilizing high-performance computing resources.
@@ -85,7 +82,6 @@ The course aims to equip students with practical molecular dynamics simulation s
 The first session is an "Introduction to Linux and command-line". 
 This workshop is based on material Copyright © Software Carpentry ("The Unix 
 Shell",[@unix_shell] "Using Shell with HPC",[@hpc_shell] and "Introduction to HPC"[@hpc_intro]).
-
 A lecture at the beginning of the workshop introduces the course and provides an overview 
 of computational techniques in chemistry. This is followed by a walkthrough of connecting to the virtual machines used to run the course (details in the Computational Resources section). 
 
@@ -99,17 +95,19 @@ will use in subsequent sessions.
 
 
 ## Session 2
-The second session is an "Introduction to molecular dynamics simulations". 
-This workshop is adapted from a GROMACS tutorial by Cathrine Bergh, Maryam Majdolhosseini and Alessandra Villa.[@lysozyme]
-A short lecture at the start introduces theoretical background topics in molecular simulations, such as force fields, thermodynamic 
-ensembles, and typical system requirements. 
+The second session, *"Introduction to molecular dynamics simulations"*, guides students thought the process of running a simple MD simulations 
+using GROMACS. This workshop is adapted from a GROMACS tutorial by Cathrine Bergh, Maryam Majdolhosseini and Alessandra Villa.[@lysozyme]
+A short lecture at the start introduces theoretical background topics in molecular simulations, including the concepts of force fields, system preparation, thermodynamic ensembles (e.g., NVT and NPT), and resource requirements for simulation.
 
-The hands-on component walks students through the three main aspects of practical molecular simulation via a simple protein, using the GROMACS 
-software. This includes 
-pre-processing input files, running energy minimization, and equilibrating the system. Students visualise the resulting trajectories using VMD[@vmd] 
-and 
-analyse 
-the outputs using in-build GROMACS[@gromacs] commands and Xmgrace.[@xmgrace]
+The practical component uses a lysozyme-in-water system to introduce students to key stages of a simulation workflow:
+
+- Pre-processing: Converting input files (e.g., PDB structures) into GROMACS-compatible formats, generating topologies, defining the simulation 
+  box, and adding solvent and ions.
+- Simulation Execution: Performing energy minimisation followed by equilibration in the NVT and NPT ensembles.
+- Post-processing and Analysis: Using built-in GROMACS tools to extract thermodynamic quantities (e.g., temperature, pressure, potential energy), trajectory information, and structural properties such as RMSD and radius of gyration.
+
+Students visualise the structure and dynamics using VMD[@vmd] and analyse the data using Xmgrace.[@xmgrace] Students are prompted to think 
+critically about their simulation results.
 
 
 ## Session 3
