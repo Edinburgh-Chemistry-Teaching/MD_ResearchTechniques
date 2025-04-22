@@ -87,7 +87,9 @@
                             ~3 nm on each side. </p>
                         <p style="margin-bottom:-3mm;">  <br> </p>
                         <p> What (whole number) do you need to multiply the cell length by in <em>x</em> or <em>y</em> to get a box big enough?
-                            This is the value to use for <code>-nbox</code> in that direction. </p>
+                            This is the value to use for <code>-nbox</code> in that direction. For example, if the unit cell length is 0.8 nm, and we
+                            want a minimum of 3 nm, we need to use 4 unit cells in that direction.
+                        </p>
                     </blockquote>
 
                 </ul>
@@ -124,7 +126,8 @@
                 <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:1mm">$ vim MMT_slab.gro</code>
                 <blockquote style="margin-top:1mm">
                     Where in the <code>.gro</code> file is the box size specified? Adjust the <em>z</em> cell length to 50 &#8491;. <br>
-                    <i>Remember:</i> the vim cheat sheet can help you navigate the file quickly.
+                    <i>Remember:</i> the <a target="_blank" href="../../session1/vim_cheat_sheet.html">vim cheat sheet</a> can help you navigate
+                    the file quickly.
                 </blockquote>
                 <div class="flex-figure" style="margin-top:-8mm;">
                     <div class="figure" style="width:50%">
@@ -232,13 +235,13 @@
                     Inside the folders, you can find the <code>.itp</code> files that contain the various force field parameters. <br>
                 </blockquote>
             </li>
-            <li>Complete the lines to add nonbonded parameter files (<code>ffnonbonded.itp</code>) for clay, organics and ions.
+            <li>Complete the lines to add nonbonded parameter files (<code>ffnonbonded.itp</code>) for <strong>clay</strong>, <strong>organics</strong> and <strong>ions</strong>.
                 <blockquote style="margin-top:1mm">
                     Clay and water share the same atom types. Therefore, no separate <code>ffnonbonded.itp</code> file needs to be added for
                     water.<br>
                 </blockquote>
             </li>
-            <li>Complete the lines to add bonded parameters for organics (<code>ffbonded.itp</code>).</li>
+            <li>Complete the lines to add bonded parameters for <strong>organics</strong> (<code>ffbonded.itp</code>).</li>
             <li>Include molecule definitions for ions (<code>ions.itp</code>), water (<code>spc.itp</code>),
                 <abbr>MMT</abbr> (<code>MMT.itp</code>) and decanoic acid (<code>decanoic_acid.itp</code>).
                 <blockquote style="margin-top:1mm">
@@ -248,13 +251,16 @@
             </li>
             <li>Complete the molecules section.
                 <blockquote style="margin-top:1mm">
-                    <p>Add entries for all molecules in your <code>.gro</code> file.</p>
+                    <p>Add entries for all molecules <em>currently</em> in your <code>.gro</code> file.</p>
                     <p style="margin-bottom:-5mm;"> <br></p>
-                    <p>E.g. for two <abbr>MMT</abbr> <abbr>UCs</abbr> and one decanoic acid, the entry would be:</p>
+                    <p>E.g. for <strong>two <abbr>MMT</abbr> <abbr>UCs</abbr></strong> and <strong>one decanoic acid</strong>, the entry would be:</p>
                     <samp style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:1mm">[ molecules ]
 ; Compound  # mols
 MMT           2
 DECA           1</samp>
+                    <p style="margin-top:3mm">To work out the number of unit cells you used, multiply the <code>-nbox</code> values you used for
+                        <code>gmx genconf</code>. <br> E.g. if you used <code>-nbox 3 2 1</code>, the number of MMT UCs would be 6
+                        .</p>
                 </blockquote>
             </li>
         </ol>

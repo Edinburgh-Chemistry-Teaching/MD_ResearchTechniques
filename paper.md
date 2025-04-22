@@ -79,7 +79,7 @@ The course aims to equip students with practical molecular dynamics simulation s
 
 
 ## Session 1 
-The first session is an "Introduction to Linux and command-line". 
+The first session is an *"Introduction to Linux and command-line"*. 
 This workshop is based on material Copyright © Software Carpentry ("The Unix 
 Shell",[@unix_shell] "Using Shell with HPC",[@hpc_shell] and "Introduction to HPC"[@hpc_intro]).
 A lecture at the beginning of the workshop introduces the course and provides an overview 
@@ -111,11 +111,12 @@ critically about their simulation results.
 
 
 ## Session 3
-The third session builds upon the skills developed in session 2, to perform advanced simulations that are domain-specific to the masters programs. 
+The third session builds upon the skills developed in session 2, to perform advanced simulations that are domain-specific to the three masters programs. 
+Medicinal and Biological Chemistry students simulate a small protein–ligand system, focusing on aspects such as structural integrity and 
+dynamics. 
+Building up to the previous session, this session emphasizes real-world research considerations such as handling incomplete PDB files
 
-Medicinal and Biological Chemistry students simulate a small protein–ligand system, focusing on aspects such as structural integrity and dynamics.
-
-[//]: # (needs more info)
+[//]: # (The third session builds directly on skills developed in Session 2 by applying molecular dynamics techniques to a biologically relevant protein–ligand system. Students prepare a protein structure, solvate it, add ions, and parameterize a ligand using external tools. They then perform energy minimization, equilibration, and production runs using GROMACS, with a focus on assessing system stability and ligand binding. The session emphasizes real-world research considerations such as handling incomplete PDB files, choosing suitable force fields, and interpreting RMSD and interaction metrics from the trajectories.)
 
 
 Materials Chemistry and Analytical Chemistry students simulate a clay–organic interface, exploring interactions at the mineral surface and 
@@ -123,6 +124,11 @@ Materials Chemistry and Analytical Chemistry students simulate a clay–organic 
  environment.
 
 [//]: # (needs more info)
+
+[//]: # (The third session focuses on applying molecular dynamics simulations to a layered clay–organic system, offering an example relevant to materials or environmental chemistry. After a brief lecture on modeling layered minerals and interfacial interactions, students prepare and simulate a hydrated clay system containing organic guest molecules.)
+
+[//]: # ()
+[//]: # (The hands-on tasks build on skills developed in previous sessions, with added complexity such as setting up periodic systems, modifying topology files for nonstandard molecules, and managing simulation stability. Students visualize structures in VMD and use GROMACS for analysis of layer spacing, molecular diffusion, and guest–host interactions.)
 
 
 ## Session 4 
