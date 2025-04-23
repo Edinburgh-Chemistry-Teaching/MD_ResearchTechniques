@@ -136,6 +136,8 @@ The final session introduces the individual projects and guides students in gett
 A short presentation outlines the assessment criteria, expectations for scientific writing, and project submission timelines. Additionally, 
 students are also introduced to Overleaf for scientific writing in LaTeX, and example templates are provided for structuring the final mini-paper report. The remainder of the session is used for hands-on progress toward simulation setup and writing.
 
+May be we can make a simple page where we just ink the info and templates. then just state that we are not distro the actual assessment materials.
+
 [//]: # (do we need to cite latex and overleaf?)
 
 
