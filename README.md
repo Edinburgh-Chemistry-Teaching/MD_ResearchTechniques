@@ -19,7 +19,7 @@ In this repository, and with the associated manuscript, we share the materials w
 ## Files shared
 
 * **Lectures** - each session begins with the introductory lecture, and all the slides are shared within. 
-* **Notes** - HTML materials for self-guided work during each session. Start by loading `Overview.html` into the browser. Dyslexia-friendly settings are also available. 
+* **Notes** - HTML materials for self-guided work during each session. Start by opening `Overview.html` in your browser. Dyslexia-friendly settings are also available. 
 * **Practicals** - all the files necessary to complete each session. 
 
 Please note that we are not sharing the materials for Session 4, as those are used for a summative assessment. Nevertheless, we share an example report and the templates.
