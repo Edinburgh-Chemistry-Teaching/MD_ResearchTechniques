@@ -62,13 +62,15 @@ The course is designed for taught postgraduate masters students taking degrees i
 
 
 ## Learning objectives
-The course aims to equip students with the practical skills necessary to perform meaningful molecular dynamics simulations, including: 
+The module aims to equip students with the practical skills necessary to perform meaningful molecular dynamics simulations, including:
+ 
 - Using basic command-line interfaces;
 - Navigating and utilising high-performance computing resources;
 - Preparing, running, and troubleshooting molecular dynamics simulations using GROMACS software;
 - Recognising the limitations of computational chemistry methods;
-- Understanding the limitations of the computational chemistry techniques used; 
 - Applying these skills independently to real research systems.
+
+[//]: # (commenting out - Understanding the limitations of the computational chemistry techniques used)
 
 
 
