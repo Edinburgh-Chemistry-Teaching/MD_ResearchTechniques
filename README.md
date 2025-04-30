@@ -1,6 +1,6 @@
 # Introduction to Computational Chemistry Techniques
 
-This is an open educational resource [CC-BY 4.0](https://creativecommons.org/licenses/by/4.0/) originally developed for postgraduate taught masters chemistry students at the University of Edinburgh to introduce the practical aspects of molecular dynamics simulations.
+This is an open educational resource originally developed for postgraduate taught masters chemistry students at the University of Edinburgh to introduce the practical aspects of molecular dynamics simulations.
 
 This course is designed for students with no prior experience in programming or computational chemistry. It is delivered over a month as a series of four 3-hour workshops in a computer-lab setting, with the final session dedicated to individual projects.
 
