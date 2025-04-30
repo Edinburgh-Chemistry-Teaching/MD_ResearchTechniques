@@ -59,8 +59,7 @@ A final workshop session is used to introduce individual projects, assessment cr
 The students have two weeks to work on the project and submit a summative report. (Note, we are unable to share the individual project materials.)
 The course is designed for taught postgraduate masters students taking degrees in 'Materials Chemistry', 'Analytical Chemistry', and 'Medicinal and Biological Chemistry', and therefore the content for the third workshop and individual projects is adjusted to suit these diverse backgrounds.
 
-
-**we ned to mention dyslexia fonts and reference their set up**
+**we need to mention dyslexia fonts and reference their set up**
 
 
 ## Learning objectives
@@ -158,12 +157,13 @@ The largest part of the assessment (30% of the course mark) is based upon indivi
 We are looking for a concise presentation of the system, quality methodology and appealing visuals in the results section. 
 
 The report is structured as follows:
+
 - abstract 
 - intro
 - methods
-- ...
+- ...we dont have space for this 
 
-The report is made to be concise, and the marking scheme rewards the ability to condense the information ... I DUNNO >>> SOMETHING>>>>
+The report is made to be concise, and the marking scheme rewards the ability to condense the information **... I DUNNO >>> SOMETHING>>>>**
  
 The project assesses students' ability to independently design, execute, and analyse an MD simulation relevant to their degree program. 
 
