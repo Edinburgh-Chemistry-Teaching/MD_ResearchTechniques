@@ -27,7 +27,7 @@ affiliations:
     index: 1
   - name: UK Centre for Astrobiology, School of Physics and Astronomy, University of Edinburgh, James Clerk Maxwell Building, Peter Guthrie Tait Road, Edinburgh EH9 3FD, United Kingdom
     index: 2
-  - name:
+  - name: Research Services, Information Services, University of Edinburgh, Argyle House, 3 Lady Lawson Street, Edinburgh EH3 9DR, United Kingdom
     index: 3
 date:  16 April 2025
 bibliography: paper.bib
@@ -35,28 +35,30 @@ bibliography: paper.bib
 ---
 
 # Summary
-*An Introduction to Computational Chemistry Techniques* is an open educational resource originally developed for postgraduate taught masters chemistry students to introduce the practical aspects of molecular dynamics (MD) simulations. 
+
+*An Introduction to Computational Chemistry Techniques* is an open educational resource originally developed for postgraduate taught masters chemistry students to introduce the practical aspects of molecular dynamics simulations. 
 Aimed at students with no prior experience in programming or computational chemistry, this module is delivered over a month as a series of three 3-hour workshops in a computer-lab setting, with a fourth session dedicated to individual projects.
 
-The module introduces foundational concepts in Unix command-line navigation, GROMACS for MD simulations, and accessing high-performance computing (HPC) systems.
+The module introduces foundational concepts in Unix command-line navigation, setting up, running and analysing molecular simulations in GROMACS, using high-performance computing systems.
 Students work through materials at their own pace, supported by demonstrators, with all content delivered via HTML-based guides and open-source tools.
-Hosted on [GitHub](https://github.com/Edinburgh-Chemistry-Teaching/MD_ResearchTechniques), this resource promotes the reuse and adaptation of accessible, computation-rich learning materials in chemistry education worldwide.
+Hosted on [GitHub](https://github.com/Edinburgh-Chemistry-Teaching/MD_ResearchTechniques), this resource promotes the reuse and adaptation of accessible, computation-rich learning materials for chemistry education worldwide.
 
 # Statement of Need
  
 Computational techniques are integral to modern chemical research, enabling precise simulation of chemical systems and prediction of molecular properties.
-Molecular dynamics (MD) facilitates the study of complex systems, such as protein complexes, biological membranes, and material interfaces, accelerating advancements in drugs, materials, and technologies. 
+Molecular dynamics (MD) simulations facilitate the study of complex systems, such as protein complexes, biological membranes, and material interfaces, accelerating advancements in drugs, materials, and technologies.
 Despite its importance, many chemistry curricula still lack hands-on computational training [@dahl2020]. 
 Without foundational skills in Linux, high-performance computing (HPC), and simulation software like GROMACS, postgraduate chemistry students may struggle to engage with computational literature or methods.
-This module addresses this gap by providing practical MD simulation training in an accessible format, empowering students to perform computational research independently. 
+This module addresses this gap by providing practical MD simulation training in an accessible format, empowering students to perform computational research independently.
 By sharing these resources openly, we aim to support global educators in adopting or adapting computationally-enabled teaching in chemistry and related fields.
-
+
 # Content and Instructional Design
 
 The course comprises three 3-hour-long workshops, each beginning with a short lecture (slides shared via GitHub) to contextualise the material.
 A final 3-hour session is used to introduce individual projects to the students and to allow them to get started on these. (We are not sharing the individual project materials.)
 The course is designed for taught postgraduate masters students taking degrees in Materials Chemistry, Analytical Chemistry, and Medicinal and Biological Chemistry, and so the content for the third workshop and individual projects is adjusted to suit these diverse backgrounds.
 
+**we ned to mention dyslexia fonts**
 
 
 ## Learning objectives
