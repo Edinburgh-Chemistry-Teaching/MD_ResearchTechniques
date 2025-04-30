@@ -152,8 +152,7 @@ This module contributes 40% of the total grade for the course and is assessed in
 Overall comprehension of the first two sessions is assessed based on multiple-choice quizzes, each quiz being 5% of the module.
 The quizzes were run through LEARN, the University's Virtual Learning Environment. Students are first provided a formative quiz to familiarise themselves with how to operate the quiz and what type of knowledge is expected. When scoring over 80%, students can access the summative quiz. The summative quiz can only be attempted once. We share the formative quizzes within GitHub materials. 
 
-[//]: # (shall we give example? - YES - can do the practice quiz?)
-
+[//]: # (can you place quizzes html into wherever appropriate plz)
 
 The largest part of the assessment (30% of the course mark) is based upon individual projects. The projects build upon what students have learned in Session 3, allowing them to set up their individual simulation systems, analyse them and produce a short report in the form of a mini-paper. 
 We are looking for a concise presentation of the system, quality methodology and appealing visuals in the results section. 
