@@ -36,10 +36,10 @@ bibliography: paper.bib
 
 # Summary
 
-*An Introduction to Computational Chemistry Techniques* is an open educational resource originally developed for postgraduate taught masters chemistry students to introduce the practical aspects of molecular dynamics simulations. 
-Aimed at students with no prior experience in programming or computational chemistry, this module is delivered over a month as a series of three 3-hour workshops in a computer-lab setting, with a fourth session dedicated to individual projects.
+*An Introduction to Computational Chemistry Techniques* is an open educational resource originally developed for postgraduate taught masters chemistry students at the University of Edinburgh to introduce practical aspects of molecular dynamics simulations. 
+Aimed at students with no prior experience in programming or computational chemistry, this module is delivered over a month as a series of four 3-hour workshops in a computer-lab setting, with the last session dedicated to individual projects.
 
-The module introduces foundational concepts in Unix command-line navigation, setting up, running and analysing molecular simulations in GROMACS, using high-performance computing systems.
+The module introduces foundational concepts in Unix command-line navigation, setting up, running and analysing molecular simulations, using high-performance computing systems.
 Students work through materials at their own pace, supported by demonstrators, with all content delivered via HTML-based guides and open-source tools.
 Hosted on [GitHub](https://github.com/Edinburgh-Chemistry-Teaching/MD_ResearchTechniques), this resource promotes the reuse and adaptation of accessible, computation-rich learning materials for chemistry education worldwide.
 
@@ -74,7 +74,7 @@ The course aims to equip students with the practical skills necessary to perform
 
 ## Session 1 
 The first session is an *"Introduction to Linux and command-line"*. 
-This workshop is primarily based on material Copyright © Software Carpentry ("The Unix Shell",[@unix_shell] "Using Shell with HPC",[@hpc_shell] and "Introduction to HPC"[@hpc_intro]).
+This workshop is primarily based on material from Software Carpentry ("The Unix Shell" [@unix_shell], "Using Shell with HPC" [@hpc_shell], and "Introduction to HPC" [@hpc_intro]).
 At the start of the workshop, a lecture introduces the course, the motivation, as well as explaining the nature of independent learning and setting up the assessment deadlines. 
 The lecture also overviews computational techniques in chemistry, detailing when each may be beneficial.
 This is followed by a walkthrough on how to connect to the virtual machines used to run the course (details in the Computational Resources section). 
@@ -100,7 +100,7 @@ The practical component uses a lysozyme-in-water system to introduce students to
 - Simulation Execution: Performing energy minimisation followed by equilibration in the canonical (NVT) and isothermal-isobaric (NPT) ensembles.
 - Post-processing and Analysis: Using built-in GROMACS tools to extract thermodynamic quantities (e.g., temperature, pressure, potential energy), trajectory information, and structural properties such as root mean square deviation (RMSD) and radius of gyration.
 
-Students visualise the structure and dynamics using VMD[@vmd] and analyse the data using Xmgrace.[@xmgrace] Students are prompted to think critically about their simulation results, discussing them with demonstrators.
+Students visualise the structure and dynamics using VMD [@vmd] and analyse the data using Xmgrace [@xmgrace]. Students are prompted to think critically about their simulation results, discussing them with demonstrators.
 
 
 ## Session 3
@@ -112,6 +112,7 @@ Students prepare a protein structure, solvate it, add ions, and parameterise a l
 They perform energy minimisation, equilibration, and production runs using GROMACS, focusing on system stability and ligand binding.
 The session addresses real-world research considerations, such as handling incomplete PDB files, selecting suitable force fields, and interpreting RMSD and interaction metrics from trajectories.
 
+**cite Matteo paper in JOSE and state that slides and materials were partually adapted from there** 
 
 [//]: # (Medicinal and Biological Chemistry students simulate a small protein–ligand system, focusing on aspects such as structural integrity and dynamics. Building up to the previous session, this session emphasizes real-world research considerations such as handling incomplete PDB files)
 
@@ -178,14 +179,14 @@ The project assesses students' ability to independently design, execute, and ana
 
 ## Computational Resources
 
-Each student was given an access to an individual Linux virtual machine, created using the University of Edinburgh’s Research Cloud Computing Service, Eleanor, deployed on the OpenStack platform [@ecdf]. 
+Each student was given access to an individual Linux virtual machine, created using the University of Edinburgh’s Research Cloud Computing Service, Eleanor, deployed on the OpenStack platform [@ecdf]. 
 The machines were launched from an Ubuntu 22.04.3 LTS with Xfce Desktop Environment image, which has been saved to be re-used for future instances of the course. 
 The machines had GROMACS 2024.4, VMD 1.9.4 and Xmgrace 5.1.25 software installed. 
 Network storage was also mounted on each machine to enable access to the course materials and the transfer of outputs off the machine.
 Provisioned with 4 virtual CPU cores, 8GB RAM, and 80GB disk, these resources can easily be increased if required.
 Local accounts with randomly generated passwords were created for the students on the machines. Each student accessed their assigned machine through Remote Desktop using their assigned username and password.
 
-The resource-heavy simulations (i.e., equilibration and production runs) were performed on NVIDIA A100 20GB Multi Instance GPUs (MIGs) on the University of Edinburgh’s Research Compute Cluster, Eddie.[@ecdf]
+The resource-heavy simulations (i.e., equilibration and production runs) were performed on NVIDIA A100 20GB Multi-Instance GPUs (MIGs) on the University of Edinburgh’s Research Compute Cluster, Eddie [@ecdf].
 The Eddie compute cluster uses the Altair Grid Engine Scheduler and the Rocky Linux 9 operating system. 
 To enable shorter queuing times for the students, 10 MIGs were ringfenced for them for the duration of the course. 
 The ringfenced MIGs were on a single compute node with 64 CPU cores and 768GB of system RAM. 
@@ -217,6 +218,7 @@ For those interested in learning more about simulating clay surfaces, we have al
 We thank the demonstrators who supported student learning and Rosa Brauer for feedback on the instructional materials. This work builds on contributions from Software Carpentry and GROMACS community tutorials. 
 
 [//]: # (Should we name the demonstrators? - yes we can if they are ok with it)
+[//]: # (Thank Matteo for sharing the slides?)
 
 
 # References
