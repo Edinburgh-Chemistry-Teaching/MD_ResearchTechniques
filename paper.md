@@ -147,14 +147,10 @@ Please note that we are unable to share the materials for this part of the modul
 
 ## Assessment
 
-The module was created as part of a postgraduate Research Techniques course at the University of Edinburgh, which aimed to teach postgraduate taught masters students practical aspects of chemistry. 
-The module contributes 40% of the total grade for the course. 
-The module was assessed in two ways.
-Overall comprehension of the first two sessions is assessed based on multiple-choice quizzes, each quiz being 5% of the module. **is that correct? 5% or the corse or module?**
-
-The quiz is run through **myED blackboard ... <-- whatever is that interface called.** 
-Students are provided a formative quiz to familiarise with how to operate the quiz and what type of knowledge is expected. When scoring over 80% they can access the summative quiz. The summative quiz can only be attempted once.
-We share the formative quizzes within GitHub materials. 
+The module was created as part of a Research Techniques course at the University of Edinburgh (SCQF 11, 20 credits), which trains postgraduate taught masters students in practical aspects of chemistry research.
+This module contributes 40% of the total grade for the course and is assessed in two ways.
+Overall comprehension of the first two sessions is assessed based on multiple-choice quizzes, each quiz being 5% of the module.
+The quizzes were run through LEARN, the University's Virtual Learning Environment. Students are first provided a formative quiz to familiarise themselves with how to operate the quiz and what type of knowledge is expected. When scoring over 80%, students can access the summative quiz. The summative quiz can only be attempted once. We share the formative quizzes within GitHub materials. 
 
 [//]: # (shall we give example? - YES - can do the practice quiz?)
 
