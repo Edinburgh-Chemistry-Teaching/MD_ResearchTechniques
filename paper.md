@@ -42,16 +42,21 @@ Aimed at students with no prior experience in programming or computational chemi
 The module introduces foundational concepts in Unix command-line navigation, setting up, running and analysing molecular simulations, using high-performance computing systems.
 Students work through materials at their own pace, supported by demonstrators, with all content delivered via HTML-based guides and open-source tools.
 Hosted on [GitHub](https://github.com/Edinburgh-Chemistry-Teaching/MD_ResearchTechniques), this resource promotes the reuse and adaptation of accessible, computation-rich learning materials for chemistry education worldwide.
-
+
+
+
 # Statement of Need
  
 Computational techniques are integral to modern chemical research, enabling precise simulation of chemical systems and prediction of molecular properties.
 Molecular dynamics (MD) simulations facilitate the study of complex systems, such as protein complexes, biological membranes, and material interfaces, accelerating advancements in drugs, materials, and technologies.
-Despite its importance, many chemistry curricula still lack hands-on computational training [@dahl2020]. 
+Despite its importance, many chemistry curricula still lack hands-on computational training [@dahl2020].
 Without foundational skills in Linux, high-performance computing (HPC), and simulation software like GROMACS, postgraduate chemistry students may struggle to engage with computational literature or methods.
 This module addresses this gap by providing practical MD simulation training in an accessible format, empowering students to perform computational research independently.
 By sharing these resources openly, we aim to support global educators in adopting or adapting computationally-enabled teaching in chemistry and related fields.
-
+Feedback from students highlights that the learners found the material engaging, recognised the importance of the skills being taught, and felt they had gained valuable and sufficient knowledge aligned with the learning objectives.
+
+
+
 # Content and Instructional Design
 
 The course comprises four 3-hour-long workshops, run weekly. Each session begins with a short lecture to contextualise the material. The remainder of the session is set for independent work using HTML guides with demonstrators available. The students are also supported by weekly drop-in sessions. 
@@ -59,7 +64,6 @@ A final workshop session is used to introduce individual projects, assessment cr
 The students have two weeks to work on the project and submit a summative report. (Note, we are unable to share the individual project materials.)
 The course is designed for taught postgraduate masters students taking degrees in 'Materials Chemistry', 'Analytical Chemistry', and 'Medicinal and Biological Chemistry', and therefore the content for the third workshop and individual projects is adjusted to suit these diverse backgrounds.
 
-**we need to mention dyslexia fonts and reference their set up**
 
 
 ## Learning objectives
@@ -73,10 +77,7 @@ The module aims to equip students with the practical skills necessary to perform
 * Report the methodology and observations in a condensed written format.
 * Perform group work, encouraged and developed through the practicals.
 
-[//]: # (- Using basic command-line interfaces; - Navigating and utilising high-performance computing resources; - Preparing, running, and troubleshooting molecular dynamics simulations using GROMACS software; - Recognising the limitations of computational chemistry methods; - Applying these skills independently to real research systems.  - Understanding the limitations of the computational chemistry techniques used)
 
-
-[//]: # (the sessions may need to shrink a bit )
 
 ## Session 1 
 The first session is an *"Introduction to Linux and command-line"*. 
@@ -90,6 +91,10 @@ The exercises in six parts introduce the Unix shell and simple Bash commands —
 Unlike the Software Carpentry model, we teach Vim as the text editor due to its advanced functionality (such as quickly navigating through files). 
 The seventh part introduces high-performance computing, focusing on how to interact with the University of Edinburgh's Eddie compute cluster [@ecdf], which the students will use in subsequent sessions.
 Only the first three parts (working with files and directories and using HPC) are required to be completed, the other parts are given for the more keen or advanced students.
+Unlike the Software Carpentry model, we teach Vim as the text editor due to its advanced functionality (such as quickly navigating through files).
+The seventh part introduces high-performance computing, focusing on how to interact with the University of Edinburgh's Eddie compute cluster, 
+which the students will use in subsequent sessions.[@ecdf]
+
 
 
 ## Session 2
@@ -101,7 +106,7 @@ The practical component uses a protein-in-water system (allowing students to cho
 
 - Pre-processing: Converting input files (e.g., PDB structures) into GROMACS formats, generating topologies, defining the simulation box, and adding water and ions.
 - Simulation Execution: Performing energy minimisation followed by equilibration in the canonical (NVT) and isothermal-isobaric (NPT) ensembles.
-- Post-processing and Analysis: Using built-in GROMACS tools to extract thermodynamic quantities (e.g., temperature, pressure, potential energy), trajectory information, and structural properties, such as root mean square deviation (RMSD) and radius of gyration.
+- Post-processing and Analysis: Using built-in GROMACS tools to extract thermodynamic quantities (e.g., temperature, pressure, potential energy), trajectory information, and structural properties, such as root-mean-square deviation (RMSD) and radius of gyration.
 
 Students visualise the structure and dynamics using VMD [@vmd] and plot analysed data using Xmgrace [@xmgrace]. Students are prompted to think critically about their simulation results, discussing with demonstrators.
 
@@ -111,13 +116,8 @@ Students visualise the structure and dynamics using VMD [@vmd] and plot analysed
 The third session builds upon the developed skills to perform advanced simulations that are domain-specific to the three masters programs. 
 
 For Medicinal and Biological Chemistry students, this session applies molecular dynamics to a biologically relevant protein–ligand system. 
-The students learn to prepare a protein structure file and parameterise a ligand using external tools (e.g., PDBFixer or PDB2PQR). 
-They perform energy minimisation, equilibration, and production runs using GROMACS, focusing on system stability and ligand binding.
-The session addresses real-world research considerations, such as handling incomplete PDB files, selecting suitable force fields, and interpreting RMSD and interaction metrics from trajectories. This session and lecture materials have been partially adapted from [BioSim Analysis Workshop](https://github.com/CCPBioSim/BioSim-analysis-workshop) [@biosim].
-
-[//]: # (Medicinal and Biological Chemistry students simulate a small protein–ligand system, focusing on aspects such as structural integrity and dynamics. Building up to the previous session, this session emphasizes real-world research considerations such as handling incomplete PDB files)
-[//]: # (The third session builds directly on skills developed in Session 2 by applying molecular dynamics techniques to a biologically relevant protein–ligand system. Students prepare a protein structure, solvate it, add ions, and parameterize a ligand using external tools. They then perform energy minimization, equilibration, and production runs using GROMACS, with a focus on assessing system stability and ligand binding. The session emphasizes real-world research considerations such as handling incomplete PDB files, choosing suitable force fields, and interpreting RMSD and interaction metrics from the trajectories.)
-
+Students prepare the system as before, with a focus on handling incomplete PDB files and selecting suitable force fields.
+They perform energy minimisation, equilibration, and production runs using GROMACS, with analysis focusing on system stability and ligand binding through interpreting RMSD and interaction metrics from trajectories. This session and lecture materials have been partially adapted from [BioSim Analysis Workshop](https://github.com/CCPBioSim/BioSim-analysis-workshop) [@biosim].
 
 For Materials Chemistry and Analytical Chemistry students, the focus of the session is on simulating a clay–organic interface, relevant to materials and environmental sciences. 
 A short lecture introduces layered minerals, interfacial interactions, and their applications in catalysis, environmental remediation, and nanotechnology.
@@ -126,21 +126,16 @@ Hands-on tasks include setting up a 2D layered system across the periodic bounda
 Students visualise structures using VMD and analyse layer spacing, molecular diffusion, and guest–host interactions with GROMACS tools. 
 The session emphasises real-world challenges, such as selecting an appropriate combination of force fields for the organic-inorganic system, and interpreting interfacial dynamics.
 
-[//]: # (Materials Chemistry and Analytical Chemistry students simulate a clay–organic interface, exploring interactions at the mineral surface and  solvation environment.)
-[//]: # (The third session focuses on applying molecular dynamics simulations to a layered clay–organic system, offering an example relevant to materials or environmental chemistry. After a brief lecture on modeling layered minerals and interfacial interactions, students prepare and simulate a hydrated clay system containing organic guest molecules.)
-[//]: # (The hands-on tasks build on skills developed in previous sessions, with added complexity such as setting up periodic systems, modifying topology files for nonstandard molecules, and managing simulation stability. Students visualize structures in VMD and use GROMACS for analysis of layer spacing, molecular diffusion, and guest–host interactions.)
 
 
 ## Session 4 
+
 The final session introduces the individual projects and guides students in getting started on their independent simulations and final reports.
 A short lecture gives tips for scientific writing, provides an example report, highlights expectations for the project, and provides templates and submission guidelines. 
 Additionally, students are introduced to Overleaf (https://www.overleaf.com) for scientific writing in LaTeX, and templates for the report are provided.
 The remainder of the session is used for hands-on progress toward simulation setup and report writing.
 
 Please note that we are unable to share the materials for this part of the module, since it is used in a summative assessment. Instead, we are including a simplified HTML page linking the templates and an example report.
-
-[//]: # (May be we can make a simple page where we just ink the info and templates. then just state that we are not distro the actual assessment materials. - yes)
-[//]: # (do we need to cite latex and overleaf? - yes if possible)
 
 
 
@@ -151,29 +146,20 @@ This module contributes 40% of the total grade for the course and is assessed in
 Overall comprehension of the first two sessions is assessed based on multiple-choice quizzes, each quiz being 5% of the module.
 The quizzes were run through LEARN, the University's Virtual Learning Environment. Students are first provided a formative quiz to familiarise themselves with how to operate the quiz and what type of knowledge is expected. When scoring over 80%, students can access the summative quiz. The summative quiz can only be attempted once. We share the formative quizzes within GitHub materials. 
 
-[//]: # (can you place quizzes html into wherever appropriate plz)
 
 The largest part of the assessment (30% of the course mark) is based upon individual projects. The projects build upon what students have learned in Session 3, allowing them to set up their individual simulation systems, analyse them and produce a short report in the form of a mini-paper. 
 We are looking for a concise presentation of the system, quality methodology and appealing visuals in the results section. 
 
-The report is structured as follows:
 
-- abstract 
-- intro
-- methods
-- ...we dont have space for this 
-
-The report is made to be concise, and the marking scheme rewards the ability to condense the information **... I DUNNO >>> SOMETHING>>>>**
- 
-The project assesses students' ability to independently design, execute, and analyse an MD simulation relevant to their degree program. 
-
+The project assesses students' ability to independently design, execute, and analyse an MD simulation relevant to their degree program.
+The report is made to be concise, and the marking scheme rewards the ability to condense the information.
 
 
 ## Computational Resources
 
 Each student was given access to an individual Linux virtual machine, created using the University of Edinburgh’s Research Cloud Computing Service, Eleanor, deployed on the OpenStack platform [@ecdf]. 
 The machines were launched from an Ubuntu 22.04.3 LTS with Xfce Desktop Environment image, which has been saved to be re-used for future instances of the course. 
-The machines had GROMACS 2024.4, VMD 1.9.4 and Xmgrace 5.1.25 software installed. 
+The machines had GROMACS 2024.4 [@gromacs], VMD 1.9.4 [@vmd] and Xmgrace 5.1.25 [@xmgrace] software installed. 
 Network storage was also mounted on each machine to enable access to the course materials and the transfer of outputs off the machine.
 Provisioned with 4 virtual CPU cores, 8GB RAM, and 80GB disk, these resources can easily be increased if required.
 Local accounts with randomly generated passwords were created for the students on the machines. Each student accessed their assigned machine through Remote Desktop using their assigned username and password.
@@ -184,15 +170,13 @@ To enable shorter queuing times for the students, 10 MIGs were ringfenced for th
 The ringfenced MIGs were on a single compute node with 64 CPU cores and 768GB of system RAM. 
 On Eddie, each student had access to a 2TB scratch area where they could perform the simulations, and used GROMACS 2024.4 with GPU support and Xmgrace 5.1.25 software.
 
-[//]: # (do we need to re-cite gromacs, vmd and xmgrace? - yes on the first instance in this section)  
-
-
+[//]: # (use of HTML as it is portable, cross browser, dyslexia &#40;css&#41;, accessibility)
 
 
 
 # Reuse, implementation and modification
 
-The complete course is available on [GitHub](https://github.com/Edinburgh-Chemistry-Teaching/MD_ResearchTechniques) under an open license - **WHAT TYPE?**. 
+The complete course is available on [GitHub](https://github.com/Edinburgh-Chemistry-Teaching/MD_ResearchTechniques) under an open license - CC 4.0. 
 Course slides, shell scripts, tutorials, and example data are all included. 
 Implementation requires a computer lab with Unix, GROMACS, and HPC access, though adaptations for local desktops or cloud platforms (e.g., Google Colab) are feasible. 
 The materials have been successfully adapted for undergraduate chemistry students joining our group to introduce MD simulations.
@@ -207,10 +191,10 @@ For those interested in learning more about simulating clay surfaces, we have al
 
 
 # Acknowledgements
-We thank the demonstrators who supported student learning and Rosa Brauer for feedback on the instructional materials. This work builds on contributions from Software Carpentry and GROMACS community tutorials. 
+We thank the demonstrators, Finlay Clark and Ryan Zhu, who supported student learning and Rosa Brauer for feedback on the instructional materials. 
+We also thank Matteo Degiacomi for providing protein lecture material for session 3.
+This work builds on contributions from Software Carpentry and GROMACS community tutorials. 
 
-[//]: # (Should we name the demonstrators? - yes we can if they are ok with it)
-[//]: # (Thank Matteo for sharing the slides?)
 
 
 # References

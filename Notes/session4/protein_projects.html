@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en-UK">
+
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0, user-scalable=yes" name="viewport"/>
+    <meta content="Session 4: Projects" name="description"/>
+    <link href="https://fonts.googleapis.com" rel="preconnect">
+    <link crossorigin href="https://fonts.gstatic.com" rel="preconnect">
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,400;0,600;1,400&display=swap"
+          rel="stylesheet">
+    <link href="../scripts/style.css" media="screen" rel="stylesheet" type="text/css"/>
+    <link href="../scripts/print_style.css" media="print" rel='stylesheet' type="text/css">
+    <title>Session 4</title>
+</head>
+
+<body>
+
+<div class="box">
+    <h1 id="title">Session 4: Projects</h1>
+</div>
+
+<div class="box">
+    <h2 id="overview">Contents</h2>
+</div>
+
+<div class="box">
+    <h2 class='enum' id="toc_1">Projects</h2>
+    <p> Proteins are biopolymers linked to a majority of biological functions. Their biological activity is determined by their 3D shape (also
+        known as “fold”), which dictates their ability of binding to designated biomolecules such as DNA, drugs, or even other proteins. Through
+        these interactions, proteins perform diverse functions, such as transporting substances, recognizing and neutralizing threats, and sensing
+        environmental changes. A key class of proteins, enzymes, catalyse chemical reactions by binding to specific ligands. Enzyme binding often
+        induces conformational changes, which can range from minor side-chain rearrangements to large-scale structural shifts affecting loops or
+        entire domains.
+    </p>
+    <p> In this project, you will study the structure and dynamics of an enzyme responsible for the catalysis of a reaction on another protein. In the
+        <a href="https://www.rcsb.org" target="_blank">Protein Data Bank</a>, the atomic structure of many enzymes bound to their protein ligand are
+        available (also known as the “bound state”). The question in this project is: how much does the enzyme's structure change between its
+        monomeric ("unbound") state and its ligand-bound state? You will be assigned to a bound-state enzyme structure from the list we provide,
+        and are tasked with performing molecular dynamics simulations to study the enzyme subunit conformational behaviour, in both the bound and
+        unbound states.
+    </p>
+    <p> During the session 4 workshop you will be assigned to one of the project options below.</p>
+
+    <h4>Suggested reading</h4>
+    <ul style="margin-top:-4mm">
+        <li>
+            Every PDB entry is typically associated with a publication (reported in the PDB page) about the specific protein
+        </li>
+        <li>
+            <a href="https://doi.org/10.3410/b3-19" target="_blank">Conformational selection or induced fit? 50 years of debate resolved</a> (a
+            general introduction to what happens when proteins bind)
+        </li>
+        <li>
+            <a href="https://doi.org/10.1016/j.jmb.2015.07.016" target="_blank">Updates to the integrated protein-protein interaction benchmarks:
+                Docking benchmark version 5 and affinity benchmark version 2</a> (source of information on dimers)
+        </li>
+    </ul>
+
+    <div class="pbox">
+        <h3 class="options" id="options">Project Options</h3>
+
+        <button class="collapsible">Option 1</button>
+        <div class="content">
+            <ul>
+                <li> <a href="https://www.rcsb.org/">RCSB page</a></li>
+                <li> Chain of interest: ?</li>
+            </ul>
+        </div>
+
+        <button class="collapsible">Option 2</button>
+        <div class="content">
+            <ul>
+                <li> <a href="https://www.rcsb.org/">RCSB page</a></li>
+                <li> Chain of interest: ?</li>
+            </ul>
+        </div>
+
+        <button class="collapsible">Option 3</button>
+        <div class="content">
+            <ul>
+                <li> <a href="https://www.rcsb.org/">RCSB page</a></li>
+                <li> Chain of interest: ?</li>
+            </ul>
+        </div>
+
+        <button class="collapsible">Option 4</button>
+        <div class="content">
+            <ul>
+                <li> <a href="https://www.rcsb.org/">RCSB page</a></li>
+                <li> Chain of interest: ?</li>
+            </ul>
+        </div>
+
+        <p>
+
+        </p>
+    </div>
+
+
+    <h3 class=enum" id="toc_1_2">Tasks</h3>
+    <p>
+        All required files for this project are located inside the <code>[we are not providing the material]</code> folder. The following list provides a
+        general description for the tasks of this project, which you should carry out for both of your systems (all proteins and only the chain of interest).
+    </p>
+    <ol>
+        <li>
+            Copy the <code>proteins</code> folder to your Desktop.
+        </li>
+        <li>
+            For the protein from <strong>your option</strong>, clean the pdb file. You should have two cleaned files: one with only the chain of
+            interest and one with all proteins
+        </li>
+        <li>
+            Create a dodecahedron box containing the protein chain.
+        </li>
+        <li>
+            Solvate the box with SPC water.
+        </li>
+        <li>
+            Add 0.15 mol&nbsp;L<sup>-1</sup> of NaCl and neutralise any excess charge.
+        </li>
+        <li>
+            Perform an energy minimisation with a force tolerance of 500&nbsp;kJ&nbsp;mol<sup>-1</sup>&nbsp;nm<sup>-1</sup>.
+        </li>
+        <li>
+            Equilibrate the system for 100&nbsp;ps in the NVT ensemble at 300&nbsp;K.
+        </li>
+        <li>
+            Equilibrate the system for 100&nbsp;ps in the NPT ensemble at 300&nbsp;K and 1&nbsp;bar.
+        </li>
+        <li>
+            Run a 50&nbsp;ns production simulation in the NPT ensemble at 300&nbsp;K and 1&nbsp;bar.
+        </li>
+        <li>
+            Ensure that the protein does not cross periodic boundaries during the period of analysis.
+        </li>
+        <li>
+            Determine the point where the system reaches equilibrium. Use only the equilibrated portion for subsequent analysis.
+        </li>
+        <li>
+            Calculate the RMSF of the alpha-carbons.
+        </li>
+        <li>
+            Perform PCA on the protein backbone.
+        </li>
+        <li>
+            Inspect the final coordinates and trajectory in VMD and take snapshot(s) that illustrate the important
+            dynamics within the system.
+        </li>
+        <li>
+            Compare and discuss your simulations with the bound- and unbound-state enzyme structure, providing illustrations from your analysis and
+            VMD as needed.
+        </li>
+    </ol>
+</div>
+
+<div class="box">
+    <h2 class='enum' id="toc_2">Useful information</h2>
+
+    <h3 class='enum' id="toc_2_1">Input files</h3>
+    <p>
+        Run parameter <code>.mdp</code> files are inside <code>MDP</code>. Use <code>em.mdp</code> for energy
+        minimisation, <code>nvt.mdp</code>
+        for equilibration at constant temperature and volume, <code>npt.mdp</code> for equilibration at constant
+        temperature and pressure
+        and <code>prod.mdp</code> for the production run. Make sure to fill in any missing values for the keywords of
+        the <code>.mdp</code> files
+        that are marked with <code>COMPLETE HERE</code>.
+    </p>
+    <p>
+        You will find template scripts for submitting your simulation on Eddie inside the project folder.<br>
+        <em>Remember to run all of your simulations on the Eddie HPC, otherwise your simulation times will be longer than the project work
+            duration!</em>
+    </p>
+
+    <h3 class='enum' id="toc_2_2">Cleaning PDB files</h3>
+    <p>
+        To remove all chains except the one of interest, we can use <code>grep</code> and knowledge of PDB file structure. The chain identifier is
+        always in column 5 of the <code>ATOM</code> and <code>HETATM</code> entries, and so we can search the file for where column 5 is the chain
+        letter of interest.
+    </p>
+    <p>First, identify the number of characters that occur before character we want to search for. Use <code>grep</code> to search for that
+        many characters followed by the chain identifier. E.g. if there were 15 characters, and we wanted chain C the command would be:</p>
+    <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-3mm;">grep "^.\{15\}C" input.pdb > chain_C.pdb</code>
+    <p>Then, remove any non-protein atoms as before: </p>
+    <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-3mm;margin-bottom:2mm">grep -v HETATM chain_C.pdb > protein.pdb</code>
+
+    <h3 class='enum' id="toc_2_3">Making an index file</h3>
+    <p>
+        Some of the analysis you are tasked with performing will require you to make an index file. You can do this using <code>gmx
+        make_ndx</code> with the PDB files, and selecting the protein chain you want to analyse.
+    </p>
+    <p> When using <code>gmx make_ndx</code> you can use the following selection language in the interactive menu:
+    </p>
+    <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-3mm;"> chain &lt;chain_letter&gt; & a &lt;atom_name&gt; </code>
+    <p class="note" style="margin-top:0mm">You may be required to use wildcards (<code>*</code> or <code>?</code>) as part of the residue or atom
+        name</p>
+    <p>E.g. to make an index file containing the alpha carbons in chain A, you would select the atoms belonging to chain A, and filter for those
+        with the atom name CA:</p>
+    <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-3mm;">$ gmx make_ndx -f protein.pdb -o analysis_groups.ndx </code>
+    <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:1mm;"> chain A & a CA</code>
+    <p style="margin-top:0mm">Then, press <code>q</code> to quit and save the index file</p>
+    <p>Or to make an index file containing the backbone atoms in chain A, you would select the group that contains the backbone atoms, and filter
+        for those belonging to chain A:</p>
+    <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:-3mm;">$ gmx make_ndx -f protein.pdb -o analysis_groups.ndx </code>
+    <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:1mm;"> 4 & chain A</code>
+    <p style="margin-top:0mm">Then, press <code>q</code> to quit and save the index file</p>
+</div>
+
+</body>
+<script>
+    var coll = document.getElementsByClassName("collapsible");
+    var i;
+
+    for (i = 0; i < coll.length; i++) {
+        coll[i].addEventListener("click", function () {
+            this.classList.toggle("active");
+            var content = this.nextElementSibling;
+            if (content.style.display === "block") {
+                content.style.display = "none";
+            } else {
+                content.style.display = "block";
+            }
+        });
+    }
+
+    var pcoll = document.getElementsByClassName("pcollapsible");
+    var j;
+
+    for (j = 0; j < pcoll.length; j++) {
+        pcoll[j].addEventListener("click", function () {
+            this.classList.toggle("active");
+            let content = this.nextElementSibling;
+            if (content.style.display === "block") {
+                content.style.display = "none";
+            } else {
+                content.style.display = "block";
+            }
+        });
+    }
+
+</script>
+<script src="../scripts/generate_header_s4.js"></script>
+<script src="../scripts/generate_overview.js"></script>
+<script src="../scripts/scroll_up.js"></script>
+<script src="../scripts/feedback.js"></script>
+<script src="../scripts/adjust_for_dyslexia.js"></script>
+<script>window.onload = function () {
+    generateOverview();
+    generateHeader();
+    scrollUp();
+    adjustForDyslexia();
+}</script>
+</html>

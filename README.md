@@ -28,13 +28,22 @@ Please note that we are not sharing the materials for Session 4, as those are us
 
 ## Authors and contributions
 
-* [Sarah S Stewart](https://github.com/sarahvs99) - adaptation of the original materials for 2024/25, introduction of assessment for MedBio cohort, overseeing the module delivery.
+* [Sarah V Stewart](https://github.com/sarahvs99) - testing material for 2023/24, adaptation of the original materials for 2024/25, introduction of assessment for MedBio cohort, overseeing the module delivery.
 * [Hannah Pollak](https://github.com/hp115) - development of the original course materials in 2023/24, integration of Dyslexia-friendly settings.
 * [Tim Spankie](https://github.com/tspankie) - development and delivery of the MedBio teaching materials in Sessions 3 and 4.
 * [Audrey Ngambia](https://github.com/s2242277) - delivery of materials in Session 2, testing the materials.
 * [Angela Chitzanidi](https://github.com/achitzan) - set up of virtual machines, ensuring access to HPC facilities for all students.
 * [Valentina Erastova](https://github.com/punkpony) -  module lead, development of original materials and full oversight of the development and delivery of the module.
  
+
+
+## Relevant resources:
+
+- software carpentary
+- gromacs
+- ccpbiosim
+- claycode
+
 
 ## Reuse and adaptation of the material
 
@@ -45,7 +54,3 @@ To reuse this material, you can [clone](https://docs.github.com/en/repositories/
 If using this material, please acknowledge the developers and cite the associated publication:
 
 - JOSE REFERENCE WHEN AVAILABLE
-
-
-
-
