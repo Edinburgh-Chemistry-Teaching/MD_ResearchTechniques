@@ -39,10 +39,11 @@ Please note that we are not sharing the materials for Session 4, as those are us
 
 ## Relevant resources:
 
-- software carpentary
-- gromacs
-- ccpbiosim
-- claycode
+- [Software Carpentry lessons](https://software-carpentry.org/lessons/)
+- [Carpentry Community lessions](https://carpentries.org/lesson-development/community-lessons/)
+- [GROMACS tutorials](https://tutorials.gromacs.org)
+- [CCPBioSim workshop](https://github.com/CCPBioSim/BioSim-analysis-workshop)
+- [ClayCode workshop](https://github.com/Erastova-group/ClayCode-workshop)
 
 
 ## Reuse and adaptation of the material
