@@ -179,7 +179,7 @@ The font can be changed by placing the desired font `.ttf` files in `Notes/fonts
 
 # Reuse, implementation and modification
 
-The complete course is available on [GitHub](https://github.com/Edinburgh-Chemistry-Teaching/MD_ResearchTechniques) under an open license - CC 4.0. 
+The complete course is available on [GitHub](https://github.com/Edinburgh-Chemistry-Teaching/MD_ResearchTechniques) under an open license - CC-BY-4.0. 
 Course slides, shell scripts, tutorials, and example data are all included. 
 Implementation requires a computer lab with Unix, GROMACS, and HPC access, though adaptations for local desktops or cloud platforms (e.g., Google Colab) are feasible. 
 The materials have been successfully adapted for undergraduate chemistry students joining our group to introduce MD simulations.
