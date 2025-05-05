@@ -170,7 +170,10 @@ To enable shorter queuing times for the students, 10 MIGs were ringfenced for th
 The ringfenced MIGs were on a single compute node with 64 CPU cores and 768GB of system RAM. 
 On Eddie, each student had access to a 2TB scratch area where they could perform the simulations, and used GROMACS 2024.4 with GPU support and Xmgrace 5.1.25 software.
 
-[//]: # (use of HTML as it is portable, cross browser, dyslexia &#40;css&#41;, accessibility)
+The course materials are written using HTML, as it offers a portable and cross-browser-compatible framework for delivering accessible content to users with diverse needs. 
+Its semantic structure supports screen readers and assistive technologies, while its integration with CSS enables flexible, user-responsive design.
+We have added a dyslexia-friendly font option, which can be toggled by a button on each page. 
+The font can be changed by placing the desired font `.ttf` files in `Notes/fonts/`, and altering the font-including section of the relevant `.css` files.
 
 
 
