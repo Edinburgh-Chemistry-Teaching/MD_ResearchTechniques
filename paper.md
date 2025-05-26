@@ -13,7 +13,7 @@ authors:
     affiliation: 1
   - name: Tim Spankie
     orcid: 0000-0001-5123-7049
-    affiliation: 1
+    affiliation: "1, 4, 5"
   - name: Audrey Ngambia
     orcid: 0000-0003-1951-8742
     affiliation: 1
@@ -29,7 +29,11 @@ affiliations:
     index: 2
   - name: Research Services, Information Services, University of Edinburgh, Argyle House, 3 Lady Lawson Street, Edinburgh EH3 9DR, United Kingdom
     index: 3
-date:  16 April 2025
+  - name: Computational Biology, School of Life Sciences, University of Dundee, Dow Street, Dundee DD1 5EH, United Kingdom
+    index: 4
+  - name: Biological Chemistry and Drug Discovery, School of Life Sciences, University of Dundee, Dow Street, Dundee DD1 5EH, United Kingdom
+    index: 5
+date:  26 May 2025
 bibliography: paper.bib
 
 ---
