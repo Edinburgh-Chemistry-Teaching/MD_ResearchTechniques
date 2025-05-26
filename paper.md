@@ -11,7 +11,7 @@ authors:
   - name: Hannah Pollak
     orcid: 0000-0003-1011-8478
     affiliation: 1
-  - name: Tim Spankie
+  - name: Timothy J. Spankie
     orcid: 0000-0001-5123-7049
     affiliation: "1, 4, 5"
   - name: Audrey Ngambia
