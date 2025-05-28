@@ -95,9 +95,6 @@ The exercises in six parts introduce the Unix shell and simple Bash commands —
 Unlike the Software Carpentry model, we teach Vim as the text editor due to its advanced functionality (such as quickly navigating through files). 
 The seventh part introduces high-performance computing, focusing on how to interact with the University of Edinburgh's Eddie compute cluster [@ecdf], which the students will use in subsequent sessions.
 Only the first three parts (working with files and directories and using HPC) are required to be completed, the other parts are given for the more keen or advanced students.
-Unlike the Software Carpentry model, we teach Vim as the text editor due to its advanced functionality (such as quickly navigating through files).
-The seventh part introduces high-performance computing, focusing on how to interact with the University of Edinburgh's Eddie compute cluster, 
-which the students will use in subsequent sessions.[@ecdf]
 
 
 
