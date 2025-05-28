@@ -54,7 +54,7 @@ Hosted on [GitHub](https://github.com/Edinburgh-Chemistry-Teaching/MD_ResearchTe
 Computational techniques are integral to modern chemical research, enabling precise simulation of chemical systems and prediction of molecular properties.
 Molecular dynamics (MD) simulations facilitate the study of complex systems, such as protein complexes, biological membranes, and material interfaces, accelerating advancements in drugs, materials, and technologies.
 Despite its importance, many chemistry curricula still lack hands-on computational training [@dahl2020].
-Without foundational skills in Linux, high-performance computing (HPC), and simulation software like GROMACS, postgraduate chemistry students may struggle to engage with computational literature or methods.
+Without foundational skills in Linux, high-performance computing (HPC), and simulation software, postgraduate chemistry students may struggle to engage with computational literature or methods.
 This module addresses this gap by providing practical MD simulation training in an accessible format, empowering students to perform computational research independently.
 By sharing these resources openly, we aim to support global educators in adopting or adapting computationally-enabled teaching in chemistry and related fields.
 Feedback from students highlights that the learners found the material engaging, recognised the importance of the skills being taught, and felt they had gained valuable and sufficient knowledge aligned with the learning objectives.
@@ -63,7 +63,7 @@ Feedback from students highlights that the learners found the material engaging,
 
 # Content and Instructional Design
 
-The course comprises four 3-hour-long workshops, run weekly. Each session begins with a short lecture to contextualise the material. The remainder of the session is set for independent work using HTML guides with demonstrators available. The students are also supported by weekly drop-in sessions. 
+The course comprises three 3-hour-long workshops, run weekly. Each session begins with a short lecture to contextualise the material. The remainder of the session is set for independent work using HTML guides with demonstrators available. The students are also supported by weekly drop-in sessions. 
 A final workshop session is used to introduce individual projects, assessment criteria and allow students to get started. 
 The students have two weeks to work on the project and submit a summative report. (Note, we are unable to share the individual project materials.)
 The course is designed for taught postgraduate masters students taking degrees in 'Materials Chemistry', 'Analytical Chemistry', and 'Medicinal and Biological Chemistry', and therefore the content for the third workshop and individual projects is adjusted to suit these diverse backgrounds.
@@ -116,16 +116,15 @@ Students visualise the structure and dynamics using VMD [@vmd] and plot analysed
 ## Session 3
 The third session builds upon the developed skills to perform advanced simulations that are domain-specific to the three masters programs. 
 
-For Medicinal and Biological Chemistry students, this session applies molecular dynamics to a biologically relevant protein–ligand system. 
-Students prepare the system as before, with a focus on handling incomplete PDB files and selecting suitable force fields.
+For Medicinal and Biological Chemistry students, this session applies molecular dynamics to a biologically relevant protein–ligand system. A short lecture introduces protein structure and the requirements for modelling them.
+Students prepare a dimer system as before, with a focus on handling incomplete PDB files and selecting suitable force fields.
 They perform energy minimisation, equilibration, and production runs using GROMACS, with analysis focusing on system stability and ligand binding through interpreting RMSD and interaction metrics from trajectories. This session and lecture materials have been partially adapted from [BioSim Analysis Workshop](https://github.com/CCPBioSim/BioSim-analysis-workshop) [@biosim].
 
 For Materials Chemistry and Analytical Chemistry students, the focus of the session is on simulating a clay–organic interface, relevant to materials and environmental sciences. 
 A short lecture introduces layered minerals, interfacial interactions, and their applications in catalysis, environmental remediation, and nanotechnology.
 Students prepare a hydrated clay system containing organic guest molecules. 
 Hands-on tasks include setting up a 2D layered system across the periodic boundary, modifying topology files, solvating and charge-balancing the system, running NPT simulation in semi-isotropic ensemble to account for the layered system and ensuring simulation stability.
-Students visualise structures using VMD and analyse layer spacing, molecular diffusion, and guest–host interactions with GROMACS tools. 
-The session emphasises real-world challenges, such as selecting an appropriate combination of force fields for the organic-inorganic system, and interpreting interfacial dynamics.
+Students visualise structures using VMD and analyse layer spacing, molecular diffusion, and guest–host interactions with GROMACS tools.
 
 
 
@@ -133,7 +132,7 @@ The session emphasises real-world challenges, such as selecting an appropriate c
 
 The final session introduces the individual projects and guides students in getting started on their independent simulations and final reports.
 A short lecture gives tips for scientific writing, provides an example report, highlights expectations for the project, and provides templates and submission guidelines. 
-Additionally, students are introduced to Overleaf (https://www.overleaf.com) for scientific writing in LaTeX, and templates for the report are provided.
+Additionally, students are introduced to [Overleaf](https://www.overleaf.com) for scientific writing in LaTeX, and templates for the report are provided.
 The remainder of the session is used for hands-on progress toward simulation setup and report writing.
 
 Please note that we are unable to share the materials for this part of the module, since it is used in a summative assessment. Instead, we are including a simplified HTML page linking the templates and an example report.
@@ -148,12 +147,9 @@ Overall comprehension of the first two sessions is assessed based on multiple-ch
 The quizzes were run through LEARN, the University's Virtual Learning Environment. Students are first provided a formative quiz to familiarise themselves with how to operate the quiz and what type of knowledge is expected. When scoring over 80%, students can access the summative quiz. The summative quiz can only be attempted once. We share the formative quizzes within GitHub materials. 
 
 
-The largest part of the assessment (30% of the course mark) is based upon individual projects. The projects build upon what students have learned in Session 3, allowing them to set up their individual simulation systems, analyse them and produce a short report in the form of a mini-paper. 
-We are looking for a concise presentation of the system, quality methodology and appealing visuals in the results section. 
-
-
+The largest part of the assessment (30% of the course mark) is based upon individual projects. The projects build upon what students have learned in Session 3, allowing them to set up their individual simulation systems, analyse them and produce a short report in the form of a mini-paper.
 The project assesses students' ability to independently design, execute, and analyse an MD simulation relevant to their degree program.
-The report is made to be concise, and the marking scheme rewards the ability to condense the information.
+The report is made to be concise, and the marking scheme rewards the ability to condense the information, create a quality methodology and produce appealing visuals in the results section.
 
 
 ## Computational Resources
