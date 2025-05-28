@@ -196,8 +196,8 @@ com/Erastova-group/ClayCode-workshop) introducing the use of ClayCode[@pollak202
 
 
 # Acknowledgements
-We thank the demonstrators, Finlay Clark and Ryan Zhu, who supported student learning and Rosa Brauer for feedback on the instructional materials. 
-We also thank Matteo Degiacomi for providing protein lecture material for session 3.
+We thank the demonstrators, Finlay Clark, Chenfeng Zhang and Ryan Zhu, who supported student learning and Rosa Brauer for feedback on the instructional materials.
+We also thank Mike Wallis for assistance with setting up the original computational resources, David August for organising the course this module was part of, and Matteo Degiacomi for providing protein lecture material for session 3.
 This work builds on contributions from Software Carpentry and GROMACS community tutorials. 
 
 
