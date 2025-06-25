@@ -1,3 +1,5 @@
+[![status](https://jose.theoj.org/papers/203c19913b1c1d8801a559c0eada14d1/status.svg)](https://jose.theoj.org/papers/203c19913b1c1d8801a559c0eada14d1)
+
 # Introduction to Computational Chemistry Techniques
 
 This is an open educational resource originally developed for postgraduate taught masters chemistry students at the University of Edinburgh to introduce the practical aspects of molecular dynamics simulations.
