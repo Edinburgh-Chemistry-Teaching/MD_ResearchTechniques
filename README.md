@@ -46,7 +46,11 @@ Please note that we are not sharing the materials for Session 4, as those are us
 - [GROMACS tutorials](https://tutorials.gromacs.org)
 - [CCPBioSim workshop](https://github.com/CCPBioSim/BioSim-analysis-workshop)
 - [ClayCode workshop](https://github.com/Erastova-group/ClayCode-workshop)
+- [VMD](https://www.ks.uiuc.edu/Research/vmd/)
 
+## Gromacs version and others:
+- Gromacs  version, `gromacs/2024.4`,  was used for simulations throughout this course.
+- VMD was used for rendering of images.
 
 ## Reuse and adaptation of the material
 
