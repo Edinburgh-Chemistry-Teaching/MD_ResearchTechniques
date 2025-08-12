@@ -32,7 +32,7 @@ Please note that we are not sharing the materials for Session 4, as those are us
 
 * [Sarah V Stewart](https://github.com/sarahvs99) - testing material for 2023/24, adaptation of the original materials for 2024/25, development of MedBio materials in Sessions 3 and 4, overseeing the module delivery in 2024/25, delivery of materials in Session 1, demonstrating in 2023/24 and 2024/25.
 * [Hannah Pollak](https://github.com/hp115) - development of the original course materials in 2023/24, integration of Dyslexia-friendly settings, creation of virtual machine template, set up of virtual machines in 2023/24, benchmarking of computational resources, set up of storage space, overseeing the module delivery in 2023/24, demonstrating in 2023/24.
-* [Timothy J. Spankie](https://github.com/tspankie) - development of the MedBio materials in Sessions 3 and 4, demonstrating in 2024/25.
+* [Timothy J. Spankie](https://github.com/tspankie) - development of the MedBio materials in Sessions 3 and 4, delivery of MedBio materials in Session 3, demonstrating in 2024/25.
 * [Audrey Ngambia](https://github.com/s2242277) - delivery of materials in Session 2, testing the materials, demonstrating in 2023/24 and 2024/25.
 * [Angela Chitzanidi](https://github.com/achitzan) - set up of virtual machines, ensuring access to HPC facilities for all students.
 * [Valentina Erastova](https://github.com/punkpony) -  module lead, development of original materials, full oversight of the development and delivery of the module, delivery of teaching materials in all sessions.
