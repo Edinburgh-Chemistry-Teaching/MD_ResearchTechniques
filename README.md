@@ -39,7 +39,7 @@ Please note that we are not sharing the materials for Session 4, as those are us
  
 
 
-## Relevant resources:
+## Relevant resources
 
 - [Software Carpentry lessons](https://software-carpentry.org/lessons/)
 - [Carpentry Community lessions](https://carpentries.org/lesson-development/community-lessons/)
@@ -49,7 +49,7 @@ Please note that we are not sharing the materials for Session 4, as those are us
 - [VMD](https://www.ks.uiuc.edu/Research/vmd/)
 
 
-## Gromacs version and others:
+## Gromacs version and others
 - Gromacs  version, `gromacs/2024.4`,  was used for simulations throughout this course.
 - VMD was used for rendering of images.
 
@@ -76,7 +76,7 @@ If you just want to tell us how you have been using the resource just send us an
 The easiest way is by cloning the material and adapting it to your needs. This can be just using some partial material or expanding on the existing material. The best way to do this is by either [cloning](https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository) the repo and building up on it, or using the current repository as a [template repository](https://docs.github.com/en/repositories/creating-and-managing-repositories/creating-a-repository-from-a-template) for your own or your organisations GitHub account, for more details see the [overview](overview.md) document. 
 
 
-## Reference:
+## Reference
 
 If using this material, please acknowledge the developers and cite the associated publication:
 
