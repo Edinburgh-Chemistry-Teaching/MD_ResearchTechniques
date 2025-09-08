@@ -43,8 +43,8 @@ bibliography: paper.bib
 *An Introduction to Computational Chemistry Techniques* is an open educational resource originally developed for postgraduate taught masters chemistry students at the University of Edinburgh to introduce practical aspects of molecular dynamics simulations. 
 Aimed at students with no prior experience in programming or computational chemistry, this module is delivered over a month as a series of four 3-hour workshops in a computer-lab setting, with the last session dedicated to individual projects.
 
-The module introduces foundational concepts in Unix command-line navigation, setting up, running and analysing molecular simulations, using high-performance computing systems.
-Students work through materials at their own pace, supported by demonstrators, with all content delivered via HTML-based guides and open-source tools.
+The module introduces foundational concepts in Unix command-line navigation, setting up, running and analysing molecular simulations, using high-performance computing systems. The material is provided to the students through virtual machines with the content delivered via HTML-based guides, opened on local web browsers, and open-source tools.
+Students work through materials at their own pace, supported by demonstrators.
 Hosted on [GitHub](https://github.com/Edinburgh-Chemistry-Teaching/MD_ResearchTechniques), this resource promotes the reuse and adaptation of accessible, computation-rich learning materials for chemistry education worldwide.
 
 
