@@ -49,10 +49,26 @@ Please note that we are not sharing the materials for Session 4, as those are us
 - [VMD](https://www.ks.uiuc.edu/Research/vmd/)
 
 
-## Gromacs version and others
-- Gromacs  version, `gromacs/2024.4`,  was used for simulations throughout this course.
-- VMD was used for rendering of images.
+## Dependecies
+- GROMACS  version `gromacs/2024.4` was used for simulations throughout this course.
+- VMD version `1.9.4` was used for rendering of images.
+- Xmgrace version `5.1.25` was used for plotting.
 
+
+## Reusing and building on the material for your own course
+
+The easiest way is by cloning the material and adapting it to your needs. This can be just using some partial material or expanding on the existing material. The best way to do this is by either [cloning](https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository) the repo and building up on it, or using the current repository as a [template repository](https://docs.github.com/en/repositories/creating-and-managing-repositories/creating-a-repository-from-a-template) for your own or your organisations GitHub account, for more details see the [overview](overview.md) document. 
+
+If you are interested in using the material outside of the University of Edinburgh, or already have access to a Unix machine/virtual machine, the instructions will need adapted. At the end of each session's introduction page there is a link and QR code to a [Wooclap](https://www.wooclap.com) feedback form. If you wish to gather your own feedback, you will need to regenerate the form and update the links and codes.
+
+### Unix
+If you have access to a Unix machine (e.g. Linux desktop, MacOS), you will not need a virtual machine and so can ignore/remove sections ???. If you are using a different virtual machine platform, adapt these sections accordingly. The material was developed and tested on the dependencies listed above.
+
+
+###  HPC use
+We strongly recommend using an HPC to run the simulations. If you don't have access to one, the length of the simulations will need to be reduced according to the available hardware. For example, the production simulation in Session 2 ran at ?? ns/day on the Eddie HPC and will instead run at ?? ns/day on an Apple M2 MacBook Pro. The instructions in section ??? and corresponding `.mdp` files will need adapted. 
+
+If you have access to a different HPC, you would need to adjust the access details in section ??, generate new `.sh` files for simulation submission to the scheduler. Note that Eddie HPC uses Grid Engine and the simulations are run on GPUs.
 
 ## Contributing to the resource and raising issues
 
@@ -70,10 +86,6 @@ Contributions to the learning resource are welcome. Contributions can be made th
 
 ### Telling us about how you are using the resource
 If you just want to tell us how you have been using the resource just send us an email or raise an issue pointing to your work. 
-
-## Reusing and building on the material for your own course
-
-The easiest way is by cloning the material and adapting it to your needs. This can be just using some partial material or expanding on the existing material. The best way to do this is by either [cloning](https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository) the repo and building up on it, or using the current repository as a [template repository](https://docs.github.com/en/repositories/creating-and-managing-repositories/creating-a-repository-from-a-template) for your own or your organisations GitHub account, for more details see the [overview](overview.md) document. 
 
 
 ## Reference
