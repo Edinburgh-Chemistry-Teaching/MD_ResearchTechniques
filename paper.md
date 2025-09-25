@@ -70,7 +70,7 @@ The course is designed for taught postgraduate masters students taking degrees i
 
 
 
-## Learning objectives
+## Module Goals
 The module aims to equip students with the practical skills necessary to perform meaningful molecular dynamics simulations, including:
  
 * Understand the practical aspects of molecular simulations.
