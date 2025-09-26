@@ -13,12 +13,12 @@ authors:
     affiliation: 1
   - name: Timothy J. Spankie
     orcid: 0000-0001-5123-7049
-    affiliation: "1, 4, 5"
+    affiliation: "1, 3, 4"
   - name: Audrey Ngambia
     orcid: 0000-0003-1951-8742
     affiliation: 1
   - name: Angela Chitzanidi
-    affiliation: 3
+    affiliation: 5
   - name: Valentina Erastova
     orcid: 0000-0002-6747-3297
     affiliation: "1, 2"
@@ -27,11 +27,11 @@ affiliations:
     index: 1
   - name: UK Centre for Astrobiology, School of Physics and Astronomy, University of Edinburgh, James Clerk Maxwell Building, Peter Guthrie Tait Road, Edinburgh EH9 3FD, United Kingdom
     index: 2
-  - name: Research Services, Information Services, University of Edinburgh, Argyle House, 3 Lady Lawson Street, Edinburgh EH3 9DR, United Kingdom
-    index: 3
   - name: Computational Biology, School of Life Sciences, University of Dundee, Dow Street, Dundee DD1 5EH, United Kingdom
-    index: 4
+    index: 3
   - name: Biological Chemistry and Drug Discovery, School of Life Sciences, University of Dundee, Dow Street, Dundee DD1 5EH, United Kingdom
+    index: 4
+  - name: Research Services, Information Services, University of Edinburgh, Argyle House, 3 Lady Lawson Street, Edinburgh EH3 9DR, United Kingdom
     index: 5
 date:  26 May 2025
 bibliography: paper.bib
@@ -41,7 +41,7 @@ bibliography: paper.bib
 # Summary
 
 *An Introduction to Computational Chemistry Techniques* is an open educational resource originally developed for postgraduate taught masters chemistry students at the University of Edinburgh to introduce practical aspects of molecular dynamics simulations. 
-Aimed at students with no prior experience in programming or computational chemistry, this module is delivered over a month as a series of four 3-hour workshops in a computer-lab setting, with the last session dedicated to individual projects.
+Aimed at students with no prior experience in programming or computational chemistry, this module is delivered over a month as a series of three 3-hour workshops in a computer-lab setting, and a final session dedicated to individual projects.
 
 The module introduces foundational concepts in Unix command-line navigation, setting up, running and analysing molecular simulations, using high-performance computing systems. The material is provided to the students through virtual machines with the content delivered via HTML-based guides, opened on local web browsers, and open-source tools.
 Students work through materials at their own pace, supported by demonstrators.
@@ -192,7 +192,7 @@ com/Erastova-group/ClayCode-workshop) introducing the use of ClayCode [@pollak20
 
 
 # Acknowledgements
-We thank the demonstrators, Finlay Clark, Chenfeng Zhang and Ryan Zhu, who supported student learning and Rosa Brauer for feedback on the instructional materials.
+We thank the additional demonstrators, Finlay Clark, Chenfeng Zhang and Ryan Zhu, who supported student learning and Rosa Brauer for feedback on the instructional materials.
 We also thank Mike Wallis for assistance with setting up the original computational resources, David August for organising the course this module was part of, and Matteo Degiacomi for providing protein lecture material for session 3. This work builds on contributions from Software Carpentry and GROMACS community tutorials. Student feedback mentioned here is based on informal feedback collected as part of routine course delivery and not as part of a formal research study.
 
 
