@@ -1,4 +1,4 @@
-[![status](https://jose.theoj.org/papers/203c19913b1c1d8801a559c0eada14d1/status.svg)](https://jose.theoj.org/papers/203c19913b1c1d8801a559c0eada14d1)
+[![DOI](https://jose.theoj.org/papers/10.21105/jose.00299/status.svg)](https://doi.org/10.21105/jose.00299)
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.17226164.svg)](https://doi.org/10.5281/zenodo.17226164)
 
 # Introduction to Computational Chemistry Techniques
@@ -100,9 +100,9 @@ If you just want to tell us how you have been using the resource just send us an
 
 ## Reference
 
-If using this material, please acknowledge the developers and cite the associated publication:
+If using this material, please acknowledge the developers and cite the associated publication. A full citation is found in the *Cite this repository* menu in the About section, containing both APA and BibTeX formats.
 
-- JOSE REFERENCE WHEN AVAILABLE
+- Stewart, S. V., Pollak, H., Spankie, T. J., Ngambia, A., Chitzanidi, A., & Erastova, V. (2025). Course Materials for an Introduction to Computational Chemistry Techniques. Journal of Open Source Education, 8(93), 299. https://doi.org/10.21105/jose.00299
 
 
 
