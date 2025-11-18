@@ -187,8 +187,8 @@ The materials have been successfully adapted for undergraduate chemistry student
 This module equips postgraduate students with practical computational chemistry skills, emphasising reproducibility and open science. 
 It is particularly suited to courses seeking to integrate practical computational methods skills with experimental and theoretical chemistry teaching.
 
-For those interested in learning more about simulating clay surfaces, we have also developed a [workshop](https://github.
-com/Erastova-group/ClayCode-workshop) introducing the use of ClayCode [@pollak2024] software for set-up and simulation of realistic clay mineral systems.
+For those interested in learning more about simulating clay surfaces, we have also developed a [workshop](https://github.com/Erastova-group/ClayCode-workshop) 
+introducing the use of ClayCode [@pollak2024] software for set-up and simulation of realistic clay mineral systems.
 
 
 # Acknowledgements
