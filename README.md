@@ -1,4 +1,5 @@
 [![DOI](https://jose.theoj.org/papers/10.21105/jose.00299/status.svg)](https://doi.org/10.21105/jose.00299)
+
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.17226164.svg)](https://doi.org/10.5281/zenodo.17226164)
 
 # Introduction to Computational Chemistry Techniques
