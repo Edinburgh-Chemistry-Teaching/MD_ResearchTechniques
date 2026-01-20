@@ -43,10 +43,9 @@
                 <ol>
                     <li id="interactive_login" style="margin-top:2mm"> Use the <code>qlogin</code> command to request an interactive session with
                         16 G of memory:
-                        <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:1mm">$ qlogin -l h='node1b09' -l h_vmem=16G</code>
+                        <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:1mm">$ qlogin -l h_rss=16G</code>
                         <blockquote style="margin-top:2mm">
-                            <code>-l h</code> specifies the node to use. Here we use one set aside for the course <br>
-                            <code>-l h_vmem</code> specifies the amount of memory
+                            <code>-l h_rss</code> specifies the amount of RAM memory
                         </blockquote>
                     </li>
                     <li> Load GROMACS by sourcing the script provided:

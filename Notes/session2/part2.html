@@ -228,14 +228,13 @@ Norm of force     =  3.5967257e+03</samp>
                     </li>
                     <li>Add the restrained equilibration with <a target="_blank" href="https://manual.gromacs.org/current/onlinehelp/gmx-mdrun.html">
                         <code>mdrun</code></a>:<br>
-                        <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:1mm">gmx mdrun -v -s nvt.tpr -deffnm nvt -ntomp 1</code>
+                        <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:1mm">gmx mdrun -v -s nvt.tpr -deffnm nvt -ntomp 4 </code>
                         <blockquote style="margin-top:2mm">
                             <code>-v</code> specifies that the output should be "loud and noisy" (i.e. <strong>v</strong>erbose) <br>
                             <code>-s</code> specifies the run input file, which is the output <code>.tpr</code> file from <code>grompp</code><br>
                             <code>-deffnm</code> specifies the <strong>def</strong>ault <strong>f</strong>ile <strong>n</strong>a<strong>m</strong>e
                             for all outputs <br>
-                            <code>-ntomp</code> specifies the total <strong>n</strong>umber of <strong>O</strong>pen<strong>MP</strong> <strong>t
-                        </strong>hreads <br>
+                            <code>-ntomp</code> specifies the total <strong>n</strong>umber of <strong>O</strong>pen<strong>MP</strong> <strong>t</strong>hreads per MPI rank. For our setup, this is the number of CPUs available<br>
                         </blockquote>
                     </li>
                 </ol>
@@ -375,8 +374,7 @@ Norm of force     =  3.5967257e+03</samp>
                             <code>-po</code> specifies the output name of the <code>.mdp</code> file <br>
                             <code>-pp</code> specifies the output name of the <code>.top</code> file
                         </blockquote>
-                        <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:5mm">gmx mdrun -v -s prod.tpr -deffnm prod -ntomp
-                            1</code>
+                        <code style="display:block;white-space:pre-wrap;padding: 6px 10px;margin-top:5mm">gmx mdrun -v -s prod.tpr -deffnm prod -ntomp 4</code>
                         <blockquote style="margin-top:2mm">
                             <code>-v</code> specifies that the output should be "loud and noisy" (i.e. <strong>v</strong>erbose) <br>
                             <code>-s</code> specifies the run input file, which is the output <code>.tpr</code> file from <code>grompp</code><br>
